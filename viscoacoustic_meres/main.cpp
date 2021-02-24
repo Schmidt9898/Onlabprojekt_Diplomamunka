@@ -25,7 +25,7 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
 
   float (*r1)[y_size][z_size] = (float (*)[y_size][z_size])new float[x_size*y_size*z_size];
     {
-        Timer t("Section 0: ");
+        Timer t("Section 0");
     for (int x = x_m; x <= x_M; x += 1)
     {
       for (int y = y_m; y <= y_M; y += 1)
@@ -43,7 +43,7 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
     /* Begin section1 */
     {
 
-     Timer t("Section 1: ");
+     Timer t("Section 1");
     bf0(b_vec,damp_vec,dt,p_vec,v_x_vec,v_y_vec,v_z_vec,t0,t1,x0_blk0_size,x_M - (x_M - x_m + 1)%(x0_blk0_size),x_m,y_M,y_m,z_M,z_m);
     bf0(b_vec,damp_vec,dt,p_vec,v_x_vec,v_y_vec,v_z_vec,t0,t1,(x_M - x_m + 1)%(x0_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x0_blk0_size) + 1,y_M,y_m,z_M,z_m);
     bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,x1_blk0_size,x_M - (x_M - x_m + 1)%(x1_blk0_size),x_m,y0_blk0_size,y_M - (y_M - y_m + 1)%(y0_blk0_size),y_m,z_M,z_m);
@@ -55,7 +55,7 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
     /* Begin section2 */
 
     {
-        Timer t("Section 2: ");
+        Timer t("Section 2");
       for (int p_src = p_src_m; p_src <= p_src_M; p_src += 1)
       {
         float posx = -o_x + src_coords[p_src][0];
@@ -116,7 +116,7 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
     /* Begin section3 */
 
     {
-        Timer t("Section 3: ");
+        Timer t("Section 3");
       for (int p_rec = p_rec_m; p_rec <= p_rec_M; p_rec += 1)
       {
         float posx = -o_x + rec_coords[p_rec][0];
@@ -176,6 +176,7 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
 
 void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, const float dt, struct dataobj *__restrict p_vec, struct dataobj *__restrict v_x_vec, struct dataobj *__restrict v_y_vec, struct dataobj *__restrict v_z_vec, const int t0, const int t1, const int x0_blk0_size, const int x_M, const int x_m, const int y_M, const int y_m, const int z_M, const int z_m)
 {
+    Timer t("bf0");
   float (*__restrict b)[b_vec->size[1]][b_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[b_vec->size[1]][b_vec->size[2]]) b_vec->data;
   float (*__restrict damp)[damp_vec->size[1]][damp_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[damp_vec->size[1]][damp_vec->size[2]]) damp_vec->data;
   float (*__restrict p)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]]) p_vec->data;
@@ -187,6 +188,7 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
   {
     for (int y = y_m; y <= y_M; y += 1)
     {
+
       for (int z = z_m; z <= z_M; z += 1)
       {
         v_x[t1][x + 2][y + 2][z + 2] = (-5.00000007450581e-2F*dt*(b[x + 2][y + 2][z + 2] + b[x + 3][y + 2][z + 2])*(-p[t0][x + 2][y + 2][z + 2] + p[t0][x + 3][y + 2][z + 2]) + v_x[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
@@ -219,6 +221,7 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
 
 void bf1(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, const float dt, struct dataobj *__restrict p_vec, struct dataobj *__restrict qp_vec, struct dataobj *__restrict r_vec, float *__restrict r1_vec, struct dataobj *__restrict v_x_vec, struct dataobj *__restrict v_y_vec, struct dataobj *__restrict v_z_vec, struct dataobj *__restrict vp_vec, const int x_size, const int y_size, const int z_size, const int t0, const int t1, const int x1_blk0_size, const int x_M, const int x_m, const int y0_blk0_size, const int y_M, const int y_m, const int z_M, const int z_m)
 {
+    Timer t("bf1");
   float (*__restrict b)[b_vec->size[1]][b_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[b_vec->size[1]][b_vec->size[2]]) b_vec->data;
   float (*__restrict damp)[damp_vec->size[1]][damp_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[damp_vec->size[1]][damp_vec->size[2]]) damp_vec->data;
   float (*__restrict p)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]]) p_vec->data;
@@ -262,6 +265,7 @@ dataobj create_data(int size0, int size1, int size2, int size3, int elemsize) {
 }
 
 int main(int argc, char ** argv) {
+
   float dt=1.42900002, o_x=-400, o_y=-400, o_z=-400;
   int x_M=335, x_m=0, x_size=336, y_M=335, y_m=0, y_size=336, z_M=335, z_m=0, z_size=336;
   int p_rec_M=65535, p_rec_m=0, p_src_M=0, p_src_m=0, time_M=10, time_m=0;
