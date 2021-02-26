@@ -31,19 +31,27 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
   float (*__restrict src_coords)[src_coords_vec->size[1]] __attribute__ ((aligned (64))) = (float (*)[src_coords_vec->size[1]]) src_coords_vec->data;
 
   float (*r1)[y_size][z_size] = (float (*)[y_size][z_size])new float[x_size*y_size*z_size];
+    //#pragma omp private(qp)
     {
     Timer t("Section 0");
+
+    #pragma omp parallel for \
+    schedule (dynamic)
     for (int x = x_m; x <= x_M; x += 1)
     {
+        //#pragma omp parallel for
       for (int y = y_m; y <= y_M; y += 1)
       {
+        //#pragma omp parallel for
         for (int z = z_m; z <= z_M; z += 1)
         {
           r1[x][y][z] = sqrt(1.0F + 1.0F/pow(qp[x + 2][y + 2][z + 2], 2));
         }
       }
     }
+
     }
+    //return 0;
   /* End section0 */
   for (int time = time_m, t0 = (time)%(2), t1 = (time + 1)%(2); time <= time_M; time += 1, t0 = (time)%(2), t1 = (time + 1)%(2))
   {
@@ -190,7 +198,7 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
   float (*__restrict v_x)[v_x_vec->size[1]][v_x_vec->size[2]][v_x_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_x_vec->size[1]][v_x_vec->size[2]][v_x_vec->size[3]]) v_x_vec->data;
   float (*__restrict v_y)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]]) v_y_vec->data;
   float (*__restrict v_z)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]]) v_z_vec->data;
-
+#pragma omp parallel for schedule (dynamic)
   for (int x = x_m; x <= x_M; x += 1)
   {
     for (int y = y_m; y <= y_M; y += 1)
@@ -199,19 +207,23 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
       for (int z = z_m; z <= z_M; z += 1)
       {
         v_x[t1][x + 2][y + 2][z + 2] = (-5.00000007450581e-2F*dt*(b[x + 2][y + 2][z + 2] + b[x + 3][y + 2][z + 2])*(-p[t0][x + 2][y + 2][z + 2] + p[t0][x + 3][y + 2][z + 2]) + v_x[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
+        v_y[t1][x + 2][y + 2][z + 2] = (-5.00000007450581e-2F*dt*(b[x + 2][y + 2][z + 2] + b[x + 2][y + 3][z + 2])*(-p[t0][x + 2][y + 2][z + 2] + p[t0][x + 2][y + 3][z + 2]) + v_y[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
+        v_z[t1][x + 2][y + 2][z + 2] = (-5.00000007450581e-2F*dt*(b[x + 2][y + 2][z + 2] + b[x + 2][y + 2][z + 3])*(-p[t0][x + 2][y + 2][z + 2] + p[t0][x + 2][y + 2][z + 3]) + v_z[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
       }
     }
   }
+  /*
+  #pragma omp parallel for
   for (int x = x_m; x <= x_M; x += 1)
   {
     for (int y = y_m; y <= y_M; y += 1)
     {
       for (int z = z_m; z <= z_M; z += 1)
       {
-        v_y[t1][x + 2][y + 2][z + 2] = (-5.00000007450581e-2F*dt*(b[x + 2][y + 2][z + 2] + b[x + 2][y + 3][z + 2])*(-p[t0][x + 2][y + 2][z + 2] + p[t0][x + 2][y + 3][z + 2]) + v_y[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
       }
     }
   }
+  #pragma omp parallel for
   for (int x = x_m; x <= x_M; x += 1)
   {
     for (int y = y_m; y <= y_M; y += 1)
@@ -219,10 +231,9 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
 
       for (int z = z_m; z <= z_M; z += 1)
       {
-        v_z[t1][x + 2][y + 2][z + 2] = (-5.00000007450581e-2F*dt*(b[x + 2][y + 2][z + 2] + b[x + 2][y + 2][z + 3])*(-p[t0][x + 2][y + 2][z + 2] + p[t0][x + 2][y + 2][z + 3]) + v_z[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
       }
     }
-  }
+  }*/
 
 }
 
@@ -239,7 +250,7 @@ void bf1(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
   float (*__restrict v_y)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]]) v_y_vec->data;
   float (*__restrict v_z)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]]) v_z_vec->data;
   float (*__restrict vp)[vp_vec->size[1]][vp_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[vp_vec->size[1]][vp_vec->size[2]]) vp_vec->data;
-
+#pragma omp parallel for schedule (dynamic)
   for (int x = x_m; x <= x_M; x += 1)
   {
     for (int y = y_m; y <= y_M; y += 1)
@@ -272,7 +283,6 @@ dataobj create_data(int size0, int size1, int size2, int size3, int elemsize) {
 }
 
 int main(int argc, char ** argv) {
-
   float dt=1.42900002, o_x=-400, o_y=-400, o_z=-400;
   int x_M=335, x_m=0, x_size=336, y_M=335, y_m=0, y_size=336, z_M=335, z_m=0, z_size=336;
   int p_rec_M=65535, p_rec_m=0, p_src_M=0, p_src_m=0, time_M=10, time_m=0;
