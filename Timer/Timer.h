@@ -2,6 +2,7 @@
 #define TIMER_H
 #include <string>
 #include <chrono>
+//#include <iostream>
 /**
 Ez a Timer osztály.
 
@@ -23,7 +24,8 @@ Mert nem tudom mi történne és tuti nem jó dolog.
 
 */
 
-
+extern bool Timer_Filemode;
+extern std::string Timer_filename;
 void Timer_Print_all();
 
 class Timer
@@ -36,6 +38,8 @@ class Timer
     public:
         std::string msg="Timer";
         int root_num=0;
+
+
 
         Timer();
         Timer(std::string msg_);

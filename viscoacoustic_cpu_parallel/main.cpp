@@ -191,7 +191,7 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
 
 void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, const float dt, struct dataobj *__restrict p_vec, struct dataobj *__restrict v_x_vec, struct dataobj *__restrict v_y_vec, struct dataobj *__restrict v_z_vec, const int t0, const int t1, const int x0_blk0_size, const int x_M, const int x_m, const int y_M, const int y_m, const int z_M, const int z_m)
 {
-    Timer t("bf0");
+    //Timer t("bf0");
   float (*__restrict b)[b_vec->size[1]][b_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[b_vec->size[1]][b_vec->size[2]]) b_vec->data;
   float (*__restrict damp)[damp_vec->size[1]][damp_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[damp_vec->size[1]][damp_vec->size[2]]) damp_vec->data;
   float (*__restrict p)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]]) p_vec->data;
@@ -239,7 +239,7 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
 
 void bf1(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, const float dt, struct dataobj *__restrict p_vec, struct dataobj *__restrict qp_vec, struct dataobj *__restrict r_vec, float *__restrict r1_vec, struct dataobj *__restrict v_x_vec, struct dataobj *__restrict v_y_vec, struct dataobj *__restrict v_z_vec, struct dataobj *__restrict vp_vec, const int x_size, const int y_size, const int z_size, const int t0, const int t1, const int x1_blk0_size, const int x_M, const int x_m, const int y0_blk0_size, const int y_M, const int y_m, const int z_M, const int z_m)
 {
-    Timer t("bf1");
+    //Timer t("bf1");
   float (*__restrict b)[b_vec->size[1]][b_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[b_vec->size[1]][b_vec->size[2]]) b_vec->data;
   float (*__restrict damp)[damp_vec->size[1]][damp_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[damp_vec->size[1]][damp_vec->size[2]]) damp_vec->data;
   float (*__restrict p)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]]) p_vec->data;
@@ -283,6 +283,12 @@ dataobj create_data(int size0, int size1, int size2, int size3, int elemsize) {
 }
 
 int main(int argc, char ** argv) {
+
+        //Timer setting
+    Timer_filename="cpu_parallel.txt";
+    Timer_Filemode=false;
+
+
   float dt=1.42900002, o_x=-400, o_y=-400, o_z=-400;
   int x_M=335, x_m=0, x_size=336, y_M=335, y_m=0, y_size=336, z_M=335, z_m=0, z_size=336;
   int p_rec_M=65535, p_rec_m=0, p_src_M=0, p_src_m=0, time_M=10, time_m=0;
