@@ -275,7 +275,7 @@ int main(int argc, char ** argv) {
 
     //Timer setting
     Timer_filename="base.txt";
-    Timer_Filemode=false;
+    Timer_Filemode=true;
 
   float dt=1.42900002, o_x=-400, o_y=-400, o_z=-400;
   int x_M=335, x_m=0, x_size=336, y_M=335, y_m=0, y_size=336, z_M=335, z_m=0, z_size=336;

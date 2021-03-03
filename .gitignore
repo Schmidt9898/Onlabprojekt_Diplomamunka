@@ -8,3 +8,7 @@ Timer/bin/Debug/libTimer.a
 viscoacoustic_meres/base.txt
 viscoacoustic_cpu_parallel/cpu_parallel.txt
 Timer/bin/Debug/libTimer.a
+viscoacoustic.cpp
+*.a
+*.a
+todo.txt

@@ -39,8 +39,6 @@ class Timer
         std::string msg="Timer";
         int root_num=0;
 
-
-
         Timer();
         Timer(std::string msg_);
         virtual ~Timer();

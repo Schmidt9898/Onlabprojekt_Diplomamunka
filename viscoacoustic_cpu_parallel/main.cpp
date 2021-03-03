@@ -198,7 +198,7 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
   float (*__restrict v_x)[v_x_vec->size[1]][v_x_vec->size[2]][v_x_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_x_vec->size[1]][v_x_vec->size[2]][v_x_vec->size[3]]) v_x_vec->data;
   float (*__restrict v_y)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]]) v_y_vec->data;
   float (*__restrict v_z)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]]) v_z_vec->data;
-#pragma omp parallel for schedule (dynamic)
+#pragma omp parallel for schedule (dynamic) //collapse(3)
   for (int x = x_m; x <= x_M; x += 1)
   {
     for (int y = y_m; y <= y_M; y += 1)
@@ -286,7 +286,7 @@ int main(int argc, char ** argv) {
 
         //Timer setting
     Timer_filename="cpu_parallel.txt";
-    Timer_Filemode=false;
+    Timer_Filemode=true;
 
 
   float dt=1.42900002, o_x=-400, o_y=-400, o_z=-400;
