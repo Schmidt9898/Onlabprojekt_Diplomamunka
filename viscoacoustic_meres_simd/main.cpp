@@ -31,28 +31,20 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
   float (*__restrict src_coords)[src_coords_vec->size[1]] __attribute__ ((aligned (64))) = (float (*)[src_coords_vec->size[1]]) src_coords_vec->data;
 
   float (*r1)[y_size][z_size] = (float (*)[y_size][z_size])new float[x_size*y_size*z_size];
-    //#pragma omp private(qp)
     {
     Timer t("Section 0");
-
-    #pragma omp parallel for \
-    schedule (dynamic) //collapse(2)
     for (int x = x_m; x <= x_M; x += 1)
     {
-        //#pragma omp parallel for
-        #pragma omp simd
       for (int y = y_m; y <= y_M; y += 1)
       {
-        //#pragma omp parallel for
+    #pragma omp simd
         for (int z = z_m; z <= z_M; z += 1)
         {
           r1[x][y][z] = sqrt(1.0F + 1.0F/pow(qp[x + 2][y + 2][z + 2], 2));
         }
       }
     }
-
     }
-    //return 0;
   /* End section0 */
   for (int time = time_m, t0 = (time)%(2), t1 = (time + 1)%(2); time <= time_M; time += 1, t0 = (time)%(2), t1 = (time + 1)%(2))
   {
@@ -199,12 +191,12 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
   float (*__restrict v_x)[v_x_vec->size[1]][v_x_vec->size[2]][v_x_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_x_vec->size[1]][v_x_vec->size[2]][v_x_vec->size[3]]) v_x_vec->data;
   float (*__restrict v_y)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]]) v_y_vec->data;
   float (*__restrict v_z)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]]) v_z_vec->data;
-#pragma omp parallel for schedule (dynamic)// collapse(2)
   for (int x = x_m; x <= x_M; x += 1)
   {
-        #pragma omp simd
     for (int y = y_m; y <= y_M; y += 1)
     {
+
+#pragma omp simd
       for (int z = z_m; z <= z_M; z += 1)
       {
         v_x[t1][x + 2][y + 2][z + 2] = (-5.00000007450581e-2F*dt*(b[x + 2][y + 2][z + 2] + b[x + 3][y + 2][z + 2])*(-p[t0][x + 2][y + 2][z + 2] + p[t0][x + 3][y + 2][z + 2]) + v_x[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
@@ -214,7 +206,6 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
     }
   }
   /*
-  #pragma omp parallel for
   for (int x = x_m; x <= x_M; x += 1)
   {
     for (int y = y_m; y <= y_M; y += 1)
@@ -224,7 +215,6 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
       }
     }
   }
-  #pragma omp parallel for
   for (int x = x_m; x <= x_M; x += 1)
   {
     for (int y = y_m; y <= y_M; y += 1)
@@ -251,12 +241,11 @@ void bf1(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
   float (*__restrict v_y)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]]) v_y_vec->data;
   float (*__restrict v_z)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]]) v_z_vec->data;
   float (*__restrict vp)[vp_vec->size[1]][vp_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[vp_vec->size[1]][vp_vec->size[2]]) vp_vec->data;
-#pragma omp parallel for schedule (dynamic) //collapse(2)
   for (int x = x_m; x <= x_M; x += 1)
   {
-        #pragma omp simd
     for (int y = y_m; y <= y_M; y += 1)
     {
+#pragma omp simd
       for (int z = z_m; z <= z_M; z += 1)
       {
         float r36 = vp[x + 2][y + 2][z + 2]*vp[x + 2][y + 2][z + 2];
@@ -283,19 +272,12 @@ dataobj create_data(int size0, int size1, int size2, int size3, int elemsize) {
   a.size[3] = size3;
   return a;
 }
-/*
-void delete_data(dataobj& a) {
-  delete[] a.data;
-  delete[] a.size;
-}
-*/
+
 int main(int argc, char ** argv) {
 
-//for(int i=0;i<5;i++){
-        //Timer setting
-    Timer_filename="cpu_parallel.txt";
+    //Timer setting
+    Timer_filename="base.txt";
     Timer_Filemode=false;
-
 
   float dt=1.42900002, o_x=-400, o_y=-400, o_z=-400;
   int x_M=335, x_m=0, x_size=336, y_M=335, y_m=0, y_size=336, z_M=335, z_m=0, z_size=336;
@@ -323,24 +305,6 @@ int main(int argc, char ** argv) {
 
     Timer_Print_all();
   //TODO: deallocate
-/*
-  delete_data( b_vec );
-  delete_data( damp_vec);
-  delete_data( p_vec );
-  delete_data( qp_vec );
-  delete_data( r_vec );
-  delete_data( rec_vec );
-  delete_data( rec_coords_vec );
-  delete_data( src_vec );
-  delete_data( src_coords_vec );
-  delete_data( v_x_vec );
-  delete_data( v_y_vec );
-  delete_data( v_z_vec );
-  delete_data( vp_vec );
-}
-  */
-    //std::cin.get();
-
   return 0;
 
 }

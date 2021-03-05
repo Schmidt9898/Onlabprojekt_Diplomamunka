@@ -12,3 +12,4 @@ viscoacoustic.cpp
 *.a
 *.a
 todo.txt
+viscoacoustic_meres_simd/base.txt
