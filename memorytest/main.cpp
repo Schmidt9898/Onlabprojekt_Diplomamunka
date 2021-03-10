@@ -46,6 +46,7 @@
 # include <float.h>
 # include <limits.h>
 # include <sys/time.h>
+#include <omp.h>
 
 /*-----------------------------------------------------------------------
  * INSTRUCTIONS:
@@ -91,7 +92,7 @@
  *          per array.
  */
 #ifndef STREAM_ARRAY_SIZE
-#   define STREAM_ARRAY_SIZE	10000000
+#   define STREAM_ARRAY_SIZE	60000000
 #endif
 
 /*  2) STREAM runs each kernel "NTIMES" times and reports the *best* result
