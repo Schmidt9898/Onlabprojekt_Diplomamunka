@@ -26,7 +26,7 @@ Mert nem tudom mi történne és tuti nem jó dolog.
 
 
 
-
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -58,10 +58,9 @@ class Timer
     private:
 };
 
-
 #ifdef __cplusplus
 }
-
+#endif
 
 
 
