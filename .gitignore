@@ -13,3 +13,6 @@ viscoacoustic.cpp
 *.a
 todo.txt
 viscoacoustic_meres_simd/base.txt
+pass
+send
+Terminalcode.txt

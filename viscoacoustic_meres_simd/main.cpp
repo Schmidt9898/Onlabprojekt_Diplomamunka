@@ -40,7 +40,7 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
     #pragma omp simd
         for (int z = z_m; z <= z_M; z += 1)
         {
-          r1[x][y][z] = sqrt(1.0F + 1.0F/pow(qp[x + 2][y + 2][z + 2], 2));
+          r1[x][y][z] = sqrt(1.0F + 1.0F/pow(qp[x + 2][y + 2][z + 2], 2));//2
         }
       }
     }
