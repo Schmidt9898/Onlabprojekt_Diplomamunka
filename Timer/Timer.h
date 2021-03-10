@@ -24,6 +24,12 @@ Mert nem tudom mi történne és tuti nem jó dolog.
 
 */
 
+
+
+
+extern "C" {
+#endif
+
 extern bool Timer_Filemode;
 extern std::string Timer_filename;
 void Timer_Print_all();
@@ -51,5 +57,14 @@ class Timer
 
     private:
 };
+
+
+#ifdef __cplusplus
+}
+
+
+
+
+
 
 #endif // TIMER_H
