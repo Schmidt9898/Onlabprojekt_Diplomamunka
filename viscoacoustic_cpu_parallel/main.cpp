@@ -283,18 +283,21 @@ dataobj create_data(int size0, int size1, int size2, int size3, int elemsize) {
   a.size[3] = size3;
   return a;
 }
-/*
+
 void delete_data(dataobj& a) {
   delete[] a.data;
   delete[] a.size;
 }
-*/
-int main(int argc, char ** argv) {
 
-//for(int i=0;i<5;i++){
+int main(int argc, char ** argv) {
+std::stringstream str_buff;
+for (int i = 1; i < argc; i++) 
+  str_buff<<argv[1]<<" ";
+for(int i=0;i<5;i++){
         //Timer setting
     Timer_filename="cpu_parallel.txt";
-    Timer_Filemode=false;
+    Timer_Filemode=true;
+    Timer_Reset();
 
 
   float dt=1.42900002, o_x=-400, o_y=-400, o_z=-400;
@@ -321,9 +324,10 @@ int main(int argc, char ** argv) {
     &src_coords_vec, &v_x_vec, &v_y_vec, &v_z_vec, &vp_vec, x_M, x_m, x_size, y_M, y_m, y_size, z_M, z_m,
     z_size, p_rec_M, p_rec_m, p_src_M, p_src_m, time_M, time_m, x0_blk0_size, x1_blk0_size, y0_blk0_size);
 
+  str_buff<<Timer_Get_Total_Time()<<" ";
     Timer_Print_all();
   //TODO: deallocate
-/*
+
   delete_data( b_vec );
   delete_data( damp_vec);
   delete_data( p_vec );
@@ -338,7 +342,8 @@ int main(int argc, char ** argv) {
   delete_data( v_z_vec );
   delete_data( vp_vec );
 }
-  */
+str_buff<<"\n";
+  Write_to_file(str_buff.str(),"Core_test.csv",true);
     //std::cin.get();
 
   return 0;

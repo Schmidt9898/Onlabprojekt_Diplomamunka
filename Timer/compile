@@ -1,0 +1,3 @@
+
+g++ -c Timer.cpp -Ofast
+#ar rvs ../libs/libTimer.a Timer.o

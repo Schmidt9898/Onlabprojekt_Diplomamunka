@@ -2,11 +2,13 @@
 #define TIMER_H
 #include <string>
 #include <chrono>
+#include <sstream>
+#include <fstream>
 //#include <iostream>
 /**
-Ez a Timer osztály.
+Ez a Timer osztï¿½ly.
 
-Igy használd
+Igy hasznï¿½ld
 
 {
 Timer t1("t1");
@@ -15,12 +17,12 @@ Timer t1("t1");
     }
 }
 
-Soha ne csinálj ilyet.
+Soha ne csinï¿½lj ilyet.
 Timer t1("t1");
 Timer t2("t2");
 
 
-Mert nem tudom mi történne és tuti nem jó dolog.
+Mert nem tudom mi tï¿½rtï¿½nne ï¿½s tuti nem jï¿½ dolog.
 
 */
 
@@ -33,6 +35,10 @@ extern "C" {
 extern bool Timer_Filemode;
 extern std::string Timer_filename;
 void Timer_Print_all();
+void Timer_Reset();
+float Timer_Get_Total_Time();
+
+void Write_to_file(std::string str,std::string filename,bool  append);
 
 class Timer
 {
@@ -53,6 +59,7 @@ class Timer
         void Stop();
         void Print();
         void Print_start();
+
 
 
     private:

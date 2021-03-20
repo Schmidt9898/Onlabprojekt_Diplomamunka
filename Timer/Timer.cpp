@@ -82,3 +82,31 @@ if(Timer_Filemode)
     std::cout<<"Total time: "<<Totaltime<<" sec.\n";
     std::cout<<"Number of timers: "<<Sum_Timers<<".\n";
 };
+
+
+void Timer_Reset(){
+    Sum_Timers=0;
+    Totaltime=0;
+};
+
+void Write_to_file(std::string str,std::string filename,bool append)
+{
+    if(append)
+    {
+    std::ofstream outfile;
+    outfile.open(filename, std::ios_base::app);
+    outfile << str;
+    outfile.close();
+    }else{
+    std::ofstream outfile;
+    outfile.open(filename);
+    outfile << str;
+    outfile.close();
+
+    }
+}
+
+float Timer_Get_Total_Time()
+{
+    return Totaltime;
+}
