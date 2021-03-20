@@ -41,9 +41,25 @@ def plot_this(filename):
 
 
 print("Diagram megjelenito.")
+values =[]
+names=[]
+with open("Core_test.csv") as f:
+        lines = f.readlines()
+        for i in range(len(lines)):
+            elemek = lines[i].split()
+            avg=0
+            for j in range(1,len(elemek)):
+                avg+=float(elemek[j])
+            avg/=len(elemek)-1
+            names.append(elemek[0])
+            values.append(avg)
 
-plot_this("..\\viscoacoustic_meres\\base.txt")
-plot_this("..\\viscoacoustic_cpu_parallel\\cpu_parallel.txt")
+plt.bar(names,values)
+        
+
+
+#plot_this("..\\viscoacoustic_meres\\base.txt")
+#plot_this("..\\viscoacoustic_cpu_parallel\\cpu_parallel.txt")
     #sections[temp[0]]=float(temp[1])
 #plt.bar([1,2,3,4],[1,2,3,4])
 plt.show()

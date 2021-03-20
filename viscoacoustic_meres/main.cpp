@@ -4,7 +4,13 @@
 #include "stdlib.h"
 #include "math.h"
 #include "omp.h"
-
+size_t count_t=0,sum_t;
+void prt(std::string s)
+{
+    std::cout<<s<<": "<<count_t<<"\n";
+    sum_t+=count_t;
+    count_t=0;
+}
 struct dataobj
 {
   void *__restrict data;
@@ -32,7 +38,7 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
 
   float (*r1)[y_size][z_size] = (float (*)[y_size][z_size])new float[x_size*y_size*z_size];
     {
-    Timer t("Section 0");
+    //Timer t("Section 0");
     for (int x = x_m; x <= x_M; x += 1)
     {
       for (int y = y_m; y <= y_M; y += 1)
@@ -40,29 +46,39 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
         for (int z = z_m; z <= z_M; z += 1)
         {
           r1[x][y][z] = sqrt(1.0F + 1.0F/pow(qp[x + 2][y + 2][z + 2], 2));
+          count_t++;
         }
       }
     }
     }
+    count_t*=4;
+    prt("Section 0");
+
   /* End section0 */
   for (int time = time_m, t0 = (time)%(2), t1 = (time + 1)%(2); time <= time_M; time += 1, t0 = (time)%(2), t1 = (time + 1)%(2))
   {
     /* Begin section1 */
     {
 
-     Timer t("Section 1");
+    // Timer t("Section 1");
     bf0(b_vec,damp_vec,dt,p_vec,v_x_vec,v_y_vec,v_z_vec,t0,t1,x0_blk0_size,x_M - (x_M - x_m + 1)%(x0_blk0_size),x_m,y_M,y_m,z_M,z_m);
+    prt("bf01");
     bf0(b_vec,damp_vec,dt,p_vec,v_x_vec,v_y_vec,v_z_vec,t0,t1,(x_M - x_m + 1)%(x0_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x0_blk0_size) + 1,y_M,y_m,z_M,z_m);
+    prt("bf02");
     bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,x1_blk0_size,x_M - (x_M - x_m + 1)%(x1_blk0_size),x_m,y0_blk0_size,y_M - (y_M - y_m + 1)%(y0_blk0_size),y_m,z_M,z_m);
+    prt("bf11");
     bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,x1_blk0_size,x_M - (x_M - x_m + 1)%(x1_blk0_size),x_m,(y_M - y_m + 1)%(y0_blk0_size),y_M,y_M - (y_M - y_m + 1)%(y0_blk0_size) + 1,z_M,z_m);
+    prt("bf12");
     bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,(x_M - x_m + 1)%(x1_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x1_blk0_size) + 1,y0_blk0_size,y_M - (y_M - y_m + 1)%(y0_blk0_size),y_m,z_M,z_m);
+    prt("bf13");
     bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,(x_M - x_m + 1)%(x1_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x1_blk0_size) + 1,(y_M - y_m + 1)%(y0_blk0_size),y_M,y_M - (y_M - y_m + 1)%(y0_blk0_size) + 1,z_M,z_m);
+    prt("bf14");
     }
     /* End section1 */
     /* Begin section2 */
 
     {
-        Timer t("Section 2");
+       // Timer t("Section 2");
       for (int p_src = p_src_m; p_src <= p_src_M; p_src += 1)
       {
         float posx = -o_x + src_coords[p_src][0];
@@ -123,7 +139,7 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
     /* Begin section3 */
 
     {
-        Timer t("Section 3");
+        //Timer t("Section 3");
       for (int p_rec = p_rec_m; p_rec <= p_rec_M; p_rec += 1)
       {
         float posx = -o_x + rec_coords[p_rec][0];
@@ -197,8 +213,9 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
     {
 
       for (int z = z_m; z <= z_M; z += 1)
-      {
+      {//1                                                         2                        2                          3                            3                               4                           5
         v_x[t1][x + 2][y + 2][z + 2] = (-5.00000007450581e-2F*dt*(b[x + 2][y + 2][z + 2] + b[x + 3][y + 2][z + 2])*(-p[t0][x + 2][y + 2][z + 2] + p[t0][x + 3][y + 2][z + 2]) + v_x[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
+        count_t++;
       }
     }
   }
@@ -209,6 +226,7 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
       for (int z = z_m; z <= z_M; z += 1)
       {
         v_y[t1][x + 2][y + 2][z + 2] = (-5.00000007450581e-2F*dt*(b[x + 2][y + 2][z + 2] + b[x + 2][y + 3][z + 2])*(-p[t0][x + 2][y + 2][z + 2] + p[t0][x + 2][y + 3][z + 2]) + v_y[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
+
       }
     }
   }
@@ -223,6 +241,7 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
       }
     }
   }
+  count_t*=15*4;
 
 }
 
@@ -245,7 +264,7 @@ void bf1(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
     for (int y = y_m; y <= y_M; y += 1)
     {
       for (int z = z_m; z <= z_M; z += 1)
-      {
+      {//10 ---11 *4
         float r36 = vp[x + 2][y + 2][z + 2]*vp[x + 2][y + 2][z + 2];
         float r35 = -v_x[t1][x + 1][y + 2][z + 2] + v_x[t1][x + 2][y + 2][z + 2] - v_y[t1][x + 2][y + 1][z + 2] + v_y[t1][x + 2][y + 2][z + 2] - v_z[t1][x + 2][y + 2][z + 1] + v_z[t1][x + 2][y + 2][z + 2];
         float r34 = 1.0/b[x + 2][y + 2][z + 2];
@@ -254,10 +273,11 @@ void bf1(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
         float r31 = 1.0/(-1.0e+2F*r33 + 1.0e+2F*r1[x][y][z]);
         r[t1][x + 1][y + 1][z + 1] = (r31*(-1.00000001490116e-1F*r34*r35*r36*dt*(r31*(1.0F*r32) - 1.0F) - 1.0F*dt*r[t0][x + 1][y + 1][z + 1]) + r[t0][x + 1][y + 1][z + 1])*damp[x + 1][y + 1][z + 1];
         p[t1][x + 2][y + 2][z + 2] = (r31*(-1.00000001490116e-1F*r32*r34*r35*r36*dt) + dt*(-r[t1][x + 1][y + 1][z + 1]) + p[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
+        count_t++;
       }
     }
   }
-
+count_t*=11*4;
 }
 
 dataobj create_data(int size0, int size1, int size2, int size3, int elemsize) {
@@ -302,6 +322,7 @@ int main(int argc, char ** argv) {
     z_size, p_rec_M, p_rec_m, p_src_M, p_src_m, time_M, time_m, x0_blk0_size, x1_blk0_size, y0_blk0_size);
 
     Timer_Print_all();
+     std::cout<<"sum: "<<sum_t<<"\n";
   //TODO: deallocate
   return 0;
 
