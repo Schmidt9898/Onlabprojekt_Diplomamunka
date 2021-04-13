@@ -3,7 +3,8 @@
         "functional": "cpp",
         "array": "c",
         "bitset": "c",
-        "initializer_list": "c"
+        "initializer_list": "c",
+        "random": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

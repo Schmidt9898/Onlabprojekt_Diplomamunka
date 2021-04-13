@@ -38,12 +38,12 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
                   const int p_rec_m, const int p_src_M, const int p_src_m, const int time_M, const int time_m, const int x0_blk0_size,
                    const int x1_blk0_size, const int y0_blk0_size)
 {
-  float (*__restrict p)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]]) p_vec->data;
-  float (*__restrict qp)[qp_vec->size[1]][qp_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[qp_vec->size[1]][qp_vec->size[2]]) qp_vec->data;
-  float (*__restrict rec)[rec_vec->size[1]] __attribute__ ((aligned (64))) = (float (*)[rec_vec->size[1]]) rec_vec->data;
-  float (*__restrict rec_coords)[rec_coords_vec->size[1]] __attribute__ ((aligned (64))) = (float (*)[rec_coords_vec->size[1]]) rec_coords_vec->data;
-  float (*__restrict src)[src_vec->size[1]] __attribute__ ((aligned (64))) = (float (*)[src_vec->size[1]]) src_vec->data;
-  float (*__restrict src_coords)[src_coords_vec->size[1]] __attribute__ ((aligned (64))) = (float (*)[src_coords_vec->size[1]]) src_coords_vec->data;
+  float (*__restrict p)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]]  = (float (*)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]]) p_vec->data;
+  float (*__restrict qp)[qp_vec->size[1]][qp_vec->size[2]]  = (float (*)[qp_vec->size[1]][qp_vec->size[2]]) qp_vec->data;
+  float (*__restrict rec)[rec_vec->size[1]]  = (float (*)[rec_vec->size[1]]) rec_vec->data;
+  float (*__restrict rec_coords)[rec_coords_vec->size[1]]  = (float (*)[rec_coords_vec->size[1]]) rec_coords_vec->data;
+  float (*__restrict src)[src_vec->size[1]]  = (float (*)[src_vec->size[1]]) src_vec->data;
+  float (*__restrict src_coords)[src_coords_vec->size[1]]  = (float (*)[src_coords_vec->size[1]]) src_coords_vec->data;
 
   float (*r1)[y_size][z_size] = (float (*)[y_size][z_size])malloc(x_size*y_size*z_size);
     {
@@ -75,13 +75,13 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
     
     bf0(b_vec,damp_vec,dt,p_vec,v_x_vec,v_y_vec,v_z_vec,t0,t1,(x_M - x_m + 1)%(x0_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x0_blk0_size) + 1,y_M,y_m,z_M,z_m);
     
-    //bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,x1_blk0_size,x_M - (x_M - x_m + 1)%(x1_blk0_size),x_m,y0_blk0_size,y_M - (y_M - y_m + 1)%(y0_blk0_size),y_m,z_M,z_m);
+    bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,x1_blk0_size,x_M - (x_M - x_m + 1)%(x1_blk0_size),x_m,y0_blk0_size,y_M - (y_M - y_m + 1)%(y0_blk0_size),y_m,z_M,z_m);
     
-    //bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,x1_blk0_size,x_M - (x_M - x_m + 1)%(x1_blk0_size),x_m,(y_M - y_m + 1)%(y0_blk0_size),y_M,y_M - (y_M - y_m + 1)%(y0_blk0_size) + 1,z_M,z_m);
+    bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,x1_blk0_size,x_M - (x_M - x_m + 1)%(x1_blk0_size),x_m,(y_M - y_m + 1)%(y0_blk0_size),y_M,y_M - (y_M - y_m + 1)%(y0_blk0_size) + 1,z_M,z_m);
     
-    //bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,(x_M - x_m + 1)%(x1_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x1_blk0_size) + 1,y0_blk0_size,y_M - (y_M - y_m + 1)%(y0_blk0_size),y_m,z_M,z_m);
+    bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,(x_M - x_m + 1)%(x1_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x1_blk0_size) + 1,y0_blk0_size,y_M - (y_M - y_m + 1)%(y0_blk0_size),y_m,z_M,z_m);
     
-    //bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,(x_M - x_m + 1)%(x1_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x1_blk0_size) + 1,(y_M - y_m + 1)%(y0_blk0_size),y_M,y_M - (y_M - y_m + 1)%(y0_blk0_size) + 1,z_M,z_m);
+    bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,(x_M - x_m + 1)%(x1_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x1_blk0_size) + 1,(y_M - y_m + 1)%(y0_blk0_size),y_M,y_M - (y_M - y_m + 1)%(y0_blk0_size) + 1,z_M,z_m);
     
     }
     /* End section1 */
@@ -218,11 +218,11 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
   float (*__restrict v_y)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]]  = (float (*)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]]) v_y_vec->data;
   float (*__restrict v_z)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]]  = (float (*)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]]) v_z_vec->data;
   #pragma omp target data map(to: b[0:b_vec->size[0]][0:b_vec->size[1]][0:b_vec->size[2]]) \
-   map(to: p[0:p_vec->size[0]][0:p_vec->size[1]][0:p_vec->size[2]][0:p_vec->size[3]])\
-    map(to: damp[0:damp_vec->size[0]][0:damp_vec->size[1]][0:damp_vec->size[2]]) \
-          map(from: v_x[0:v_x_vec->size[0]][0:v_x_vec->size[1]][0:v_x_vec->size[2]][0:v_x_vec->size[3]]) \
-         map(from: v_y[0:v_y_vec->size[0]][0:v_y_vec->size[1]][0:v_y_vec->size[2]][0:v_y_vec->size[3]]) \
-         map(from: v_z[0:v_z_vec->size[0]][0:v_z_vec->size[1]][0:v_z_vec->size[2]][0:v_z_vec->size[3]])
+                          map(to: p[0:p_vec->size[0]][0:p_vec->size[1]][0:p_vec->size[2]][0:p_vec->size[3]])\
+                          map(to: damp[0:damp_vec->size[0]][0:damp_vec->size[1]][0:damp_vec->size[2]]) \
+                          map(from: v_x[0:v_x_vec->size[0]][0:v_x_vec->size[1]][0:v_x_vec->size[2]][0:v_x_vec->size[3]]) \
+                          map(from: v_y[0:v_y_vec->size[0]][0:v_y_vec->size[1]][0:v_y_vec->size[2]][0:v_y_vec->size[3]]) \
+                          map(from: v_z[0:v_z_vec->size[0]][0:v_z_vec->size[1]][0:v_z_vec->size[2]][0:v_z_vec->size[3]])
   {
   #pragma omp target teams distribute parallel for collapse(3)
   for (int x = x_m; x <= x_M; x += 1)
@@ -237,7 +237,7 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
       }
     }
   }
-/*
+
   #pragma omp target teams distribute parallel for collapse(3)
   for (int x = x_m; x <= x_M; x += 1)
   {
@@ -261,7 +261,7 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
         v_z[t1][x + 2][y + 2][z + 2] = (-5.00000007450581e-2F*dt*(b[x + 2][y + 2][z + 2] + b[x + 2][y + 2][z + 3])*(-p[t0][x + 2][y + 2][z + 2] + p[t0][x + 2][y + 2][z + 3]) + v_z[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
       }
     }
-  }*/
+  }
   }
   //count_t*=15*4;
 
@@ -270,16 +270,28 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
 void bf1(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, const float dt, struct dataobj *__restrict p_vec, struct dataobj *__restrict qp_vec, struct dataobj *__restrict r_vec, float *__restrict r1_vec, struct dataobj *__restrict v_x_vec, struct dataobj *__restrict v_y_vec, struct dataobj *__restrict v_z_vec, struct dataobj *__restrict vp_vec, const int x_size, const int y_size, const int z_size, const int t0, const int t1, const int x1_blk0_size, const int x_M, const int x_m, const int y0_blk0_size, const int y_M, const int y_m, const int z_M, const int z_m)
 {
     //Timer t("bf1");
-  float (*__restrict b)[b_vec->size[1]][b_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[b_vec->size[1]][b_vec->size[2]]) b_vec->data;
-  float (*__restrict damp)[damp_vec->size[1]][damp_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[damp_vec->size[1]][damp_vec->size[2]]) damp_vec->data;
-  float (*__restrict p)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]]) p_vec->data;
-  float (*__restrict qp)[qp_vec->size[1]][qp_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[qp_vec->size[1]][qp_vec->size[2]]) qp_vec->data;
-  float (*__restrict r)[r_vec->size[1]][r_vec->size[2]][r_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[r_vec->size[1]][r_vec->size[2]][r_vec->size[3]]) r_vec->data;
-  float (*__restrict r1)[y_size][z_size] __attribute__ ((aligned (64))) = (float (*)[y_size][z_size]) r1_vec;
-  float (*__restrict v_x)[v_x_vec->size[1]][v_x_vec->size[2]][v_x_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_x_vec->size[1]][v_x_vec->size[2]][v_x_vec->size[3]]) v_x_vec->data;
-  float (*__restrict v_y)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]]) v_y_vec->data;
-  float (*__restrict v_z)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]]) v_z_vec->data;
-  float (*__restrict vp)[vp_vec->size[1]][vp_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[vp_vec->size[1]][vp_vec->size[2]]) vp_vec->data;
+  float (*__restrict b)[b_vec->size[1]][b_vec->size[2]]                           = (float (*)[b_vec->size[1]][b_vec->size[2]]) b_vec->data;
+  float (*__restrict damp)[damp_vec->size[1]][damp_vec->size[2]]                  = (float (*)[damp_vec->size[1]][damp_vec->size[2]]) damp_vec->data;
+  float (*__restrict p)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]]           = (float (*)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]]) p_vec->data;
+  float (*__restrict qp)[qp_vec->size[1]][qp_vec->size[2]]                        = (float (*)[qp_vec->size[1]][qp_vec->size[2]]) qp_vec->data;
+  float (*__restrict r)[r_vec->size[1]][r_vec->size[2]][r_vec->size[3]]           = (float (*)[r_vec->size[1]][r_vec->size[2]][r_vec->size[3]]) r_vec->data;
+  float (*__restrict r1)[y_size][z_size]                                          = (float (*)[y_size][z_size]) r1_vec;
+  float (*__restrict v_x)[v_x_vec->size[1]][v_x_vec->size[2]][v_x_vec->size[3]]   = (float (*)[v_x_vec->size[1]][v_x_vec->size[2]][v_x_vec->size[3]]) v_x_vec->data;
+  float (*__restrict v_y)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]]   = (float (*)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]]) v_y_vec->data;
+  float (*__restrict v_z)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]]   = (float (*)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]]) v_z_vec->data;
+  float (*__restrict vp)[vp_vec->size[1]][vp_vec->size[2]]  = (float (*)[vp_vec->size[1]][vp_vec->size[2]]) vp_vec->data;
+
+  #pragma omp target data map(to: b[0:b_vec->size[0]][0:b_vec->size[1]][0:b_vec->size[2]]) \
+                          map(tofrom: p[0:p_vec->size[0]][0:p_vec->size[1]][0:p_vec->size[2]][0:p_vec->size[3]])\
+                          map(to: damp[0:damp_vec->size[0]][0:damp_vec->size[1]][0:damp_vec->size[2]]) \
+                          map(to: qp[0:qp_vec->size[0]][0:qp_vec->size[1]][0:qp_vec->size[2]]) \
+                          map(tofrom: r[0:r_vec->size[0]][0:r_vec->size[1]][0:r_vec->size[2]][0:r_vec->size[3]])\
+                          map(to: r1[0:y_size][0:z_size])\
+                          map(to: v_x[0:v_x_vec->size[0]][0:v_x_vec->size[1]][0:v_x_vec->size[2]][0:v_x_vec->size[3]]) \
+                          map(to: v_y[0:v_y_vec->size[0]][0:v_y_vec->size[1]][0:v_y_vec->size[2]][0:v_y_vec->size[3]]) \
+                          map(to: v_z[0:v_z_vec->size[0]][0:v_z_vec->size[1]][0:v_z_vec->size[2]][0:v_z_vec->size[3]])\
+                          map(to: vp[0:vp_vec->size[0]][0:vp_vec->size[1]][0:vp_vec->size[2]]) 
+         {
 
 #pragma omp target teams distribute parallel for collapse(3) //map(to: qp[0:x_M][0:y_M][0:z_M]) map(from: r1[0:x_M][0:y_M][0:z_M]) schedule(auto)
   for (int x = x_m; x <= x_M; x += 1)
@@ -288,7 +300,7 @@ void bf1(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
     {
       for (int z = z_m; z <= z_M; z += 1)
       {//10 ---11 *4
-        float r36 = vp[x + 2][y + 2][z + 2]*vp[x + 2][y + 2][z + 2];
+        /*float r36 = vp[x + 2][y + 2][z + 2]*vp[x + 2][y + 2][z + 2];
         float r35 = -v_x[t1][x + 1][y + 2][z + 2] + v_x[t1][x + 2][y + 2][z + 2] - v_y[t1][x + 2][y + 1][z + 2] + v_y[t1][x + 2][y + 2][z + 2] - v_z[t1][x + 2][y + 2][z + 1] + v_z[t1][x + 2][y + 2][z + 2];
         float r34 = 1.0/b[x + 2][y + 2][z + 2];
         float r33 = 1.0/qp[x + 2][y + 2][z + 2];
@@ -296,10 +308,13 @@ void bf1(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
         float r31 = 1.0/(-1.0e+2F*r33 + 1.0e+2F*r1[x][y][z]);
         r[t1][x + 1][y + 1][z + 1] = (r31*(-1.00000001490116e-1F*r34*r35*r36*dt*(r31*(1.0F*r32) - 1.0F) - 1.0F*dt*r[t0][x + 1][y + 1][z + 1]) + r[t0][x + 1][y + 1][z + 1])*damp[x + 1][y + 1][z + 1];
         p[t1][x + 2][y + 2][z + 2] = (r31*(-1.00000001490116e-1F*r32*r34*r35*r36*dt) + dt*(-r[t1][x + 1][y + 1][z + 1]) + p[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
+        */
         //count_t++;
       }
     }
   }
+         }
+
 //count_t*=11*4;
 }
 
