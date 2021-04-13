@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "functional": "cpp",
+        "array": "c",
+        "bitset": "c",
+        "initializer_list": "c"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
+}

@@ -1,9 +1,24 @@
-#include <iostream>
-#include "Timer.h"
 
-#include "stdlib.h"
-#include "math.h"
+//#include <iostream>
+#include "Timer_C.h"
+
+
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
 #include "omp.h"
+
+/*
+size_t count_t=0,sum_t;
+void prt(std::string s)
+{
+    std::cout<<s<<": "<<count_t<<"\n";
+    sum_t+=count_t;
+    count_t=0;
+}
+*/
+typedef struct dataobj dataobj;//WHY??????
+
 
 struct dataobj
 {
@@ -30,48 +45,50 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
   float (*__restrict src)[src_vec->size[1]] __attribute__ ((aligned (64))) = (float (*)[src_vec->size[1]]) src_vec->data;
   float (*__restrict src_coords)[src_coords_vec->size[1]] __attribute__ ((aligned (64))) = (float (*)[src_coords_vec->size[1]]) src_coords_vec->data;
 
-  float (*r1)[y_size][z_size] = (float (*)[y_size][z_size])new float[x_size*y_size*z_size];
-    //#pragma omp private(qp)
+  float (*r1)[y_size][z_size] = (float (*)[y_size][z_size])malloc(x_size*y_size*z_size);
     {
-    Timer t("Section 0");
-
-    #pragma omp parallel for \
-    schedule (dynamic) //collapse(2)
+    
     for (int x = x_m; x <= x_M; x += 1)
     {
-        //#pragma omp parallel for
-        #pragma omp simd
       for (int y = y_m; y <= y_M; y += 1)
       {
-        //#pragma omp parallel for
         for (int z = z_m; z <= z_M; z += 1)
         {
           r1[x][y][z] = sqrt(1.0F + 1.0F/pow(qp[x + 2][y + 2][z + 2], 2));
+         
         }
       }
     }
-
     }
+    //count_t*=4;
+    //prt("Section 0");
     //return 0;
+
   /* End section0 */
   for (int time = time_m, t0 = (time)%(2), t1 = (time + 1)%(2); time <= time_M; time += 1, t0 = (time)%(2), t1 = (time + 1)%(2))
   {
     /* Begin section1 */
     {
 
-     Timer t("Section 1");
+    // Timer t("Section 1");
     bf0(b_vec,damp_vec,dt,p_vec,v_x_vec,v_y_vec,v_z_vec,t0,t1,x0_blk0_size,x_M - (x_M - x_m + 1)%(x0_blk0_size),x_m,y_M,y_m,z_M,z_m);
+    
     bf0(b_vec,damp_vec,dt,p_vec,v_x_vec,v_y_vec,v_z_vec,t0,t1,(x_M - x_m + 1)%(x0_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x0_blk0_size) + 1,y_M,y_m,z_M,z_m);
-    bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,x1_blk0_size,x_M - (x_M - x_m + 1)%(x1_blk0_size),x_m,y0_blk0_size,y_M - (y_M - y_m + 1)%(y0_blk0_size),y_m,z_M,z_m);
-    bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,x1_blk0_size,x_M - (x_M - x_m + 1)%(x1_blk0_size),x_m,(y_M - y_m + 1)%(y0_blk0_size),y_M,y_M - (y_M - y_m + 1)%(y0_blk0_size) + 1,z_M,z_m);
-    bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,(x_M - x_m + 1)%(x1_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x1_blk0_size) + 1,y0_blk0_size,y_M - (y_M - y_m + 1)%(y0_blk0_size),y_m,z_M,z_m);
-    bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,(x_M - x_m + 1)%(x1_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x1_blk0_size) + 1,(y_M - y_m + 1)%(y0_blk0_size),y_M,y_M - (y_M - y_m + 1)%(y0_blk0_size) + 1,z_M,z_m);
+    
+    //bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,x1_blk0_size,x_M - (x_M - x_m + 1)%(x1_blk0_size),x_m,y0_blk0_size,y_M - (y_M - y_m + 1)%(y0_blk0_size),y_m,z_M,z_m);
+    
+    //bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,x1_blk0_size,x_M - (x_M - x_m + 1)%(x1_blk0_size),x_m,(y_M - y_m + 1)%(y0_blk0_size),y_M,y_M - (y_M - y_m + 1)%(y0_blk0_size) + 1,z_M,z_m);
+    
+    //bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,(x_M - x_m + 1)%(x1_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x1_blk0_size) + 1,y0_blk0_size,y_M - (y_M - y_m + 1)%(y0_blk0_size),y_m,z_M,z_m);
+    
+    //bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,(x_M - x_m + 1)%(x1_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x1_blk0_size) + 1,(y_M - y_m + 1)%(y0_blk0_size),y_M,y_M - (y_M - y_m + 1)%(y0_blk0_size) + 1,z_M,z_m);
+    
     }
     /* End section1 */
     /* Begin section2 */
 
     {
-        Timer t("Section 2");
+       // Timer t("Section 2");
       for (int p_src = p_src_m; p_src <= p_src_M; p_src += 1)
       {
         float posx = -o_x + src_coords[p_src][0];
@@ -132,7 +149,7 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
     /* Begin section3 */
 
     {
-        Timer t("Section 3");
+        //Timer t("Section 3");
       for (int p_rec = p_rec_m; p_rec <= p_rec_M; p_rec += 1)
       {
         float posx = -o_x + rec_coords[p_rec][0];
@@ -186,45 +203,54 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
     /* End section3 */
   }
 
-  delete[] r1;
+  free(r1);
   return 0;
 }
 
 void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, const float dt, struct dataobj *__restrict p_vec, struct dataobj *__restrict v_x_vec, struct dataobj *__restrict v_y_vec, struct dataobj *__restrict v_z_vec, const int t0, const int t1, const int x0_blk0_size, const int x_M, const int x_m, const int y_M, const int y_m, const int z_M, const int z_m)
 {
+
     //Timer t("bf0");
-  float (*__restrict b)[b_vec->size[1]][b_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[b_vec->size[1]][b_vec->size[2]]) b_vec->data;
-  float (*__restrict damp)[damp_vec->size[1]][damp_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[damp_vec->size[1]][damp_vec->size[2]]) damp_vec->data;
-  float (*__restrict p)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]]) p_vec->data;
-  float (*__restrict v_x)[v_x_vec->size[1]][v_x_vec->size[2]][v_x_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_x_vec->size[1]][v_x_vec->size[2]][v_x_vec->size[3]]) v_x_vec->data;
-  float (*__restrict v_y)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]]) v_y_vec->data;
-  float (*__restrict v_z)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]]) v_z_vec->data;
-#pragma omp parallel for schedule (dynamic)// collapse(2)
+  float (*__restrict b)[b_vec->size[1]][b_vec->size[2]]  = (float (*)[b_vec->size[1]][b_vec->size[2]]) b_vec->data;
+  float (*__restrict damp)[damp_vec->size[1]][damp_vec->size[2]]  = (float (*)[damp_vec->size[1]][damp_vec->size[2]]) damp_vec->data;
+  float (*__restrict p)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]]  = (float (*)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]]) p_vec->data;
+  float (*__restrict v_x)[v_x_vec->size[1]][v_x_vec->size[2]][v_x_vec->size[3]]  = (float (*)[v_x_vec->size[1]][v_x_vec->size[2]][v_x_vec->size[3]]) v_x_vec->data;
+  float (*__restrict v_y)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]]  = (float (*)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]]) v_y_vec->data;
+  float (*__restrict v_z)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]]  = (float (*)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]]) v_z_vec->data;
+  #pragma omp target data map(to: b[0:b_vec->size[0]][0:b_vec->size[1]][0:b_vec->size[2]]) \
+   map(to: p[0:p_vec->size[0]][0:p_vec->size[1]][0:p_vec->size[2]][0:p_vec->size[3]])\
+    map(to: damp[0:damp_vec->size[0]][0:damp_vec->size[1]][0:damp_vec->size[2]]) \
+          map(from: v_x[0:v_x_vec->size[0]][0:v_x_vec->size[1]][0:v_x_vec->size[2]][0:v_x_vec->size[3]]) \
+         map(from: v_y[0:v_y_vec->size[0]][0:v_y_vec->size[1]][0:v_y_vec->size[2]][0:v_y_vec->size[3]]) \
+         map(from: v_z[0:v_z_vec->size[0]][0:v_z_vec->size[1]][0:v_z_vec->size[2]][0:v_z_vec->size[3]])
+  {
+  #pragma omp target teams distribute parallel for collapse(3)
   for (int x = x_m; x <= x_M; x += 1)
   {
-        #pragma omp simd
     for (int y = y_m; y <= y_M; y += 1)
     {
+
       for (int z = z_m; z <= z_M; z += 1)
-      {
+      {//1                                                         2                        2                          3                            3                               4                           5
         v_x[t1][x + 2][y + 2][z + 2] = (-5.00000007450581e-2F*dt*(b[x + 2][y + 2][z + 2] + b[x + 3][y + 2][z + 2])*(-p[t0][x + 2][y + 2][z + 2] + p[t0][x + 3][y + 2][z + 2]) + v_x[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
-        v_y[t1][x + 2][y + 2][z + 2] = (-5.00000007450581e-2F*dt*(b[x + 2][y + 2][z + 2] + b[x + 2][y + 3][z + 2])*(-p[t0][x + 2][y + 2][z + 2] + p[t0][x + 2][y + 3][z + 2]) + v_y[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
-        v_z[t1][x + 2][y + 2][z + 2] = (-5.00000007450581e-2F*dt*(b[x + 2][y + 2][z + 2] + b[x + 2][y + 2][z + 3])*(-p[t0][x + 2][y + 2][z + 2] + p[t0][x + 2][y + 2][z + 3]) + v_z[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
+        //count_t++;
       }
     }
   }
-  /*
-  #pragma omp parallel for
+/*
+  #pragma omp target teams distribute parallel for collapse(3)
   for (int x = x_m; x <= x_M; x += 1)
   {
     for (int y = y_m; y <= y_M; y += 1)
     {
       for (int z = z_m; z <= z_M; z += 1)
       {
+        v_y[t1][x + 2][y + 2][z + 2] = (-5.00000007450581e-2F*dt*(b[x + 2][y + 2][z + 2] + b[x + 2][y + 3][z + 2])*(-p[t0][x + 2][y + 2][z + 2] + p[t0][x + 2][y + 3][z + 2]) + v_y[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
+
       }
     }
   }
-  #pragma omp parallel for
+  #pragma omp target teams distribute parallel for collapse(3)
   for (int x = x_m; x <= x_M; x += 1)
   {
     for (int y = y_m; y <= y_M; y += 1)
@@ -232,9 +258,12 @@ void bf0(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
 
       for (int z = z_m; z <= z_M; z += 1)
       {
+        v_z[t1][x + 2][y + 2][z + 2] = (-5.00000007450581e-2F*dt*(b[x + 2][y + 2][z + 2] + b[x + 2][y + 2][z + 3])*(-p[t0][x + 2][y + 2][z + 2] + p[t0][x + 2][y + 2][z + 3]) + v_z[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
       }
     }
   }*/
+  }
+  //count_t*=15*4;
 
 }
 
@@ -251,14 +280,14 @@ void bf1(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
   float (*__restrict v_y)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]]) v_y_vec->data;
   float (*__restrict v_z)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]] __attribute__ ((aligned (64))) = (float (*)[v_z_vec->size[1]][v_z_vec->size[2]][v_z_vec->size[3]]) v_z_vec->data;
   float (*__restrict vp)[vp_vec->size[1]][vp_vec->size[2]] __attribute__ ((aligned (64))) = (float (*)[vp_vec->size[1]][vp_vec->size[2]]) vp_vec->data;
-#pragma omp parallel for schedule (dynamic) //collapse(2)
+
+#pragma omp target teams distribute parallel for collapse(3) //map(to: qp[0:x_M][0:y_M][0:z_M]) map(from: r1[0:x_M][0:y_M][0:z_M]) schedule(auto)
   for (int x = x_m; x <= x_M; x += 1)
   {
-        #pragma omp simd
     for (int y = y_m; y <= y_M; y += 1)
     {
       for (int z = z_m; z <= z_M; z += 1)
-      {
+      {//10 ---11 *4
         float r36 = vp[x + 2][y + 2][z + 2]*vp[x + 2][y + 2][z + 2];
         float r35 = -v_x[t1][x + 1][y + 2][z + 2] + v_x[t1][x + 2][y + 2][z + 2] - v_y[t1][x + 2][y + 1][z + 2] + v_y[t1][x + 2][y + 2][z + 2] - v_z[t1][x + 2][y + 2][z + 1] + v_z[t1][x + 2][y + 2][z + 2];
         float r34 = 1.0/b[x + 2][y + 2][z + 2];
@@ -267,16 +296,17 @@ void bf1(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
         float r31 = 1.0/(-1.0e+2F*r33 + 1.0e+2F*r1[x][y][z]);
         r[t1][x + 1][y + 1][z + 1] = (r31*(-1.00000001490116e-1F*r34*r35*r36*dt*(r31*(1.0F*r32) - 1.0F) - 1.0F*dt*r[t0][x + 1][y + 1][z + 1]) + r[t0][x + 1][y + 1][z + 1])*damp[x + 1][y + 1][z + 1];
         p[t1][x + 2][y + 2][z + 2] = (r31*(-1.00000001490116e-1F*r32*r34*r35*r36*dt) + dt*(-r[t1][x + 1][y + 1][z + 1]) + p[t0][x + 2][y + 2][z + 2])*damp[x + 1][y + 1][z + 1];
+        //count_t++;
       }
     }
   }
-
+//count_t*=11*4;
 }
 
 dataobj create_data(int size0, int size1, int size2, int size3, int elemsize) {
   dataobj a;
-  a.data = new char[elemsize*size0*size1*size2*size3]; // 340*340*340
-  a.size = new int[4];
+  a.data =  malloc(elemsize*size0*size1*size2*size3);//new char[elemsize*size0*size1*size2*size3]; // 340*340*340
+  a.size = malloc(sizeof(int)*4);//new int[4];
   a.size[0] = size0;
   a.size[1] = size1;
   a.size[2] = size2;
@@ -284,21 +314,14 @@ dataobj create_data(int size0, int size1, int size2, int size3, int elemsize) {
   return a;
 }
 
-void delete_data(dataobj& a) {
-  delete[] a.data;
-  delete[] a.size;
-}
-
 int main(int argc, char ** argv) {
-std::stringstream str_buff;
-for (int i = 1; i < argc; i++) 
-  str_buff<<argv[1]<<" ";
-for(int i=0;i<5;i++){
-        //Timer setting
-    Timer_filename="cpu_parallel.txt";
-    Timer_Filemode=false;
-    Timer_Reset();
 
+    //Timer setting
+    //Timer_filename="base.txt";
+    //Timer_Filemode=false;
+
+
+  Timer_Start();
 
   float dt=1.42900002, o_x=-400, o_y=-400, o_z=-400;
   int x_M=335, x_m=0, x_size=336, y_M=335, y_m=0, y_size=336, z_M=335, z_m=0, z_size=336;
@@ -324,28 +347,10 @@ for(int i=0;i<5;i++){
     &src_coords_vec, &v_x_vec, &v_y_vec, &v_z_vec, &vp_vec, x_M, x_m, x_size, y_M, y_m, y_size, z_M, z_m,
     z_size, p_rec_M, p_rec_m, p_src_M, p_src_m, time_M, time_m, x0_blk0_size, x1_blk0_size, y0_blk0_size);
 
-  str_buff<<Timer_Get_Total_Time()<<" ";
-    Timer_Print_all();
+  Timer_Print();
+    //Timer_Print_all();
+     //std::cout<<"sum: "<<sum_t<<"\n";
   //TODO: deallocate
-
-  delete_data( b_vec );
-  delete_data( damp_vec);
-  delete_data( p_vec );
-  delete_data( qp_vec );
-  delete_data( r_vec );
-  delete_data( rec_vec );
-  delete_data( rec_coords_vec );
-  delete_data( src_vec );
-  delete_data( src_coords_vec );
-  delete_data( v_x_vec );
-  delete_data( v_y_vec );
-  delete_data( v_z_vec );
-  delete_data( vp_vec );
-}
-str_buff<<"\n";
-  Write_to_file(str_buff.str(),"Core_test.csv",true);
-    //std::cin.get();
-
   return 0;
 
 }
