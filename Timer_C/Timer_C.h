@@ -20,7 +20,7 @@ void Timer_Print()
 {
     end = clock();
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("Time spent %f .",time_spent);
+    printf("Time spent %f .\n",time_spent);
 }
 /*
 clock_t begin = clock();
