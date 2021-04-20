@@ -51,14 +51,14 @@ int Forward(struct dataobj *__restrict b_vec,
   lets convert it to float * pointer
 */
   //float(*__restrict b_data_start) = (float*) b_vec->data;
-  float (*__restrict b)[b_vec->size[1]][b_vec->size[2]]                            = (float (*)[b_vec->size[1]][b_vec->size[2]]) b_vec->data;
+  float (*__restrict b)[b_vec->size[1]][b_vec->size[2]]                           = (float (*)[b_vec->size[1]][b_vec->size[2]]) b_vec->data;
   float (*__restrict damp)[damp_vec->size[1]][damp_vec->size[2]]                  = (float (*)[damp_vec->size[1]][damp_vec->size[2]]) damp_vec->data;
-  float (*__restrict p)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]]            = (float (*)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]]) p_vec->data;
-  float (*__restrict qp)[qp_vec->size[1]][qp_vec->size[2]]                         = (float (*)[qp_vec->size[1]][qp_vec->size[2]]) qp_vec->data;
+  float (*__restrict p)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]]           = (float (*)[p_vec->size[1]][p_vec->size[2]][p_vec->size[3]]) p_vec->data;
+  float (*__restrict qp)[qp_vec->size[1]][qp_vec->size[2]]                        = (float (*)[qp_vec->size[1]][qp_vec->size[2]]) qp_vec->data;
   float (*__restrict r)[r_vec->size[1]][r_vec->size[2]][r_vec->size[3]]           = (float (*)[r_vec->size[1]][r_vec->size[2]][r_vec->size[3]]) r_vec->data;
-  float (*__restrict rec)[rec_vec->size[1]]                                        = (float (*)[rec_vec->size[1]]) rec_vec->data;
-  float (*__restrict rec_coords)[rec_coords_vec->size[1]]                          = (float (*)[rec_coords_vec->size[1]]) rec_coords_vec->data;
-  float (*__restrict src)[src_vec->size[1]]                                        = (float (*)[src_vec->size[1]]) src_vec->data;
+  float (*__restrict rec)[rec_vec->size[1]]                                       = (float (*)[rec_vec->size[1]]) rec_vec->data;
+  float (*__restrict rec_coords)[rec_coords_vec->size[1]]                         = (float (*)[rec_coords_vec->size[1]]) rec_coords_vec->data;
+  float (*__restrict src)[src_vec->size[1]]                                       = (float (*)[src_vec->size[1]]) src_vec->data;
   float (*__restrict src_coords)[src_coords_vec->size[1]]                         = (float (*)[src_coords_vec->size[1]]) src_coords_vec->data;
   float (*__restrict v_x)[v_x_vec->size[1]][v_x_vec->size[2]][v_x_vec->size[3]]   = (float (*)[v_x_vec->size[1]][v_x_vec->size[2]][v_x_vec->size[3]]) v_x_vec->data;
   float (*__restrict v_y)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]]   = (float (*)[v_y_vec->size[1]][v_y_vec->size[2]][v_y_vec->size[3]]) v_y_vec->data;
