@@ -4,7 +4,12 @@
         "array": "c",
         "bitset": "c",
         "initializer_list": "c",
-        "random": "c"
+        "random": "c",
+        "deque": "c",
+        "list": "c",
+        "string": "c",
+        "unordered_map": "c",
+        "vector": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
