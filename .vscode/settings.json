@@ -9,7 +9,9 @@
         "list": "c",
         "string": "c",
         "unordered_map": "c",
-        "vector": "c"
+        "vector": "c",
+        "typeindex": "cpp",
+        "typeinfo": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

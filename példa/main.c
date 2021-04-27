@@ -2,11 +2,12 @@
 #include <math.h>
 #include <time.h>
 #include <stdlib.h>
+#include <sys/time.h>
 //#include "Timer_C.h"
 
 /* constans méretek */
-size_t size1 = 1000;
-size_t size0 = 1000;
+size_t size1 = 20000;
+size_t size0 = 10000;
 
 typedef struct dataobj dataobj;
 struct dataobj
@@ -24,7 +25,7 @@ float(*__restrict o)[size1] = (float(*)[size1])O->data;
     //out[i]=in[i]+in[i]/2.0;
     for (size_t j = 0; j < size1; j++)
     {
-      o[i][j]=i;
+      o[i][j]+=i;
     }
   }
 }
@@ -53,11 +54,20 @@ void Gpu(struct dataobj *__restrict O)
       }
 }
 
+double op_timers_core() {
+
+struct timeval t;
+
+ gettimeofday(&t, (struct timezone *)0);
+return t.tv_sec + t.tv_usec * 1.0e-6;
+}
 int main(int argc, char **argv)
 {
 
+
+
   /*start the clock*/
-  clock_t begin = clock();
+ double begin = clock();
   double time_spent ;
   
   /*print memory usage*/
@@ -67,13 +77,13 @@ int main(int argc, char **argv)
   dataobj O;
   O.data=malloc(sizeof(float) * size0 * size1);
   
-  begin = clock();
+  begin =  op_timers_core();
 
   Gpu(&O);
   
-  clock_t end = clock();
+ double end =  op_timers_core();
   
-  time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+  time_spent = (double)(end - begin);
   printf("Gpu calculate took %f \n", time_spent);
 
 
@@ -82,7 +92,7 @@ int main(int argc, char **argv)
     //out[i]=in[i]+in[i]/2.0;
     for (size_t j = 0; j < 10; j++)
     {
-      printf(" %f ",((float*)O.data)[i*size0+j]); 
+      printf(" %f ",((float*)O.data)[i*size1+j]); 
     }
     printf(" \n ");
   }

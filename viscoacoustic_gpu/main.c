@@ -68,12 +68,15 @@ int Forward(struct dataobj *__restrict b_vec,
 
 
   printf("eljut-1 \n");
-  //float* r1_=malloc(x_size*y_size*z_size*sizeof(float));
-  float (*__restrict r1)[y_size][z_size] = (float (*)[y_size][z_size])malloc(x_size*y_size*z_size*sizeof(float)) ; //r1_;
+  float* r1_=malloc(x_size*y_size*z_size*sizeof(float));
+  float (*__restrict r1)[y_size][z_size] = (float (*)[y_size][z_size])r1_;//malloc(x_size*y_size*z_size*sizeof(float)) ;
 
 
   
-printf("eljut %d %d %d    \n",x_size,y_size,z_size);
+//printf("eljut %d %d %d    \n",x_size,y_size,z_size);
+
+//char offloadname[10]="Offload";
+       Section_Start("Offload");
 
 #pragma omp target data map(tofrom: b[0:b_vec->size[0]][0:b_vec->size[1]][0:b_vec->size[2]]), \
             map(tofrom: damp[0:damp_vec->size[0]][0:damp_vec->size[1]][0:damp_vec->size[2]]),\
@@ -94,12 +97,14 @@ printf("eljut %d %d %d    \n",x_size,y_size,z_size);
 
   {
 
+    Section_End();
 
 
 
-printf("eljut2\n");
+  
 
-
+  Section_Start("Section 0");
+#pragma omp target teams distribute parallel for collapse(3)
    for (int x = x_m; x <= x_M; x += 1)
     {
       for (int y = y_m; y <= y_M; y += 1)
@@ -110,15 +115,17 @@ printf("eljut2\n");
         }
       }
     }
+  Section_End();
 
     //count_t*=4;
     //prt("Section 0");
     //return 0;
-
     /* End section0 */
     for (int time = time_m, t0 = (time) % (2), t1 = (time + 1) % (2); time <= time_M; time += 1, t0 = (time) % (2), t1 = (time + 1) % (2))
     {
       /* Begin section1 */
+      
+       Section_Start("Section 1");
       {
 
           // Timer t("Section 1");
@@ -135,10 +142,12 @@ printf("eljut2\n");
           bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,(x_M - x_m + 1)%(x1_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x1_blk0_size) + 1,(y_M - y_m + 1)%(y0_blk0_size),y_M,y_M - (y_M - y_m + 1)%(y0_blk0_size) + 1,z_M,z_m);
 
       }
+      Section_End();
       /* End section1 */
       /* Begin section2 */
-
-      {
+      
+      Section_Start("Section 2");
+      /*{
           // Timer t("Section 2");
           for (int p_src = p_src_m; p_src <= p_src_M; p_src += 1)
         {
@@ -196,12 +205,16 @@ printf("eljut2\n");
           }
         }
       }
+      */
+      Section_End();
+
       /* End section2 */
       /* Begin section3 */
-
+      
+      Section_Start("Section 3");
       {
         //Timer t("Section 3");
-        
+        #pragma omp target teams distribute parallel for
         for (int p_rec = p_rec_m; p_rec <= p_rec_M; p_rec += 1)
         {
           float posx = -o_x + rec_coords[p_rec][0];
@@ -252,11 +265,14 @@ printf("eljut2\n");
           rec[time][p_rec] = sum;
         }
       }
+      Section_End();
       /* End section3 */
     }
-  }
 
-  //free(r1);
+  Section_Start("Back to Ram");
+  }
+  Section_End();
+  //free(r1_);
   
   return 0;
 }
@@ -377,11 +393,10 @@ int main(int argc, char ** argv) {
     //Timer_Filemode=false;
 
 
-  Timer_Start();
 
   float dt=1.42900002, o_x=-400, o_y=-400, o_z=-400;
   int x_M=335, x_m=0, x_size=336, y_M=335, y_m=0, y_size=336, z_M=335, z_m=0, z_size=336;
-  int p_rec_M=65535, p_rec_m=0, p_src_M=0, p_src_m=0, time_M=10, time_m=0;
+  int p_rec_M=65535, p_rec_m=0, p_src_M=0, p_src_m=0, time_M=100, time_m=0;
   int x0_blk0_size=8, x1_blk0_size=8, y0_blk0_size=8;
 
 
@@ -402,11 +417,16 @@ int main(int argc, char ** argv) {
   printf("took %f GB memory needed.\n", (float)total_memory_needed / 100000000);
 
 
+  
+  Section_Start("Forward");
+
+
   Forward(&b_vec, &damp_vec, dt, o_x, o_y, o_z, &p_vec, &qp_vec, &r_vec, &rec_vec, &rec_coords_vec, &src_vec,
     &src_coords_vec, &v_x_vec, &v_y_vec, &v_z_vec, &vp_vec, x_M, x_m, x_size, y_M, y_m, y_size, z_M, z_m,
     z_size, p_rec_M, p_rec_m, p_src_M, p_src_m, time_M, time_m, x0_blk0_size, x1_blk0_size, y0_blk0_size);
 
-  Timer_Print();
+  Section_End();
+  //Timer_Print();
     //Timer_Print_all();
      //std::cout<<"sum: "<<sum_t<<"\n";
   //TODO: deallocate
