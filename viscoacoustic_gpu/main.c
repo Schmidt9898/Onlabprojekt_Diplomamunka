@@ -67,7 +67,7 @@ int Forward(struct dataobj *__restrict b_vec,
 
 
 
-  printf("eljut-1 \n");
+  //printf("eljut-1 \n");
   float* r1_=malloc(x_size*y_size*z_size*sizeof(float));
   float (*__restrict r1)[y_size][z_size] = (float (*)[y_size][z_size])r1_;//malloc(x_size*y_size*z_size*sizeof(float)) ;
 
@@ -121,11 +121,12 @@ int Forward(struct dataobj *__restrict b_vec,
     //prt("Section 0");
     //return 0;
     /* End section0 */
+    Section_Start("Time for loop");
     for (int time = time_m, t0 = (time) % (2), t1 = (time + 1) % (2); time <= time_M; time += 1, t0 = (time) % (2), t1 = (time + 1) % (2))
     {
       /* Begin section1 */
+       //Section_Start("Section 1");
       
-       Section_Start("Section 1");
       {
 
           // Timer t("Section 1");
@@ -142,11 +143,11 @@ int Forward(struct dataobj *__restrict b_vec,
           bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,(x_M - x_m + 1)%(x1_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x1_blk0_size) + 1,(y_M - y_m + 1)%(y0_blk0_size),y_M,y_M - (y_M - y_m + 1)%(y0_blk0_size) + 1,z_M,z_m);
 
       }
-      Section_End();
+      //Section_End();
       /* End section1 */
       /* Begin section2 */
       
-      Section_Start("Section 2");
+      //Section_Start("Section 2");
       /*{
           // Timer t("Section 2");
           for (int p_src = p_src_m; p_src <= p_src_M; p_src += 1)
@@ -206,12 +207,12 @@ int Forward(struct dataobj *__restrict b_vec,
         }
       }
       */
-      Section_End();
+      //Section_End();
 
       /* End section2 */
       /* Begin section3 */
       
-      Section_Start("Section 3");
+      //Section_Start("Section 3");
       {
         //Timer t("Section 3");
         #pragma omp target teams distribute parallel for
@@ -265,9 +266,9 @@ int Forward(struct dataobj *__restrict b_vec,
           rec[time][p_rec] = sum;
         }
       }
-      Section_End();
-      /* End section3 */
+       //Section_End();/* End section3 */
     }
+    Section_End();//Tiem loop end
 
   Section_Start("Back to Ram");
   }
@@ -396,7 +397,7 @@ int main(int argc, char ** argv) {
 
   float dt=1.42900002, o_x=-400, o_y=-400, o_z=-400;
   int x_M=335, x_m=0, x_size=336, y_M=335, y_m=0, y_size=336, z_M=335, z_m=0, z_size=336;
-  int p_rec_M=65535, p_rec_m=0, p_src_M=0, p_src_m=0, time_M=100, time_m=0;
+  int p_rec_M=65535, p_rec_m=0, p_src_M=0, p_src_m=0, time_M=10, time_m=0;
   int x0_blk0_size=8, x1_blk0_size=8, y0_blk0_size=8;
 
 
