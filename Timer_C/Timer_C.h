@@ -12,9 +12,17 @@ typedef struct Timer_C Timer_C();
 double Totaltime=0;
 int Sum_Timers=0;
 struct Timer_C * Timer_root=NULL;
-//bool Timer_Filemode=true;
+int Timer_Filemode=0;
+char* Timer_buffer;
 
-
+char* concat(const char *s1, const char *s2)
+{
+    char *result = malloc(strlen(s1) + strlen(s2) + 1); // +1 for the null-terminator
+    // in real code you would check for errors in malloc here
+    strcpy(result, s1);
+    strcat(result, s2);
+    return result;
+}
 
 double op_timers_core() {
 
@@ -27,33 +35,20 @@ return t.tv_sec + t.tv_usec * 1.0e-6;
 struct Timer_C
 {
     /* data */
-    struct Timer_C* parent;//=NULL;
+    struct Timer_C* parent;
     double start,end;
     char name[20];
-    /*Timer_C start(){
-        start=op_timers_core();
-        parent=Timer_root;
-        Timer_root=this;
-        
-    }
-    ~Timer_C()
-    {
-        double end=op_timers_core();
-        end-=start;
-        printf("Time took: %f sec.\n",end);
-        //if(parent!=0)
-        Timer_root=parent;
-    }*/
+
 };
 
 
 void Section_Start(char* name)
 {
-        //printf("%d\n",sizeof(struct Timer_C));
+
         struct Timer_C * timer= malloc(sizeof(struct Timer_C));
-        printf("%s started->\n",name);
+        if(Timer_Filemode==0)
+            printf("%s started->\n",name);
         strcpy(timer->name,name);
-        //printf("%s\n",timer->name);
         timer->start=op_timers_core();
         timer->parent=Timer_root;
         Timer_root=timer;
@@ -64,65 +59,27 @@ void Section_End()
         return;
     Timer_root->end=op_timers_core();
     Timer_root->end-=Timer_root->start;
-    printf("%s took: %f sec.\n",Timer_root->name,Timer_root->end);
+    if(Timer_Filemode==0)
+        printf("%s took: %f sec.\n",Timer_root->name,Timer_root->end);
+    else {
+        char output[64];
+        snprintf(output, 64, "%s:%f\n",Timer_root->name,Timer_root->end);
+        char* temp_del=Timer_buffer;
+        Timer_buffer=concat(Timer_buffer,output);
+        free(temp_del);
+
+    }
     struct Timer_C* t=Timer_root;
     Timer_root=Timer_root->parent;
     free(t);
 }
-
-/*
-void Timer_Start()
+void Timer_print2file(const char * filename)
 {
-     begin = clock();
+    FILE* file = fopen(filename, "a" );
+    //printf("%s",Timer_buffer);
+    fputs(Timer_buffer, file);
+    fclose(file);
 }
-void Timer_Stop(){
-    end = clock();
-}
-//void Timer_reset(){};
-void Timer_Print()
-{
-    end = clock();
-    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("Time spent %f .\n",time_spent);
-}
-*/
-/*
-clock_t begin = clock();
 
 
-
-clock_t end = clock();
-double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-
-
-*/
-
-
-/*
-//extern "C" {
-
-
-//extern bool Timer_Filemode;
-//extern std::string Timer_filename;
-
-void Set_Timer_filemode(int istofile);
-void Set_Timer_filename(char* filename);
-
-void Timer_Print_all();//print all information
-void Timer_Reset();//reset timer counter
-float Timer_Get_Total_Time();//get the total time of timercounter
-
-void Write_to_file(char* str,char* filename,int  append);
-
-void Timer_push(char* name);
-void Timer_pop();
-
-
-//}
-
-
-
-
-
-*/
 #endif // TIMER_H

@@ -417,7 +417,10 @@ int main(int argc, char ** argv) {
 
   printf("took %f GB memory needed.\n", (float)total_memory_needed / 100000000);
 
-
+  //timer settings
+  Timer_Filemode=0;
+  Timer_buffer=malloc(1);
+  *Timer_buffer='\0';
   
   Section_Start("Forward");
 
@@ -427,10 +430,9 @@ int main(int argc, char ** argv) {
     z_size, p_rec_M, p_rec_m, p_src_M, p_src_m, time_M, time_m, x0_blk0_size, x1_blk0_size, y0_blk0_size);
 
   Section_End();
-  //Timer_Print();
-    //Timer_Print_all();
-     //std::cout<<"sum: "<<sum_t<<"\n";
-  //TODO: deallocate
+
+  Timer_print2file("viscoacoustic_gpu_v100.meres.txt");
+
   return 0;
 
 }

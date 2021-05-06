@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include "Timer.h"
 
 #include "stdlib.h"
@@ -53,6 +54,8 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
 
     }
     //return 0;
+    {
+      Timer t("Time loop");
   /* End section0 */
   for (int time = time_m, t0 = (time)%(2), t1 = (time + 1)%(2); time <= time_M; time += 1, t0 = (time)%(2), t1 = (time + 1)%(2))
   {
@@ -185,6 +188,7 @@ int Forward(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_ve
     }
     /* End section3 */
   }
+}
 
   delete[] r1;
   return 0;
@@ -285,7 +289,8 @@ dataobj create_data(int size0, int size1, int size2, int size3, int elemsize) {
 }
 
 void delete_data(dataobj& a) {
-  delete[] a.data;
+  float * data=(float*)a.data;
+  delete[] data;
   delete[] a.size;
 }
 
@@ -293,10 +298,13 @@ int main(int argc, char ** argv) {
 std::stringstream str_buff;
 for (int i = 1; i < argc; i++) 
   str_buff<<argv[1]<<" ";
+
+//Timer setting
+Timer_filename=strcat(argv[1],"_viscoacoustic_cpu_parallel.txt");
+Timer_Filemode=true;
+
 for(int i=0;i<5;i++){
-        //Timer setting
-    Timer_filename="cpu_parallel.txt";
-    Timer_Filemode=false;
+      
     Timer_Reset();
 
 
@@ -320,10 +328,12 @@ for(int i=0;i<5;i++){
   dataobj v_z_vec = create_data(2, 340, 340, 340, sizeof(float));
   dataobj vp_vec = create_data(340, 340, 340, 1, sizeof(float));
 
+  {
+    Timer t("Forward");
   Forward(&b_vec, &damp_vec, dt, o_x, o_y, o_z, &p_vec, &qp_vec, &r_vec, &rec_vec, &rec_coords_vec, &src_vec,
     &src_coords_vec, &v_x_vec, &v_y_vec, &v_z_vec, &vp_vec, x_M, x_m, x_size, y_M, y_m, y_size, z_M, z_m,
     z_size, p_rec_M, p_rec_m, p_src_M, p_src_m, time_M, time_m, x0_blk0_size, x1_blk0_size, y0_blk0_size);
-
+  }
   str_buff<<Timer_Get_Total_Time()<<" ";
     Timer_Print_all();
   //TODO: deallocate

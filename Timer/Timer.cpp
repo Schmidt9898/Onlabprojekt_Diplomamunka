@@ -71,7 +71,7 @@ void Timer::Print_start(){
 void Timer_Print_all(){
 if(Timer_Filemode)
 {
-    Timer_buff<<"Total time:"<<Totaltime<<"\nEND\n";
+    Timer_buff/*<<"Total time:"<<Totaltime*/<<"END\n";
     std::ofstream outfile;
 
     outfile.open(Timer_filename, std::ios_base::app);
