@@ -54,12 +54,21 @@ with open("Core_test.csv") as f:
             names.append(elemek[0])
             values.append(avg)
 
-plt.bar(names,values)
-        
+print(values)
+fig,ax = plt.subplots(figsize = (10,6))
+plt.title("Different number of cores")
+plt.ylabel("Time in secounds")
+plt.xlabel("Section")
+plt.bar(names,values,color=['green'])
+
+for index,data in enumerate(values):
+    plt.text(x=index-0.3 , y =data+0.02 , s=f"{round(data,2)}" , fontdict=dict(fontsize=15)  )      
+plt.savefig('képek/Core_test.png')
+#plt.show()
 
 
 #plot_this("..\\viscoacoustic_meres\\base.txt")
 #plot_this("..\\viscoacoustic_cpu_parallel\\cpu_parallel.txt")
     #sections[temp[0]]=float(temp[1])
 #plt.bar([1,2,3,4],[1,2,3,4])
-plt.show()
+#plt.show()

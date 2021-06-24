@@ -17,3 +17,10 @@ pass
 send
 Terminalcode.txt
 Ploting/.vscode/settings.json
+*.png
+*.txt
+Ploting/képek/.vs/képek/v16/.suo
+*.csv
+Ploting/képek/.vs/VSWorkspaceState.json
+Ploting/képek/.vs/slnx.sqlite
+Ploting/__pycache__/grafok.cpython-39.pyc
