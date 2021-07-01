@@ -11,10 +11,16 @@ Timer/bin/Debug
 viscoacoustic.cpp
 *.a
 *.a
-todo.txt
 viscoacoustic_meres_simd/base.txt
 pass
 send
 Terminalcode.txt
 *run
 *.meres.txt
+*.png
+
+
+*.vscode/
+*.vs/
+Ploting/meresek*
+Ploting/__pycache__*
