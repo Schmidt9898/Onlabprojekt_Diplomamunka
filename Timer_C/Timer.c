@@ -1,7 +1,21 @@
-#include "Timer.h"
+
+
+
+
+
+
+
+
+/*#include "Timer.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <chrono>
+#include <vector>
+
+class Timer;
+
+
 float Totaltime=0;
 int Sum_Timers=0;
 Timer * root=nullptr;
@@ -9,10 +23,38 @@ bool Timer_Filemode=true;
 std::stringstream Timer_buff;
 std::string Timer_filename="time.txt";
 
+std::vector<Timer*> timer_que;
+
 //Timer::Timer(){
     //Sum_Timers++;
     //start = std::chrono::high_resolution_clock::now();};
 //Timer::Timer(std::string msg_):msg(msg_){};
+
+
+class Timer
+{
+    protected:
+        std::chrono::time_point<std::chrono::high_resolution_clock> start,end;
+        std::chrono::duration<float> duration;
+        Timer * parent = nullptr;
+    public:
+        std::string msg="Timer";
+        int root_num=0;
+
+        Timer();
+        Timer(std::string msg_);
+        virtual ~Timer();
+    protected:
+        void Start();
+        void Stop();
+        void Print();
+        void Print_start();
+    private:
+};
+
+
+
+
 
 Timer::Timer(std::string msg_):msg(msg_)
 {
@@ -68,10 +110,10 @@ void Timer::Print_start(){
     std::cout<<msg.c_str()<<"->\n";
 };
 
-void Timer_Print_all(){
+extern "C" void Timer_Print_all(){
 if(Timer_Filemode)
 {
-    Timer_buff/*<<"Total time:"<<Totaltime*/<<"END\n";
+    Timer_buff<<"Total time:"<<Totaltime<<"\nEND\n";
     std::ofstream outfile;
 
     outfile.open(Timer_filename, std::ios_base::app);
@@ -84,14 +126,14 @@ if(Timer_Filemode)
 };
 
 
-void Timer_Reset(){
+extern "C" void Timer_Reset(){
     Sum_Timers=0;
     Totaltime=0;
 };
 
-void Write_to_file(std::string str,std::string filename,bool append)
+extern "C" void Write_to_file(char* str,char* filename,int append)
 {
-    if(append)
+    if(append==1)
     {
     std::ofstream outfile;
     outfile.open(filename, std::ios_base::app);
@@ -106,7 +148,35 @@ void Write_to_file(std::string str,std::string filename,bool append)
     }
 }
 
-float Timer_Get_Total_Time()
+extern "C" float Timer_Get_Total_Time()
 {
     return Totaltime;
 }
+
+
+extern "C" void Set_Timer_filemode(int istofile)
+{
+    Timer_Filemode=istofile==1;
+}
+extern "C" void Set_Timer_filename(char* filename)
+{
+    Timer_filename=filename;
+}
+extern "C" void Timer_push(char* name)
+{
+    Timer* t = new Timer(name);
+    timer_que.push_back(t);
+}
+extern "C" void Timer_pop()
+{
+    if(timer_que.size()<=0)
+        return
+    delete timer_que[timer_que.size()-1];
+    timer_que.pop_back();
+
+}*/
+
+
+
+
+

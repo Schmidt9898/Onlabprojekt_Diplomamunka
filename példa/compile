@@ -1,0 +1,7 @@
+
+
+clang main.c  -o run -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm
+
+#clang -I ../Timer ../Timer/Timer.o main.c  -o run -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofastúú
+
+
