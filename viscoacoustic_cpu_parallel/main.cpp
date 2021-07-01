@@ -300,8 +300,8 @@ for (int i = 1; i < argc; i++)
   str_buff<<argv[1]<<" ";
 
 //Timer setting
-Timer_filename=strcat(argv[1],"_viscoacoustic_cpu_parallel.txt");
-Timer_Filemode=true;
+Timer_filename=strcat(argv[1],"_viscoacoustic_cpu_parallel.meres.txt");
+Timer_Filemode=false;
 
 for(int i=0;i<5;i++){
       

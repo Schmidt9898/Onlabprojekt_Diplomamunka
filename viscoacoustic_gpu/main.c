@@ -415,7 +415,7 @@ int main(int argc, char ** argv) {
   dataobj v_z_vec       = create_data(2, 340, 340, 340, sizeof(float));
   dataobj vp_vec        = create_data(340, 340, 340, 1, sizeof(float));
 
-  printf("took %f GB memory needed.\n", (float)total_memory_needed / 100000000);
+  printf("took %f GB memory needed.\n", (float)total_memory_needed / 1000000000);
 
   //timer settings
   Timer_Filemode=0;
