@@ -20,7 +20,7 @@ Terminalcode.txt
 *.png
 
 
-*.vscode/
+*.vscode*
 *.vs/
 Ploting/meresek*
 Ploting/__pycache__*
