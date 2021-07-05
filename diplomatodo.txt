@@ -1,0 +1,22 @@
+gpu offload 
+	mekkora thread blockok használata
+	csoportok kosztása
+	1024 egy csoporton belül
+	num teams hány csoport
+	thread limit szál /csoportlimit
+	profiler nvvp ,kernel
+	64- 1024
+	3d blokkok
+	
+5.1 omp verzió
+tiling
+
+
+open ACC
+
+pgcc fordító
+
+
+----
+Miért lenne gyorsabb
+	
