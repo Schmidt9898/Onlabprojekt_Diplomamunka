@@ -1,0 +1,10 @@
+
+#clang++ -I ../../Timer ../../Timer/Timer.cpp  -std=c++11 main.cpp  -o run -Wall -fopenmp -Ofast
+
+clang -I ../../Smart_Stopper  c_main.c  -o c_run -Wall -fopenmp -Ofast -fopenmp-targets=nvptx64-nvidia-cuda -gline-tables-only -lm 
+
+
+
+#-Xopenmp-target -march=sm_70
+
+

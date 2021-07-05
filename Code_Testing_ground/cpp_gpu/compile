@@ -1,0 +1,11 @@
+
+#clang++ -I ../../Timer ../../Timer/Timer.cpp  -std=c++11 main.cpp  -o run -Wall -fopenmp -Ofast
+
+g++ -I ../../Timer ../../Timer/Timer.cpp -std=c++11 main.cpp  -o run -Wall -fopenmp -Wopenmp-simd -Ofast
+
+#-fopenmp-targets=nvptx64-nvidia-cuda
+#-gline-tables-only -lm 
+#-Xopenmp-target -march=sm_70
+
+#../../Timer ../../Timer/Timer.cpp
+
