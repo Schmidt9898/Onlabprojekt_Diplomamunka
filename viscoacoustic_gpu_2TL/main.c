@@ -104,22 +104,29 @@ int Forward(struct dataobj *__restrict b_vec,
   
 
   Spawn_stopper("Section 0");
-#pragma omp target teams distribute parallel for collapse(3)
+ 
+#pragma omp target teams num_teams(128) distribute parallel for collapse(3) 
    for (int x = x_m; x <= x_M; x += 1)
     {
       for (int y = y_m; y <= y_M; y += 1)
       {
+        
         for (int z = z_m; z <= z_M; z += 1)
         {
           r1[x][y][z] = sqrt(1.0F + 1.0F / pow(qp[x + 2][y + 2][z + 2], 2));
         }
       }
     }
+  
   Kill_stopper();
 
     //count_t*=4;
     //prt("Section 0");
-    //return 0;
+    Spawn_stopper("Back to Ram");
+    }
+    Kill_stopper();
+    return 0;
+    {
     /* End section0 */
     Spawn_stopper("Time for loop");
     for (int time = time_m, t0 = (time) % (2), t1 = (time + 1) % (2); time <= time_M; time += 1, t0 = (time) % (2), t1 = (time + 1) % (2))
