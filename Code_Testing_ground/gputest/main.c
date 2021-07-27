@@ -7,9 +7,9 @@
 
 
 /* constans méretek */
-size_t sizex = 16;
-size_t sizey = 16;
-size_t sizez = 16;
+size_t sizex = 1000;
+size_t sizey = 500;
+size_t sizez = 500;
 
 struct dataobj
 {
@@ -101,7 +101,7 @@ Spawn_stopper("3d zeroing");
 } 
 Kill_stopper();
 
-/*
+
 
 Spawn_stopper("3d computation");
 #pragma omp target teams //num_teams(128) thread_limit(8*8*8) 
@@ -135,7 +135,7 @@ Spawn_stopper("3d computation");
     }
 } 
 Kill_stopper();
-*/
+
 /*
 Spawn_stopper("3d computation collapse 2 simd");
 #pragma omp target teams //num_teams(128) thread_limit(8*8*8) 
@@ -189,6 +189,7 @@ int szamlalo=0;
 }
 printf("Szamlalo: %d\n",szamlalo);
 */
+
 Spawn_stopper("3d tiling with computation");
 #pragma omp target teams //num_teams(128) thread_limit(1024) 
 {
@@ -200,22 +201,22 @@ Spawn_stopper("3d tiling with computation");
         {
             for (long z = 0; z < sizez; z += blocksize_z)
             {
-                //#pragma omp distribute parallel for collapse(3)
+                #pragma omp parallel for collapse(3)
                 for (long bx = x; bx < x + blocksize_x; bx++)
                 {
                     for (long by = y; by < y + blocksize_y; by++)
                     {
                         for (long bz = z; bz < z + blocksize_z; bz++)
                         {
-                                        out_[bx][by][bz]=2;
-                                        printf("%f",2.0);
+                                        //out_[bx][by][bz]=2;
+                                        //printf("%f",2.0);
                             //printf("--------x:%d,y:%d,z:%d\n",bx,by,bz);
                             // sum for the scope of the window..
                             if (bx >= 0 && bx < sizex &&
                                 by >= 0 && by < sizey &&
                                 bz >= 0 && bz < sizez)
                             {
-                               /* for (int ibx = bx - window_size; ibx <= (bx + window_size); ibx++)
+                                for (int ibx = bx - window_size; ibx <= (bx + window_size); ibx++)
                                     for (int iby = by - window_size; iby <= (by + window_size); iby++)
                                         for (int ibz = bz - window_size; ibz <= (bz + window_size); ibz++)
                                         {
@@ -230,7 +231,7 @@ Spawn_stopper("3d tiling with computation");
                                             }
 
                                             //printf("x:%d,y:%d,z:%d\n",ibx,iby,ibz);
-                                        }*/
+                                        }
                             }
                         }
                     }
@@ -242,6 +243,37 @@ Spawn_stopper("3d tiling with computation");
 Kill_stopper();
 
 
+/*
+
+Spawn_stopper("6 collapsed loop");
+#pragma omp target teams //num_teams(128) thread_limit(1024) 
+{
+    //printf("size0,size1  %d",size1);
+    //int num2=2;
+#pragma omp distribute parallel for collapse(3) //private(num2)
+    for (int x = 0; x < 2; x += 1)
+    {
+        for (int y = 0; y < 2; y += 1)
+        {
+            for (int z = 0; z < 2; z += 1)
+            {
+                #pragma omp parallel for collapse(3)
+                for (int i = 0; i < 2; i+=1)
+                {
+                    for (int j = 0; j < 2; j+=1)
+                    {
+                        for (int k = 0; k < 2; k+=1)
+                        {
+                            printf("xyzijk: %d %d %d %d %d %d\n",x,y,z,i,j,k);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+Kill_stopper();
+*/
 Spawn_stopper("back to ram");
 }
 Kill_stopper();

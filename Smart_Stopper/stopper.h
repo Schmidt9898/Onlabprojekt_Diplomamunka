@@ -6,11 +6,22 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <string.h>
+#include "FileWriterStream.h"
+/*
 
 typedef ushort bool;
 #define true 1;
 #define false 0;
 
+char* concat(const char *s1, const char *s2)
+{
+    char *result = malloc(strlen(s1) + strlen(s2) + 1); // +1 for the null-terminator
+    // in real code you would check for errors in malloc here
+    strcpy(result, s1);
+    strcat(result, s2);
+    return result;// it thoes not free the original string
+}
+*/
 // individual stopper 
 typedef struct Stopper Stopper();
 //clock_t begin,end;
@@ -23,14 +34,6 @@ struct Stopper * Stopper_root=NULL; //root of the timers
 bool Stopper_Filemode=false; // false write to console true write to filename file
 char* _buffer=NULL;// buffer for the strings if we write to file
 
-char* concat(const char *s1, const char *s2)
-{
-    char *result = malloc(strlen(s1) + strlen(s2) + 1); // +1 for the null-terminator
-    // in real code you would check for errors in malloc here
-    strcpy(result, s1);
-    strcat(result, s2);
-    return result;// it thoes not free the original string
-}
 
 //get the curent time 
 //also it does magic because i dont remember what it does actualy
@@ -56,21 +59,26 @@ void Spawn_stopper(char* name)
         struct Stopper * stopper= malloc(sizeof(struct Stopper));
         if(!Stopper_Filemode) //console mode
             printf("%s ID:%d started->\n",name,Sum_Stopper);
+            else
+            {
+                //pass
+            }
         strcpy(stopper->name,name);
         stopper->start=op_timer_core();
         stopper->parent=Stopper_root;
         Stopper_root=stopper;
         Sum_Stopper++;
 }
-void Kill_stopper()
+double Kill_stopper()
 {
+    double ret=0;
     if(Stopper_root==NULL)
-        return;
+        return ret;
     Stopper_root->end=op_timer_core();
-    Stopper_root->end-=Stopper_root->start;
-    if(!Stopper_Filemode)
+    ret=Stopper_root->end-=Stopper_root->start;
+    if(!Stopper_Filemode)//console 
         printf("%s took: %f sec.\n",Stopper_root->name,Stopper_root->end);
-    else {
+    else {//file mode
         char output[64];// 64 comes from the air,... i gues
         snprintf(output, 64, "%s:%f\n",Stopper_root->name,Stopper_root->end);
         char* temp_del=_buffer;
@@ -81,6 +89,8 @@ void Kill_stopper()
     struct Stopper* t=Stopper_root;//free the stopper
     Stopper_root=Stopper_root->parent;
     free(t);
+    return ret;
+
 }
 void Stopper_print2file(const char * filename)
 {

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if test -f Tiling_meresek.csv ;then
+rm Tiling_meresek.csv
+echo "Old file removed."
+fi
+
+if test -f runacc;then
+    
+echo "Test begin...."
+c=0
+for ((x=2 ;x<=256 ;x*=2))
+do
+   for ((y=2 ;y<=256 ;y*=2))
+do
+   for ((z=2 ;z<=256 ;z*=2))
+do
+   
+   ./runacc $x $y $z
+done
+done
+done
+
+echo "$c"
+
+else
+echo "There is no eexecutable to test."
+
+fi

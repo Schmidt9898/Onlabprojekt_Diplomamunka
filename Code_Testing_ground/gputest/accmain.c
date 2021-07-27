@@ -6,10 +6,15 @@
 #include <stdio.h>
 #include "stopper.h"
 
+//sript avarage 3d computation without tiling
+double meres_avg=0.5810;
+double meres_sum=0.0;
+int meres_num=3;
+
 
 /* constans méretek */
-size_t sizex = 1000;//16*20;
-size_t sizey = 1000;//16*20;
+size_t sizex = 500;//16*20;
+size_t sizey = 500;//16*20;
 size_t sizez = 500;//16*20;
 
 struct dataobj
@@ -32,34 +37,35 @@ printf(" = %d\n",);
 
 */
 
-
-int blocksize_x=16;
-int blocksize_y=16;
-int blocksize_z=16;
+int blocksize_x=atoi(argv[1]);
+int blocksize_y=atoi(argv[2]);
+int blocksize_z=atoi(argv[3]);
 //int blockhalf=blocksize/2;
-
+//printf("%d\n%d\n%d\n",blocksize_x,blocksize_y,blocksize_z);
 //window size
-int window_size=4;
+int window_size=2;
 
 size_t meret=sizex*sizey*sizez*4;
-printf("meret: %lu \n",meret);
+printf("meret: %f Gb \n",meret/1e9f);
 //float* data=NULL; //(float*) malloc(meret);
 //float* out=NULL; // (float*) malloc(meret);
-Spawn_stopper("offload");
+
+//Spawn_stopper("offload");
 #pragma acc data copy(sizex,sizey,sizez,blocksize_x,blocksize_y,blocksize_z,window_size)
 {
 float* restrict data=(float*)acc_malloc(meret);
 float* restrict out=(float*)acc_malloc(meret);
 float(*__restrict data_)[sizey][sizez] = (float(*)[sizey][sizez])data;
 float(*__restrict out_)[sizey][sizez] = (float(*)[sizey][sizez])out;
-Kill_stopper();
+
+//Kill_stopper();
 //printf("size meret %lu \n",meret);
 
 
 
 
-Spawn_stopper("3d zeroing");
-
+//Spawn_stopper("3d zeroing");
+/*
 #pragma acc parallel loop collapse(3) deviceptr(out_,data_)
     for(size_t x=0;x<sizex;x++)
     {
@@ -72,10 +78,10 @@ Spawn_stopper("3d zeroing");
             }        
         }
     }
+*/
+//Kill_stopper();
 
-Kill_stopper();
-
-
+/*
 Spawn_stopper("3d computation");
 
     //printf("size0,size1  %d",size1);
@@ -104,7 +110,10 @@ Spawn_stopper("3d computation");
     }
 
 Kill_stopper();
+*/
 
+
+for(int i=0;i<meres_num;i++){
 
 Spawn_stopper("3d tiling with computation");
 #pragma acc parallel deviceptr(out_,data_) //present(sizex,sizey,sizez,blocksize_x,blocksize_y,blocksize_z,window_size)
@@ -154,7 +163,9 @@ for(int x=0;x<sizex;x+=blocksize_x)
         }
     }
 } 
-Kill_stopper();
+meres_sum+=Kill_stopper();
+
+}
 
 /*
 Spawn_stopper("3d with tiling pragma with computation");
@@ -188,17 +199,19 @@ Spawn_stopper("3d with tiling pragma with computation");
 Kill_stopper();
 */
 
-Spawn_stopper("back to ram");
+//Spawn_stopper("back to ram");
 }
-Kill_stopper();
-/*{
-    
-    #pragma omp teams distribute parallel for 
-    for(size_t i=0;i<meret;i++)
-    {
-        data[i]=data[i]+1;
-    }
-}*/
+//Kill_stopper();
 
+//meres kiértékelés
+meres_sum/=meres_num;
+meres_sum-=meres_avg;
+//printf("a meres: %f\n",meres_sum);
+FileStream *Fs=MakeFileStream("Tiling_meresek.csv");
+char bev[30];
+sprintf(bev,"%d,%d,%d,%lf\n",blocksize_x,blocksize_y,blocksize_z,meres_sum);
+printf("%s",bev);
+Fs->Write(Fs,bev);
+Fs->Flush(Fs);
 
 }

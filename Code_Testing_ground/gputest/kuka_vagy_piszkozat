@@ -1,0 +1,120 @@
+/*
+Spawn_stopper("3d tiling with zeroing");
+#pragma omp target teams
+{
+    //printf("size0,size1  %d",size1);
+#pragma omp distribute parallel for collapse(3)
+    for(size_t x=blockhalf;x<sizex;x+=blocksize)
+    {
+        for(size_t y=blockhalf;y<sizey;y+=blocksize)
+        {
+            for(size_t z=blockhalf;z<sizey;z+=blocksize)
+            {
+
+                #pragma omp parallel for collapse(3)
+                for(size_t bx=x-blockhalf;bx<x+blockhalf;bx++)
+                {
+                    for(size_t by=y-blockhalf;by<y+blockhalf;by++)
+                    {
+                        for(size_t bz=z-blockhalf;bz<z+blockhalf;bz++)
+                        {
+                            data_[bx][by][bz]=0;
+                        }
+                    }
+                }
+            }        
+        }
+    }
+} 
+Kill_stopper();
+*/
+
+
+
+/*
+Spawn_stopper("compute simple parallel");
+#pragma omp target teams distribute parallel for 
+    for(uint i=0;i<meret;i++)
+    {
+        data[i]=0;
+    }
+Kill_stopper();
+
+int sum_threads=0;
+Spawn_stopper("spawn team of thread");
+#pragma omp target teams reduction(+:sum_threads) num_teams(1024) thread_limit(10) //distribute parallel for 
+    {
+        //printf(" %d \n",omp_get_team_size(omp_get_active_level()));
+        #pragma omp parallel for reduction(+:sum_threads)
+        for(size_t i = 0;i<10;i++)
+            sum_threads++;
+    }
+printf("\nsum of threads: %d\n\n",sum_threads);
+Kill_stopper();
+
+Spawn_stopper("compute 10 team_thread");
+#pragma omp target teams num_teams(10)
+{
+#pragma omp distribute parallel for //simd
+    for(uint i=0;i<meret;i++)
+    {
+        data[i]=0;
+    }
+}
+Kill_stopper();
+
+Spawn_stopper("compute ");
+#pragma omp target teams 
+{
+#pragma omp distribute parallel for
+    for(uint i=0;i<meret;i+=8)
+    {
+        #pragma omp parallel for simd
+        for(ushort i2=0;i2<8;i2++)
+            data[i+i2]=1;
+    }
+}
+Kill_stopper();
+*/
+
+
+/*
+Spawn_stopper("3d tiling with zeroing");
+#pragma omp target teams
+{
+    //printf("size0,size1  %d",size1);
+#pragma omp distribute parallel for collapse(3)
+    for(size_t x=blockhalf;x<sizex;x+=blocksize)
+    {
+        for(size_t y=blockhalf;y<sizey;y+=blocksize)
+        {
+            for(size_t z=blockhalf;z<sizey;z+=blocksize)
+            {
+
+                #pragma omp parallel for collapse(3)
+                for(size_t bx=x-blockhalf;bx<x+blockhalf;bx++)
+                {
+                    for(size_t by=y-blockhalf;by<y+blockhalf;by++)
+                    {
+                        for(size_t bz=z-blockhalf;bz<z+blockhalf;bz++)
+                        {
+                            data_[bx][by][bz]=0;
+                        }
+                    }
+                }
+            }        
+        }
+    }
+} 
+Kill_stopper();
+*/
+
+
+/*{
+    
+    #pragma omp teams distribute parallel for 
+    for(size_t i=0;i<meret;i++)
+    {
+        data[i]=data[i]+1;
+    }
+}*/

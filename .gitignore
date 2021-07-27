@@ -24,3 +24,7 @@ Terminalcode.txt
 *.vs/
 Ploting/meresek*
 Ploting/__pycache__*
+*run
+*runser
+*runacc
+*run_v100
