@@ -13,9 +13,9 @@ int meres_num=3;
 
 
 /* constans méretek */
-size_t sizex = 500;//16*20;
-size_t sizey = 500;//16*20;
-size_t sizez = 500;//16*20;
+size_t sizex = 10;//16*20;
+size_t sizey = 10;//16*20;
+size_t sizez = 10;//16*20;
 
 struct dataobj
 {
@@ -37,9 +37,14 @@ printf(" = %d\n",);
 
 */
 
-int blocksize_x=atoi(argv[1]);
-int blocksize_y=atoi(argv[2]);
-int blocksize_z=atoi(argv[3]);
+int blocksize_x=1;
+int blocksize_y=1;
+int blocksize_z=1;
+if(argc>=4){
+    int blocksize_x=atoi(argv[1]);
+    int blocksize_y=atoi(argv[2]);
+    int blocksize_z=atoi(argv[3]);
+}
 //int blockhalf=blocksize/2;
 //printf("%d\n%d\n%d\n",blocksize_x,blocksize_y,blocksize_z);
 //window size
@@ -81,7 +86,7 @@ float(*__restrict out_)[sizey][sizez] = (float(*)[sizey][sizez])out;
 */
 //Kill_stopper();
 
-/*
+
 Spawn_stopper("3d computation");
 
     //printf("size0,size1  %d",size1);
@@ -110,7 +115,7 @@ Spawn_stopper("3d computation");
     }
 
 Kill_stopper();
-*/
+
 
 
 for(int i=0;i<meres_num;i++){
@@ -119,7 +124,7 @@ Spawn_stopper("3d tiling with computation");
 #pragma acc parallel deviceptr(out_,data_) //present(sizex,sizey,sizez,blocksize_x,blocksize_y,blocksize_z,window_size)
    {
     //printf("size0,size1  %d",size1);
-#pragma acc loop collapse(6) 
+#pragma acc loop collapse(6)
 for(int x=0;x<sizex;x+=blocksize_x)
     {
         for(int y=0;y<sizey;y+=blocksize_y)

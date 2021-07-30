@@ -25,4 +25,9 @@ fi
 
 
 
+#echo "compile for any? gpu..." 
+clang -I ../../Smart_Stopper mainbase.c  -o run -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -D LOMP
 
+clang -I ../../Smart_Stopper mainbase.c  -o run_v100 -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -Xopenmp-target -march=sm_70 -D LOMP
+
+#pgcc -acc -Minfo=accel -ta=tesla -Wall -I ../../Smart_Stopper -c99 mainbase.c -o runacc -D LACC
