@@ -118,3 +118,190 @@ Kill_stopper();
         data[i]=data[i]+1;
     }
 }*/
+
+
+
+
+    for(int x=0;x<sizex;x++)
+    {
+        for(int y=0;y<sizey;y++)
+        {
+            for(int z=0;z<sizez;z++)
+            {
+// sum for the scope of the window..
+                for(int ibx=x-window_size;ibx<x+window_size;ibx++)
+                for(int iby=y-window_size;iby<y+window_size;iby++)
+                for(int ibz=z-window_size;ibz<z+window_size;ibz++)
+                    {
+                    if(ibx>=0 && ibx < sizex &&
+                        iby>=0 && iby < sizey &&
+                        ibz>=0 && ibz < sizez){
+                            out_[x][y][z]+=data_[ibx][iby][ibz];
+                            //printf("good?\n");
+                        }else
+                        {
+                            //printf("not good\n");
+                        }
+                }
+
+                bejgli
+
+
+
+
+
+
+
+
+
+------------------------
+#ifdef LOMP
+#pragma omp target teams //num_teams(128) thread_limit(1024) 
+#pragma omp distribute parallel for collapse(6)
+#endif
+#ifdef LACC
+#pragma acc parallel loop deviceptr(out_,data_) tile(sizex,sizey,sizez)
+    for (int x = 0; x < sizex; x += blocksize_x)
+    {
+        for (int y = 0; y < sizey; y += blocksize_y)
+        {
+            for (int z = 0; z < sizez; z += blocksize_z)
+            {
+                //#pragma omp parallel for collapse(3)
+                for (int bx = x; bx < x + blocksize_x; bx++)
+                {
+                    for (int by = y; by < y + blocksize_y; by++)
+                    {
+                        for (int bz = z; bz < z + blocksize_z; bz++)
+                        {
+                            //kernel starts here
+                            // sum for the scope of the window..
+                            if (bx >= 0 && bx < sizex &&
+                                by >= 0 && by < sizey &&
+                                bz >= 0 && bz < sizez)
+                            {
+                                for (int ibx = bx - window_size; ibx <= (bx + window_size); ibx++)
+                                    for (int iby = by - window_size; iby <= (by + window_size); iby++)
+                                        for (int ibz = bz - window_size; ibz <= (bz + window_size); ibz++)
+                                        {
+                                            if (ibx >= 0 && ibx < sizex &&
+                                                iby >= 0 && iby < sizey &&
+                                                ibz >= 0 && ibz < sizez)
+                                            {
+                                                //printf("talált  ");
+
+                                                //out_[bx][by][bz] += data_[ibx][iby][ibz];
+                                                
+                                                //out_[bx][by][bz]=0;
+                                            }
+
+                                            //printf("x:%d,y:%d,z:%d\n",ibx,iby,ibz);
+                                        }
+                            }//kernel ends here
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+#endif
+-------------
+
+
+    /*for (int ibx = x - window_size; ibx < x + window_size; ibx++){
+        for (int iby = y - window_size; iby < y + window_size; iby++){
+            for (int ibz = z - window_size; ibz < z + window_size; ibz++)
+            {
+                
+
+                //printf(" %lu,%lu,%lu   ",bx,by,bz);
+                if (ibx >= 0 && ibx < sizex &&
+                    iby >= 0 && iby < sizey &&
+                    ibz >= 0 && ibz < sizez )
+                {
+                    out2_[x][y][z] += data_[ibx][iby][ibz];
+                }else
+                {
+                    //printf("NOOOO\n");
+                }
+            }
+        }
+    }*/
+-----------------
+/*
+int left=65535;
+Spawn_stopper("blocking");
+
+//#pragma omp task
+for(int team_i=0;team_i<team_num;team_i+=65535)
+{
+if(team_i+65535>team_num)
+    left=team_i-65535;
+#pragma omp target teams num_teams(984375) thread_limit(blocksize_x*blocksize_y*blocksize_z)
+#pragma omp parallel  
+{
+    int bid,tid;
+    bid=omp_get_team_num();
+    tid=omp_get_thread_num();
+    int x,y,z;
+
+    z=bid/(blockdbx*blockdby)*blocksize_z;
+    bid-=(bid/(blockdbx*blockdby))*blockdbx*blockdby;
+    y=(bid/blockdbx)*blocksize_y;
+    x=bid%blockdbx*blocksize_x;
+    //printf("nyersen %d %d %d\n",x,y,z);
+    z+=tid/(blocksize_x*blocksize_y);
+    tid-=(tid/(blocksize_x*blocksize_y))*(blocksize_x*blocksize_y);
+    //printf("%d\n",tid);
+    y+=(tid/blocksize_x);
+    x+=tid%blocksize_x;
+    
+    if(omp_get_team_num()==65535)
+    {
+        printf(" %d,%d,%d   \n",x,y,z);
+    }
+    if(x==0 && y==0 && z==12)
+                {
+                    printf(" %d,%d,%d   \n",x,y,z);
+                }
+
+
+    //printf("kord %d %d %d\n",x,y,z);
+    //kernel start
+    // sum for the scope of the window..
+    for (int ibx = x - window_size; ibx < x + window_size; ibx++){
+        for (int iby = y - window_size; iby < y + window_size; iby++){
+            for (int ibz = z - window_size; ibz < z + window_size; ibz++)
+            {
+                if(x==0 && y==0 && z==12)
+                {
+                    printf(" %lu,%lu,%lu   ",ibx,iby,ibz);
+                }
+
+
+                //printf(" %lu,%lu,%lu   ",bx,by,bz);
+                if (ibx >= 0 && ibx < sizex &&
+                    iby >= 0 && iby < sizey &&
+                    ibz >= 0 && ibz < sizez &&
+                    x >= 0 && x < sizex &&
+                    y >= 0 && y < sizey &&
+                    z >= 0 && z < sizez)
+                {
+                    out2_[x][y][z] += data_[ibx][iby][ibz];
+                }else
+                {
+                    //printf("NOOOO\n");
+                }
+            }
+        }
+    }
+
+           //printf("ertek:%d %d %d:  %f \n",x,y,z,out2_[x][y][z]);
+    //kernel end
+}
+
+
+Kill_stopper();
+*/
+----------------

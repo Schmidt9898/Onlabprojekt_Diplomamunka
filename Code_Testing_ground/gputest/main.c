@@ -7,9 +7,9 @@
 
 
 /* constans méretek */
-size_t sizex = 1000;
-size_t sizey = 500;
-size_t sizez = 500;
+size_t sizex = 100;
+size_t sizey = 100;
+size_t sizez = 100;
 
 struct dataobj
 {
@@ -55,9 +55,9 @@ printf(" = %d\n",);
 
 
 
-int blocksize_x=8;
+int blocksize_x=32;
 int blocksize_y=8;
-int blocksize_z=8;
+int blocksize_z=4;
 
 //window size
 int window_size=4;
@@ -101,7 +101,7 @@ Spawn_stopper("3d zeroing");
 } 
 Kill_stopper();
 
-
+/*
 
 Spawn_stopper("3d computation");
 #pragma omp target teams //num_teams(128) thread_limit(8*8*8) 
@@ -135,7 +135,7 @@ Spawn_stopper("3d computation");
     }
 } 
 Kill_stopper();
-
+*/
 /*
 Spawn_stopper("3d computation collapse 2 simd");
 #pragma omp target teams //num_teams(128) thread_limit(8*8*8) 
@@ -191,15 +191,15 @@ printf("Szamlalo: %d\n",szamlalo);
 */
 
 Spawn_stopper("3d tiling with computation");
-#pragma omp target teams //num_teams(128) thread_limit(1024) 
+#pragma omp target teams distribute collapse(3)//num_teams(128) thread_limit(1024) 
 {
     //printf("size0,size1  %d",size1);
-#pragma omp distribute parallel for collapse(3)
-    for (long x = 0; x < sizex; x += blocksize_x)
+//#pragma omp distribute parallel for collapse(3)
+    for (long x = window_size; x < sizex-window_size; x += blocksize_x)
     {
-        for (long y = 0; y < sizey; y += blocksize_y)
+        for (long y = window_size; y < sizey-window_size; y += blocksize_y)
         {
-            for (long z = 0; z < sizez; z += blocksize_z)
+            for (long z = window_size; z < sizez-window_size; z += blocksize_z)
             {
                 #pragma omp parallel for collapse(3)
                 for (long bx = x; bx < x + blocksize_x; bx++)
@@ -208,10 +208,23 @@ Spawn_stopper("3d tiling with computation");
                     {
                         for (long bz = z; bz < z + blocksize_z; bz++)
                         {
+                            if (bx < sizex-window_size &&
+                                by < sizey-window_size &&
+                                bz < sizez-window_size){
+
+                            out_[bx][by][bz]+=
+				data_[bx][by][bz-4]+data_[bx][by][bz-3]+data_[bx][by][bz-2]+data_[bx][by][bz-1]+
+				data_[bx][by][bz+4]+data_[bx][by][bz+3]+data_[bx][by][bz+2]+data_[bx][by][bz+1]+
+				data_[bx][by-4][bz]+data_[bx][by-3][bz]+data_[bx][by-2][bz]+data_[bx][by-1][bz]+
+				data_[bx][by+4][bz]+data_[bx][by+3][bz]+data_[bx][by+2][bz]+data_[bx][by+1][bz]+
+				data_[bx-4][by][bz]+data_[bx-3][by][bz]+data_[bx-2][by][bz]+data_[bx-1][by][bz]+
+				data_[bx+4][by][bz]+data_[bx+3][by][bz]+data_[bx+2][by][bz]+data_[bx+1][by][bz];
+                                }
                                         //out_[bx][by][bz]=2;
                                         //printf("%f",2.0);
                             //printf("--------x:%d,y:%d,z:%d\n",bx,by,bz);
                             // sum for the scope of the window..
+                            /*
                             if (bx >= 0 && bx < sizex &&
                                 by >= 0 && by < sizey &&
                                 bz >= 0 && bz < sizez)
@@ -232,7 +245,7 @@ Spawn_stopper("3d tiling with computation");
 
                                             //printf("x:%d,y:%d,z:%d\n",ibx,iby,ibz);
                                         }
-                            }
+                            }*/
                         }
                     }
                 }

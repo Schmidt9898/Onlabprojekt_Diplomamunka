@@ -13,9 +13,9 @@
 
 
 /* constans méretek */
-int sizex = 500;
-int sizey = 500;
-int sizez = 500;
+int sizex = 800;
+int sizey = 800;
+int sizez = 800;
 
 struct dataobj
 {
@@ -68,9 +68,9 @@ printf(" = %d\n",);
 
 
 
-int blocksize_x=1;
-int blocksize_y=1;
-int blocksize_z=1;
+int blocksize_x=32;
+int blocksize_y=8;
+int blocksize_z=4;
 if(argc>=4){
     blocksize_x=atoi(argv[1]);
     blocksize_y=atoi(argv[2]);
@@ -156,95 +156,59 @@ Spawn_stopper("3d computation");
 #ifdef LACC
 #pragma acc parallel loop collapse(3) deviceptr(out_,data_)
 #endif
-    for(int x=0;x<sizex;x++)
+for(int x=window_size;x<sizex-window_size;x++)
     {
-        for(int y=0;y<sizey;y++)
+        for(int y=window_size;y<sizey-window_size;y++)
         {
-            for(int z=0;z<sizez;z++)
+            for(int z=window_size;z<sizez-window_size;z++)
             {
                 //kernel start
-                
-                //printf("x:%d,y:%d,z:%d \n",x,y,z);
-                
-                // sum for the scope of the window..
-                for(int ibx=x-window_size;ibx<x+window_size;ibx++)
-                for(int iby=y-window_size;iby<y+window_size;iby++)
-                for(int ibz=z-window_size;ibz<z+window_size;ibz++)
-                    {
-                    if(ibx>=0 && ibx < sizex &&
-                        iby>=0 && iby < sizey &&
-                        ibz>=0 && ibz < sizez){
-                            out_[x][y][z]+=data_[ibx][iby][ibz];
-                            //printf("good?\n");
-                        }else
-                        {
-                            //printf("not good\n");
-                        }
-                }
-                        //printf("x:%d,y:%d,z:%d   val: %f\n",x,y,z,out_[x][y][z]);
+                            out_[x][y][z]+=
+				data_[x][y][z-4]+data_[x][y][z-3]+data_[x][y][z-2]+data_[x][y][z-1]+
+				data_[x][y][z+4]+data_[x][y][z+3]+data_[x][y][z+2]+data_[x][y][z+1]+
+				data_[x][y-4][z]+data_[x][y-3][z]+data_[x][y-2][z]+data_[x][y-1][z]+
+				data_[x][y+4][z]+data_[x][y+3][z]+data_[x][y+2][z]+data_[x][y+1][z]+
+				data_[x-4][y][z]+data_[x-3][y][z]+data_[x-2][y][z]+data_[x-1][y][z]+
+				data_[x+4][y][z]+data_[x+3][y][z]+data_[x+2][y][z]+data_[x+1][y][z];
                 //kernel end
+                //printf("x:%d,y:%d,z:%d   val: %f\n",x,y,z,out_[x][y][z]);
             }        
         }
     }
 Kill_stopper();
 
 
-/*
-Spawn_stopper("3d tiling with computation");
+
+Spawn_stopper("3d computation with tile() parancs");
 #ifdef LOMP
 #pragma omp target teams //num_teams(128) thread_limit(1024) 
-#pragma omp distribute parallel for collapse(6)
+#pragma omp distribute parallel for collapse(3) tile(sizex,sizey,sizez)
 #endif
 #ifdef LACC
-#pragma acc parallel deviceptr(out_,data_) num_gangs(65535) vector_length(256)
-#pragma acc loop collapse(6) 
-    for (int x = 0; x < sizex; x += blocksize_x)
+#pragma acc parallel loop deviceptr(out_,data_) tile(32,8,4)
+#endif
+for(int x=window_size;x<sizex-window_size;x++)
     {
-        for (int y = 0; y < sizey; y += blocksize_y)
+        for(int y=window_size;y<sizey-window_size;y++)
         {
-            for (int z = 0; z < sizez; z += blocksize_z)
+            for(int z=window_size;z<sizez-window_size;z++)
             {
-                //#pragma omp parallel for collapse(3)
-                for (int bx = x; bx < x + blocksize_x; bx++)
-                {
-                    for (int by = y; by < y + blocksize_y; by++)
-                    {
-                        for (int bz = z; bz < z + blocksize_z; bz++)
-                        {
-                            //kernel starts here
-                            // sum for the scope of the window..
-                            if (bx >= 0 && bx < sizex &&
-                                by >= 0 && by < sizey &&
-                                bz >= 0 && bz < sizez)
-                            {
-                                for (int ibx = bx - window_size; ibx <= (bx + window_size); ibx++)
-                                    for (int iby = by - window_size; iby <= (by + window_size); iby++)
-                                        for (int ibz = bz - window_size; ibz <= (bz + window_size); ibz++)
-                                        {
-                                            if (ibx >= 0 && ibx < sizex &&
-                                                iby >= 0 && iby < sizey &&
-                                                ibz >= 0 && ibz < sizez)
-                                            {
-                                                //printf("talált  ");
-
-                                                //out_[bx][by][bz] += data_[ibx][iby][ibz];
-                                                
-                                                //out_[bx][by][bz]=0;
-                                            }
-
-                                            //printf("x:%d,y:%d,z:%d\n",ibx,iby,ibz);
-                                        }
-                            }//kernel ends here
-                        }
-                    }
-                }
-            }
+                //kernel start
+                            out_[x][y][z]+=
+				data_[x][y][z-4]+data_[x][y][z-3]+data_[x][y][z-2]+data_[x][y][z-1]+
+				data_[x][y][z+4]+data_[x][y][z+3]+data_[x][y][z+2]+data_[x][y][z+1]+
+				data_[x][y-4][z]+data_[x][y-3][z]+data_[x][y-2][z]+data_[x][y-1][z]+
+				data_[x][y+4][z]+data_[x][y+3][z]+data_[x][y+2][z]+data_[x][y+1][z]+
+				data_[x-4][y][z]+data_[x-3][y][z]+data_[x-2][y][z]+data_[x-1][y][z]+
+				data_[x+4][y][z]+data_[x+3][y][z]+data_[x+2][y][z]+data_[x+1][y][z];
+                //kernel end
+                //printf("x:%d,y:%d,z:%d   val: %f\n",x,y,z,out_[x][y][z]);
+            }        
         }
     }
 
-#endif
 Kill_stopper();
-*/
+
 
 
 #ifdef LOMP
@@ -261,80 +225,67 @@ int blockdbz=sizez/blocksize_z+((sizez%blocksize_z!=0)?1:0);
 printf("block number dim %d %d %d\n",blockdbx,blockdby,blockdbz);
 printf("thread_num %d \n",blocksize_x*blocksize_y*blocksize_z);
 printf("team_num %d \n",blockdbx*blockdby*blockdbz);
-
 int team_num=blockdbx*blockdby*blockdbz;
-int left=65535;
-Spawn_stopper("blocking");
-//#pragma omp task
-/*for(int team_i=0;team_i<team_num;team_i+=65535)
-{
-if(team_i+65535>team_num)
-    left=team_i-65535;*/
-#pragma omp target teams num_teams(984375) thread_limit(blocksize_x*blocksize_y*blocksize_z)
-#pragma omp parallel  
-{
-    int bid,tid;
-    bid=omp_get_team_num();
-    tid=omp_get_thread_num();
+
+
+int thread_limit=blocksize_x*blocksize_y*blocksize_z;
+Spawn_stopper("2 loop blocking hack");
+#pragma omp target teams distribute parallel for collapse(2) thread_limit(thread_limit) private(blockdbx,blockdbx,blockdbx)
+for(int bid=0;bid<team_num;bid++)
+    for(int tid=0;tid<thread_limit;tid++)
+    {
+
+    //bid=omp_get_team_num();
+    //tid=omp_get_thread_num();
     int x,y,z;
+    //printf("nyersen %d %d\n",bid,tid);
 
     z=bid/(blockdbx*blockdby)*blocksize_z;
     bid-=(bid/(blockdbx*blockdby))*blockdbx*blockdby;
     y=(bid/blockdbx)*blocksize_y;
     x=bid%blockdbx*blocksize_x;
-    //printf("nyersen %d %d %d\n",x,y,z);
     z+=tid/(blocksize_x*blocksize_y);
     tid-=(tid/(blocksize_x*blocksize_y))*(blocksize_x*blocksize_y);
     //printf("%d\n",tid);
     y+=(tid/blocksize_x);
     x+=tid%blocksize_x;
-    
-    /*if(omp_get_team_num()==65535)
+    //printf("kord %d %d %d\n",x,y,z);
+   /*
+    if(omp_get_team_num()==65535)
     {
         printf(" %d,%d,%d   \n",x,y,z);
-    }*/
-    /*if(x==0 && y==0 && z==12)
+    }
+    if(x==0 && y==0 && z==12)
                 {
                     printf(" %d,%d,%d   \n",x,y,z);
-                }*/
+                }
+*/
 
-
-    //printf("kord %d %d %d\n",x,y,z);
     //kernel start
     // sum for the scope of the window..
-    for (int ibx = x - window_size; ibx < x + window_size; ibx++){
-        for (int iby = y - window_size; iby < y + window_size; iby++){
-            for (int ibz = z - window_size; ibz < z + window_size; ibz++)
-            {
-                /*if(x==0 && y==0 && z==12)
-                {
-                    printf(" %lu,%lu,%lu   ",ibx,iby,ibz);
-                }*/
+    if(x >= window_size && x < sizex-window_size &&
+                    y >= window_size && y < sizey-window_size &&
+                    z >= window_size && z < sizez-window_size){
 
-
-                //printf(" %lu,%lu,%lu   ",bx,by,bz);
-                if (ibx >= 0 && ibx < sizex &&
-                    iby >= 0 && iby < sizey &&
-                    ibz >= 0 && ibz < sizez &&
-                    x >= 0 && x < sizex &&
-                    y >= 0 && y < sizey &&
-                    z >= 0 && z < sizez)
-                {
-                    out2_[x][y][z] += data_[ibx][iby][ibz];
-                }else
-                {
-                    //printf("NOOOO\n");
-                }
-            }
-        }
+                        out2_[x][y][z]+=
+				data_[x][y][z-4]+data_[x][y][z-3]+data_[x][y][z-2]+data_[x][y][z-1]+
+				data_[x][y][z+4]+data_[x][y][z+3]+data_[x][y][z+2]+data_[x][y][z+1]+
+				data_[x][y-4][z]+data_[x][y-3][z]+data_[x][y-2][z]+data_[x][y-1][z]+
+				data_[x][y+4][z]+data_[x][y+3][z]+data_[x][y+2][z]+data_[x][y+1][z]+
+				data_[x-4][y][z]+data_[x-3][y][z]+data_[x-2][y][z]+data_[x-1][y][z]+
+				data_[x+4][y][z]+data_[x+3][y][z]+data_[x+2][y][z]+data_[x+1][y][z];
     }
 
            //printf("ertek:%d %d %d:  %f \n",x,y,z,out2_[x][y][z]);
     //kernel end
-}
+
+    }
+
+    Kill_stopper();
 
 
-Kill_stopper();
+
+
 
 
 #endif

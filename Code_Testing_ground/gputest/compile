@@ -13,7 +13,7 @@ fi
 #echo "compile for any? gpu..." 
 #clang -I ../../Smart_Stopper main.c  -o run -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm 
 #echo "compile for titan v100.."
-#clang -I ../../Smart_Stopper main.c  -o run_v100 -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -Xopenmp-target -march=sm_70 
+clang -I ../../Smart_Stopper main.c  -o run_v100 -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -Xopenmp-target -march=sm_70 
 #-Xarch_device sm_70
 
 #pgcc -omp -I ../../Smart_Stopper main.c  -o run -Wall -fopenmp=libomp -lm 
@@ -26,8 +26,8 @@ fi
 
 
 #echo "compile for any? gpu..." 
-clang -I ../../Smart_Stopper mainbase.c  -o run -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -D LOMP
+#clang -I ../../Smart_Stopper mainbase.c  -o run -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -D LOMP
 
-clang -I ../../Smart_Stopper mainbase.c  -o run_v100 -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -Xopenmp-target -march=sm_70 -D LOMP
+#clang -I ../../Smart_Stopper mainbase.c  -o run_v100 -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -Xopenmp-target -march=sm_70 -D LOMP
 
 #pgcc -acc -Minfo=accel -ta=tesla -Wall -I ../../Smart_Stopper -c99 mainbase.c -o runacc -D LACC

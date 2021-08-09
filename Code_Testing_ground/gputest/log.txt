@@ -1,0 +1,2021 @@
+
+OpenMP Running
+
+meret: 0.000012 Gb 
+offload and memory managment ID:0 started->
+offload and memory managment took: 0.077974 sec.
+3d zeroing ID:1 started->
+3d zeroing took: 0.000111 sec.
+3d computation ID:2 started->
+3d computation took: 0.000532 sec.
+block number dim 10 10 10
+thread_num 1 
+team_num 1000 
+2 loop blocking hack ID:3 started->
+nyersen 60 0
+nyersen 138 0
+nyersen 3 0
+nyersen 104 0
+nyersen 21 0
+nyersen 9 0
+nyersen 107 0
+nyersen 108 0
+nyersen 156 0
+nyersen 141 0
+nyersen 139 0
+nyersen 164 0
+nyersen 110 0
+nyersen 109 0
+nyersen 199 0
+nyersen 180 0
+nyersen 36 0
+nyersen 198 0
+nyersen 65 0
+nyersen 106 0
+nyersen 204 0
+nyersen 44 0
+nyersen 48 0
+nyersen 162 0
+nyersen 73 0
+nyersen 115 0
+nyersen 142 0
+nyersen 62 0
+nyersen 185 0
+nyersen 178 0
+nyersen 71 0
+nyersen 148 0
+nyersen 184 0
+nyersen 143 0
+nyersen 181 0
+nyersen 173 0
+nyersen 193 0
+nyersen 126 0
+nyersen 140 0
+nyersen 177 0
+nyersen 201 0
+nyersen 202 0
+nyersen 147 0
+nyersen 81 0
+nyersen 96 0
+nyersen 50 0
+nyersen 75 0
+nyersen 25 0
+nyersen 86 0
+nyersen 111 0
+nyersen 113 0
+nyersen 84 0
+nyersen 133 0
+nyersen 179 0
+nyersen 24 0
+nyersen 49 0
+nyersen 171 0
+nyersen 197 0
+nyersen 97 0
+nyersen 195 0
+nyersen 125 0
+nyersen 150 0
+nyersen 170 0
+nyersen 128 0
+nyersen 61 0
+nyersen 200 0
+nyersen 172 0
+nyersen 79 0
+nyersen 63 0
+nyersen 37 0
+nyersen 127 0
+nyersen 151 0
+nyersen 146 0
+nyersen 144 0
+nyersen 11 0
+nyersen 149 0
+nyersen 131 0
+nyersen 102 0
+nyersen 39 0
+nyersen 188 0
+nyersen 121 0
+nyersen 0 0
+nyersen 137 0
+nyersen 31 0
+nyersen 35 0
+nyersen 32 0
+nyersen 5 0
+nyersen 41 0
+nyersen 6 0
+nyersen 42 0
+nyersen 34 0
+nyersen 20 0
+nyersen 4 0
+nyersen 76 0
+nyersen 83 0
+nyersen 94 0
+nyersen 192 0
+nyersen 30 0
+nyersen 119 0
+nyersen 174 0
+nyersen 203 0
+nyersen 112 0
+nyersen 85 0
+nyersen 163 0
+nyersen 166 0
+nyersen 23 0
+nyersen 68 0
+nyersen 8 0
+nyersen 47 0
+nyersen 53 0
+nyersen 135 0
+nyersen 64 0
+nyersen 186 0
+nyersen 182 0
+nyersen 88 0
+nyersen 114 0
+nyersen 29 0
+nyersen 26 0
+nyersen 190 0
+nyersen 40 0
+nyersen 130 0
+nyersen 13 0
+nyersen 43 0
+nyersen 92 0
+nyersen 7 0
+nyersen 159 0
+nyersen 206 0
+nyersen 10 0
+nyersen 82 0
+nyersen 12 0
+nyersen 194 0
+nyersen 16 0
+nyersen 27 0
+nyersen 87 0
+nyersen 77 0
+nyersen 134 0
+nyersen 207 0
+nyersen 205 0
+nyersen 95 0
+nyersen 17 0
+nyersen 103 0
+nyersen 57 0
+nyersen 67 0
+nyersen 45 0
+nyersen 56 0
+nyersen 100 0
+nyersen 28 0
+nyersen 101 0
+nyersen 66 0
+nyersen 54 0
+nyersen 14 0
+nyersen 116 0
+nyersen 69 0
+nyersen 105 0
+nyersen 90 0
+nyersen 132 0
+nyersen 120 0
+nyersen 154 0
+nyersen 117 0
+nyersen 167 0
+nyersen 196 0
+nyersen 59 0
+nyersen 136 0
+nyersen 18 0
+nyersen 52 0
+nyersen 22 0
+nyersen 91 0
+nyersen 78 0
+nyersen 89 0
+nyersen 98 0
+nyersen 1 0
+nyersen 55 0
+nyersen 80 0
+nyersen 123 0
+nyersen 99 0
+nyersen 72 0
+nyersen 70 0
+nyersen 129 0
+nyersen 169 0
+nyersen 191 0
+nyersen 122 0
+nyersen 175 0
+nyersen 152 0
+nyersen 153 0
+nyersen 189 0
+nyersen 187 0
+nyersen 124 0
+nyersen 165 0
+nyersen 155 0
+nyersen 19 0
+nyersen 38 0
+nyersen 51 0
+nyersen 74 0
+nyersen 46 0
+nyersen 58 0
+nyersen 145 0
+nyersen 161 0
+nyersen 15 0
+nyersen 33 0
+nyersen 2 0
+nyersen 158 0
+nyersen 168 0
+nyersen 118 0
+nyersen 157 0
+nyersen 176 0
+nyersen 93 0
+nyersen 160 0
+nyersen 183 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 208 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 210 0
+nyersen 209 0
+nyersen 211 0
+nyersen 212 0
+nyersen 213 0
+nyersen 214 0
+nyersen 215 0
+nyersen 216 0
+kord 0 0 0
+nyersen 217 0
+nyersen 218 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 219 0
+nyersen 220 0
+nyersen 222 0
+nyersen 221 0
+nyersen 223 0
+nyersen 225 0
+nyersen 226 0
+nyersen 228 0
+nyersen 227 0
+nyersen 229 0
+nyersen 230 0
+nyersen 224 0
+nyersen 232 0
+nyersen 233 0
+nyersen 231 0
+nyersen 234 0
+nyersen 235 0
+nyersen 236 0
+nyersen 237 0
+nyersen 238 0
+nyersen 239 0
+nyersen 240 0
+nyersen 241 0
+nyersen 242 0
+nyersen 243 0
+nyersen 244 0
+nyersen 245 0
+nyersen 246 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 247 0
+nyersen 248 0
+kord 0 0 0
+kord 0 0 0
+nyersen 249 0
+nyersen 250 0
+nyersen 251 0
+kord 0 0 0
+kord 0 0 0
+nyersen 252 0
+kord 0 0 0
+nyersen 253 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 255 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 254 0
+kord 0 0 0
+nyersen 256 0
+kord 0 0 0
+nyersen 257 0
+nyersen 258 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 259 0
+kord 0 0 0
+nyersen 260 0
+kord 0 0 0
+nyersen 261 0
+kord 0 0 0
+nyersen 262 0
+kord 0 0 0
+nyersen 263 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 264 0
+nyersen 265 0
+nyersen 266 0
+nyersen 267 0
+kord 0 0 0
+nyersen 268 0
+nyersen 269 0
+nyersen 270 0
+nyersen 271 0
+nyersen 272 0
+nyersen 273 0
+nyersen 274 0
+kord 0 0 0
+nyersen 276 0
+nyersen 275 0
+kord 0 0 0
+kord 0 0 0
+nyersen 277 0
+nyersen 278 0
+nyersen 279 0
+nyersen 280 0
+nyersen 282 0
+nyersen 281 0
+nyersen 283 0
+nyersen 284 0
+nyersen 285 0
+nyersen 286 0
+nyersen 287 0
+kord 0 0 0
+nyersen 288 0
+nyersen 289 0
+nyersen 291 0
+nyersen 292 0
+nyersen 290 0
+nyersen 294 0
+nyersen 293 0
+kord 0 0 0
+kord 0 0 0
+nyersen 295 0
+nyersen 297 0
+nyersen 296 0
+kord 0 0 0
+kord 0 0 0
+nyersen 298 0
+nyersen 299 0
+nyersen 300 0
+nyersen 303 0
+nyersen 302 0
+nyersen 301 0
+nyersen 304 0
+kord 0 0 0
+nyersen 305 0
+nyersen 306 0
+nyersen 307 0
+kord 0 0 0
+nyersen 308 0
+nyersen 309 0
+nyersen 310 0
+nyersen 311 0
+nyersen 312 0
+nyersen 313 0
+nyersen 314 0
+nyersen 315 0
+kord 0 0 0
+nyersen 316 0
+kord 0 0 0
+nyersen 317 0
+kord 0 0 0
+nyersen 319 0
+nyersen 318 0
+nyersen 320 0
+nyersen 321 0
+nyersen 322 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 323 0
+kord 0 0 0
+nyersen 324 0
+nyersen 325 0
+nyersen 326 0
+kord 0 0 0
+nyersen 327 0
+nyersen 329 0
+nyersen 328 0
+kord 0 0 0
+kord 0 0 0
+nyersen 331 0
+nyersen 330 0
+nyersen 332 0
+nyersen 333 0
+nyersen 334 0
+nyersen 335 0
+nyersen 336 0
+kord 0 0 0
+nyersen 337 0
+kord 0 0 0
+nyersen 338 0
+nyersen 339 0
+nyersen 340 0
+nyersen 341 0
+nyersen 343 0
+kord 0 0 0
+nyersen 345 0
+kord 0 0 0
+nyersen 347 0
+nyersen 346 0
+nyersen 349 0
+nyersen 344 0
+nyersen 342 0
+nyersen 351 0
+kord 0 0 0
+nyersen 350 0
+nyersen 354 0
+nyersen 356 0
+nyersen 353 0
+nyersen 359 0
+nyersen 360 0
+nyersen 362 0
+nyersen 363 0
+nyersen 361 0
+nyersen 364 0
+nyersen 365 0
+nyersen 366 0
+nyersen 367 0
+nyersen 368 0
+nyersen 369 0
+kord 0 0 0
+kord 0 0 0
+nyersen 372 0
+nyersen 371 0
+nyersen 375 0
+kord 0 0 0
+nyersen 355 0
+nyersen 348 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 376 0
+nyersen 358 0
+kord 0 0 0
+nyersen 357 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 377 0
+kord 0 0 0
+nyersen 378 0
+nyersen 379 0
+kord 0 0 0
+kord 0 0 0
+nyersen 380 0
+kord 0 0 0
+nyersen 383 0
+kord 0 0 0
+nyersen 384 0
+nyersen 385 0
+nyersen 388 0
+nyersen 387 0
+nyersen 391 0
+nyersen 390 0
+nyersen 389 0
+nyersen 381 0
+nyersen 392 0
+nyersen 393 0
+nyersen 370 0
+nyersen 394 0
+nyersen 386 0
+nyersen 395 0
+nyersen 396 0
+nyersen 400 0
+nyersen 401 0
+nyersen 397 0
+nyersen 402 0
+nyersen 352 0
+nyersen 406 0
+nyersen 399 0
+nyersen 398 0
+kord 0 0 0
+nyersen 374 0
+nyersen 411 0
+kord 0 0 0
+nyersen 382 0
+nyersen 373 0
+nyersen 407 0
+nyersen 405 0
+nyersen 403 0
+nyersen 404 0
+nyersen 410 0
+nyersen 412 0
+nyersen 413 0
+nyersen 408 0
+nyersen 409 0
+nyersen 415 0
+nyersen 417 0
+nyersen 419 0
+kord 0 0 0
+nyersen 420 0
+nyersen 418 0
+nyersen 421 0
+nyersen 422 0
+nyersen 423 0
+nyersen 424 0
+nyersen 426 0
+nyersen 427 0
+nyersen 428 0
+nyersen 416 0
+nyersen 414 0
+nyersen 429 0
+kord 0 0 0
+kord 0 0 0
+nyersen 432 0
+nyersen 434 0
+nyersen 436 0
+nyersen 437 0
+nyersen 439 0
+nyersen 438 0
+nyersen 440 0
+nyersen 441 0
+nyersen 443 0
+nyersen 442 0
+nyersen 425 0
+nyersen 444 0
+nyersen 445 0
+nyersen 447 0
+nyersen 449 0
+nyersen 450 0
+nyersen 451 0
+nyersen 446 0
+nyersen 453 0
+nyersen 431 0
+nyersen 433 0
+nyersen 435 0
+nyersen 454 0
+kord 0 0 0
+nyersen 448 0
+nyersen 430 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 452 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 455 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 456 0
+nyersen 457 0
+nyersen 458 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 459 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 460 0
+kord 0 0 0
+nyersen 461 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 462 0
+kord 0 0 0
+nyersen 464 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 468 0
+kord 0 0 0
+nyersen 463 0
+nyersen 469 0
+kord 0 0 0
+kord 0 0 0
+nyersen 470 0
+nyersen 471 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 466 0
+nyersen 472 0
+nyersen 474 0
+nyersen 475 0
+nyersen 476 0
+nyersen 477 0
+nyersen 478 0
+nyersen 479 0
+kord 0 0 0
+nyersen 465 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 467 0
+nyersen 480 0
+nyersen 473 0
+kord 0 0 0
+kord 0 0 0
+nyersen 482 0
+kord 0 0 0
+kord 0 0 0
+nyersen 483 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 481 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 486 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 485 0
+nyersen 487 0
+nyersen 490 0
+nyersen 489 0
+nyersen 491 0
+nyersen 492 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 493 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 494 0
+kord 0 0 0
+kord 0 0 0
+nyersen 484 0
+kord 0 0 0
+nyersen 495 0
+nyersen 497 0
+kord 0 0 0
+nyersen 498 0
+nyersen 488 0
+nyersen 496 0
+nyersen 500 0
+nyersen 501 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 506 0
+nyersen 503 0
+nyersen 507 0
+kord 0 0 0
+nyersen 499 0
+kord 0 0 0
+nyersen 502 0
+nyersen 510 0
+nyersen 509 0
+nyersen 511 0
+nyersen 504 0
+nyersen 508 0
+nyersen 505 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 512 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 513 0
+kord 0 0 0
+nyersen 515 0
+nyersen 517 0
+nyersen 520 0
+nyersen 522 0
+nyersen 523 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 521 0
+nyersen 514 0
+nyersen 524 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 525 0
+kord 0 0 0
+kord 0 0 0
+nyersen 516 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 518 0
+nyersen 519 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 527 0
+nyersen 528 0
+nyersen 529 0
+nyersen 530 0
+nyersen 526 0
+nyersen 531 0
+nyersen 532 0
+nyersen 533 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 534 0
+nyersen 535 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 536 0
+kord 0 0 0
+kord 0 0 0
+nyersen 537 0
+kord 0 0 0
+kord 0 0 0
+nyersen 538 0
+kord 0 0 0
+nyersen 539 0
+kord 0 0 0
+nyersen 540 0
+nyersen 541 0
+kord 0 0 0
+nyersen 543 0
+nyersen 542 0
+kord 0 0 0
+nyersen 545 0
+nyersen 546 0
+nyersen 544 0
+nyersen 548 0
+kord 0 0 0
+nyersen 547 0
+nyersen 549 0
+nyersen 551 0
+nyersen 552 0
+kord 0 0 0
+kord 0 0 0
+nyersen 550 0
+kord 0 0 0
+nyersen 553 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 554 0
+nyersen 555 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 556 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 557 0
+nyersen 558 0
+kord 0 0 0
+nyersen 559 0
+kord 0 0 0
+nyersen 560 0
+nyersen 561 0
+nyersen 562 0
+kord 0 0 0
+nyersen 563 0
+kord 0 0 0
+nyersen 564 0
+nyersen 565 0
+nyersen 566 0
+nyersen 568 0
+nyersen 567 0
+nyersen 569 0
+nyersen 570 0
+nyersen 571 0
+nyersen 572 0
+nyersen 573 0
+nyersen 574 0
+nyersen 575 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 576 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 577 0
+nyersen 578 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 579 0
+nyersen 580 0
+kord 0 0 0
+nyersen 581 0
+nyersen 583 0
+nyersen 582 0
+nyersen 584 0
+nyersen 585 0
+nyersen 586 0
+kord 0 0 0
+nyersen 587 0
+kord 0 0 0
+nyersen 588 0
+nyersen 589 0
+nyersen 590 0
+nyersen 591 0
+nyersen 592 0
+nyersen 593 0
+nyersen 594 0
+kord 0 0 0
+nyersen 596 0
+nyersen 595 0
+kord 0 0 0
+kord 0 0 0
+nyersen 597 0
+kord 0 0 0
+kord 0 0 0
+nyersen 598 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 600 0
+nyersen 601 0
+nyersen 602 0
+nyersen 603 0
+nyersen 605 0
+nyersen 606 0
+nyersen 599 0
+kord 0 0 0
+nyersen 607 0
+nyersen 608 0
+kord 0 0 0
+nyersen 610 0
+nyersen 609 0
+kord 0 0 0
+nyersen 611 0
+kord 0 0 0
+nyersen 604 0
+nyersen 612 0
+nyersen 613 0
+nyersen 616 0
+kord 0 0 0
+nyersen 614 0
+nyersen 617 0
+kord 0 0 0
+nyersen 619 0
+nyersen 615 0
+nyersen 618 0
+nyersen 621 0
+nyersen 620 0
+nyersen 622 0
+nyersen 623 0
+nyersen 627 0
+nyersen 624 0
+nyersen 628 0
+nyersen 625 0
+nyersen 629 0
+nyersen 626 0
+kord 0 0 0
+nyersen 630 0
+nyersen 631 0
+nyersen 632 0
+nyersen 633 0
+nyersen 634 0
+nyersen 635 0
+nyersen 636 0
+nyersen 637 0
+nyersen 638 0
+nyersen 639 0
+nyersen 640 0
+nyersen 641 0
+nyersen 642 0
+nyersen 643 0
+nyersen 645 0
+nyersen 644 0
+nyersen 646 0
+kord 0 0 0
+nyersen 647 0
+nyersen 648 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 649 0
+nyersen 651 0
+nyersen 653 0
+kord 0 0 0
+kord 0 0 0
+nyersen 650 0
+nyersen 652 0
+nyersen 654 0
+nyersen 655 0
+nyersen 656 0
+nyersen 657 0
+nyersen 658 0
+nyersen 659 0
+nyersen 661 0
+nyersen 666 0
+nyersen 663 0
+nyersen 665 0
+nyersen 664 0
+nyersen 667 0
+nyersen 672 0
+nyersen 670 0
+kord 0 0 0
+nyersen 668 0
+nyersen 660 0
+nyersen 674 0
+nyersen 675 0
+nyersen 671 0
+nyersen 673 0
+nyersen 679 0
+nyersen 680 0
+nyersen 677 0
+nyersen 683 0
+nyersen 662 0
+nyersen 685 0
+nyersen 681 0
+nyersen 686 0
+kord 0 0 0
+nyersen 676 0
+nyersen 678 0
+nyersen 689 0
+nyersen 669 0
+nyersen 688 0
+nyersen 682 0
+nyersen 687 0
+nyersen 684 0
+kord 0 0 0
+nyersen 690 0
+nyersen 691 0
+nyersen 692 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 693 0
+kord 0 0 0
+nyersen 694 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 696 0
+nyersen 695 0
+nyersen 700 0
+nyersen 701 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 699 0
+kord 0 0 0
+nyersen 702 0
+nyersen 704 0
+nyersen 705 0
+nyersen 698 0
+nyersen 697 0
+kord 0 0 0
+nyersen 703 0
+kord 0 0 0
+kord 0 0 0
+nyersen 706 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 707 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 708 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 710 0
+nyersen 711 0
+nyersen 712 0
+nyersen 714 0
+nyersen 713 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 715 0
+nyersen 719 0
+kord 0 0 0
+kord 0 0 0
+nyersen 721 0
+nyersen 723 0
+nyersen 722 0
+nyersen 720 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 725 0
+nyersen 726 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 709 0
+nyersen 724 0
+kord 0 0 0
+kord 0 0 0
+nyersen 716 0
+nyersen 718 0
+nyersen 717 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 728 0
+kord 0 0 0
+nyersen 729 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 730 0
+nyersen 727 0
+nyersen 732 0
+nyersen 736 0
+nyersen 735 0
+nyersen 733 0
+nyersen 734 0
+nyersen 737 0
+nyersen 738 0
+nyersen 739 0
+nyersen 740 0
+nyersen 731 0
+nyersen 743 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 747 0
+nyersen 741 0
+nyersen 744 0
+kord 0 0 0
+nyersen 748 0
+nyersen 746 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 752 0
+kord 0 0 0
+kord 0 0 0
+nyersen 749 0
+kord 0 0 0
+kord 0 0 0
+nyersen 754 0
+nyersen 755 0
+nyersen 750 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 745 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 756 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 757 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 753 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 763 0
+kord 0 0 0
+nyersen 760 0
+kord 0 0 0
+nyersen 765 0
+nyersen 764 0
+kord 0 0 0
+nyersen 759 0
+nyersen 742 0
+kord 0 0 0
+kord 0 0 0
+nyersen 762 0
+kord 0 0 0
+kord 0 0 0
+nyersen 769 0
+nyersen 761 0
+nyersen 767 0
+nyersen 768 0
+nyersen 751 0
+nyersen 770 0
+nyersen 771 0
+nyersen 758 0
+kord 0 0 0
+nyersen 766 0
+nyersen 773 0
+nyersen 774 0
+nyersen 776 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 775 0
+nyersen 772 0
+kord 0 0 0
+nyersen 778 0
+kord 0 0 0
+nyersen 779 0
+nyersen 777 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 782 0
+nyersen 781 0
+nyersen 783 0
+nyersen 785 0
+nyersen 784 0
+nyersen 780 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 786 0
+nyersen 787 0
+nyersen 788 0
+nyersen 790 0
+nyersen 792 0
+nyersen 793 0
+kord 0 0 0
+kord 0 0 0
+nyersen 795 0
+nyersen 797 0
+nyersen 798 0
+kord 0 0 0
+nyersen 799 0
+nyersen 800 0
+kord 0 0 0
+nyersen 801 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 803 0
+nyersen 802 0
+nyersen 804 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 789 0
+nyersen 791 0
+nyersen 805 0
+nyersen 806 0
+nyersen 794 0
+kord 0 0 0
+nyersen 807 0
+nyersen 809 0
+nyersen 796 0
+nyersen 808 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 813 0
+nyersen 812 0
+kord 0 0 0
+nyersen 814 0
+kord 0 0 0
+nyersen 815 0
+nyersen 816 0
+kord 0 0 0
+nyersen 817 0
+nyersen 819 0
+nyersen 820 0
+nyersen 821 0
+nyersen 822 0
+kord 0 0 0
+nyersen 818 0
+nyersen 824 0
+nyersen 826 0
+nyersen 825 0
+nyersen 810 0
+nyersen 827 0
+nyersen 823 0
+kord 0 0 0
+nyersen 828 0
+nyersen 829 0
+kord 0 0 0
+kord 0 0 0
+nyersen 831 0
+nyersen 832 0
+nyersen 833 0
+kord 0 0 0
+kord 0 0 0
+nyersen 836 0
+nyersen 835 0
+kord 0 0 0
+kord 0 0 0
+nyersen 837 0
+nyersen 839 0
+nyersen 840 0
+nyersen 838 0
+nyersen 842 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 843 0
+kord 0 0 0
+nyersen 830 0
+nyersen 834 0
+kord 0 0 0
+nyersen 846 0
+nyersen 811 0
+nyersen 844 0
+kord 0 0 0
+nyersen 841 0
+kord 0 0 0
+nyersen 847 0
+nyersen 848 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 850 0
+nyersen 849 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 852 0
+kord 0 0 0
+nyersen 851 0
+nyersen 845 0
+kord 0 0 0
+kord 0 0 0
+nyersen 853 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 854 0
+nyersen 855 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 856 0
+kord 0 0 0
+kord 0 0 0
+nyersen 858 0
+nyersen 859 0
+nyersen 857 0
+kord 0 0 0
+nyersen 860 0
+nyersen 861 0
+nyersen 864 0
+nyersen 862 0
+kord 0 0 0
+kord 0 0 0
+nyersen 865 0
+nyersen 866 0
+nyersen 867 0
+nyersen 868 0
+nyersen 869 0
+nyersen 870 0
+nyersen 872 0
+nyersen 874 0
+nyersen 863 0
+nyersen 876 0
+nyersen 877 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 878 0
+kord 0 0 0
+nyersen 880 0
+nyersen 871 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 881 0
+nyersen 873 0
+kord 0 0 0
+nyersen 875 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 882 0
+nyersen 883 0
+kord 0 0 0
+nyersen 879 0
+nyersen 884 0
+kord 0 0 0
+kord 0 0 0
+nyersen 886 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 885 0
+kord 0 0 0
+kord 0 0 0
+nyersen 887 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 888 0
+nyersen 890 0
+kord 0 0 0
+kord 0 0 0
+nyersen 889 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 891 0
+kord 0 0 0
+nyersen 893 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 892 0
+nyersen 896 0
+nyersen 894 0
+kord 0 0 0
+nyersen 895 0
+nyersen 897 0
+nyersen 898 0
+nyersen 899 0
+nyersen 901 0
+nyersen 902 0
+nyersen 900 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 907 0
+nyersen 906 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 910 0
+nyersen 911 0
+nyersen 905 0
+nyersen 908 0
+nyersen 912 0
+nyersen 913 0
+kord 0 0 0
+nyersen 904 0
+kord 0 0 0
+kord 0 0 0
+nyersen 915 0
+nyersen 914 0
+nyersen 916 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 909 0
+nyersen 903 0
+nyersen 918 0
+kord 0 0 0
+kord 0 0 0
+nyersen 921 0
+nyersen 920 0
+kord 0 0 0
+nyersen 919 0
+kord 0 0 0
+nyersen 923 0
+nyersen 924 0
+nyersen 926 0
+nyersen 925 0
+nyersen 927 0
+nyersen 928 0
+nyersen 930 0
+nyersen 929 0
+nyersen 931 0
+nyersen 922 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 933 0
+kord 0 0 0
+nyersen 934 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 935 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 932 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 936 0
+nyersen 937 0
+nyersen 938 0
+nyersen 939 0
+nyersen 940 0
+nyersen 941 0
+kord 0 0 0
+kord 0 0 0
+nyersen 917 0
+nyersen 943 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 945 0
+nyersen 947 0
+nyersen 942 0
+nyersen 944 0
+nyersen 951 0
+nyersen 946 0
+nyersen 948 0
+nyersen 949 0
+nyersen 950 0
+nyersen 952 0
+nyersen 953 0
+nyersen 954 0
+nyersen 956 0
+kord 0 0 0
+kord 0 0 0
+nyersen 955 0
+nyersen 958 0
+nyersen 957 0
+nyersen 959 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 961 0
+kord 0 0 0
+kord 0 0 0
+nyersen 964 0
+nyersen 965 0
+nyersen 967 0
+nyersen 960 0
+nyersen 962 0
+nyersen 963 0
+nyersen 966 0
+kord 0 0 0
+nyersen 968 0
+nyersen 969 0
+nyersen 971 0
+nyersen 970 0
+nyersen 972 0
+nyersen 973 0
+nyersen 974 0
+nyersen 975 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 977 0
+nyersen 979 0
+nyersen 980 0
+nyersen 982 0
+nyersen 981 0
+nyersen 983 0
+nyersen 984 0
+nyersen 985 0
+nyersen 976 0
+nyersen 978 0
+kord 0 0 0
+kord 0 0 0
+nyersen 986 0
+kord 0 0 0
+kord 0 0 0
+nyersen 987 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 988 0
+nyersen 989 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 990 0
+nyersen 991 0
+nyersen 992 0
+nyersen 994 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 995 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 996 0
+kord 0 0 0
+nyersen 993 0
+nyersen 997 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+nyersen 999 0
+nyersen 998 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+kord 0 0 0
+2 loop blocking hack took: 0.007556 sec.
+back to ram ID:4 started->
+back to ram took: 0.000079 sec.
+hibás ertek:0 0 0:  65.000000 , 4017.000000
+valid:0
+out testing is failed.
+ertek: 4017.000000

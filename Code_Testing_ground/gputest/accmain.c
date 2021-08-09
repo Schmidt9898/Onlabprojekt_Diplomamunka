@@ -13,9 +13,9 @@ int meres_num=3;
 
 
 /* constans méretek */
-size_t sizex = 10;//16*20;
-size_t sizey = 10;//16*20;
-size_t sizez = 10;//16*20;
+size_t sizex = 800;//16*20;
+size_t sizey = 800;//16*20;
+size_t sizez = 800;//16*20;
 
 struct dataobj
 {
@@ -90,7 +90,7 @@ float(*__restrict out_)[sizey][sizez] = (float(*)[sizey][sizez])out;
 Spawn_stopper("3d computation");
 
     //printf("size0,size1  %d",size1);
-#pragma acc parallel loop collapse(3) deviceptr(out_,data_)
+#pragma acc parallel loop deviceptr(out_,data_) tile(32,8,4)
     for(int x=0;x<sizex;x++)
     {
         for(int y=0;y<sizey;y++)
@@ -99,6 +99,7 @@ Spawn_stopper("3d computation");
             {
                 //print("asd");
                 // sum for the scope of the window..
+                #pragma unroll
                 for(int ibx=x-window_size;ibx<x+window_size;ibx++)
                 for(int iby=y-window_size;iby<y+window_size;iby++)
                 for(int ibz=z-window_size;ibz<z+window_size;ibz++)
@@ -117,7 +118,7 @@ Spawn_stopper("3d computation");
 Kill_stopper();
 
 
-
+/*
 for(int i=0;i<meres_num;i++){
 
 Spawn_stopper("3d tiling with computation");
@@ -171,7 +172,7 @@ for(int x=0;x<sizex;x+=blocksize_x)
 meres_sum+=Kill_stopper();
 
 }
-
+*/
 /*
 Spawn_stopper("3d with tiling pragma with computation");
  //#pragma acc parallel 

@@ -3,7 +3,7 @@ if test -f runacc;then
     rm runacc
 fi
 
-pgcc -acc -Minfo=accel -ta=tesla -Wall -I ../../Smart_Stopper -c99 accmain.c -o runacc 
+pgcc -acc -Minfo=accel -ta=tesla -Wall -I ../../Smart_Stopper -c99 accmain.c -o runacc -fast -O3
 
 #-Minline
 #cc70
