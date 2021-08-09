@@ -49,7 +49,7 @@ struct Stopper
     /* data */
     struct Stopper* parent; //am i a child
     double start,end;       //preaty self explain
-    char name[20];          //20 caracter for a name is enought
+    char name[255];          //20 caracter for a name is enought //update it is few week later and 255 because turns out it isn't enought, this took like 3 painfull hours to find out.
 
 };
 

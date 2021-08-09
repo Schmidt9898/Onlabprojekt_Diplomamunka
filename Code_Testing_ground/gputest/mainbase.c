@@ -1,3 +1,25 @@
+/*
+Ebben a C programban egy egyszerő számolást hajtunk végre melynek nem 
+számolásban van értelme, próbálunk minél több adatot mozgatni gpu-n
+és ennek a tiling hatásait megfigyelni
+
+A kódban Definíciókkal elkülönített pragmákat és kódrészreteket találunk
+Értelme hogy minden fordításban ugyanazt a számolást végezzzük el
+opciók 
+-LOMP
+-LACC
+
+késöbb lehet cpu külön
+
+Cpu ram-> gpu vram -> compute -> gpu vram- > cpu ram
+
+Cpu-n ellenőrizzük az adatot
+
+data ból számolunk és out, out2 be írunk
+
+*/
+
+
 
 #include "stdlib.h"
 #include <stdio.h>
@@ -13,9 +35,9 @@
 
 
 /* constans méretek */
-int sizex = 800;
-int sizey = 800;
-int sizez = 800;
+int sizex = 100;
+int sizey = 100;
+int sizez = 100;
 
 struct dataobj
 {
@@ -25,10 +47,14 @@ struct dataobj
 
 
 int main(int argc, char ** argv) {
-Stopper_Filemode=false;
+
+Stopper_Filemode=false; //Mérő beállítás, fileba mentsen e.
+
+
+
 //printf("Hi this is the openMP testing..\n\n");
 
-//following block try all the functions and list properties
+//following block try all(not realy all) the functions and list properties
 /*
 printf("omp_get_num_threads = %d\n",omp_get_num_threads());
 
@@ -50,11 +76,11 @@ printf("omp_get_wtime = %f\n",omp_get_wtime());
 */
 #ifdef LOMP
 printf("\nOpenMP Running\n\n");
-#pragma message ( "OpenMP compiling." )
+#pragma message "OpenMP compiling "  __FILE__ 
 #endif
 #ifdef LACC
 printf("\nOpenACC Running\n\n");
-#pragma message ( "OpenACC compiling." )
+#pragma message  "OpenACC compiling "  __FILE__ 
 #endif
 /*
 
@@ -67,7 +93,7 @@ printf(" = %d\n",);
 
 
 
-
+//blokméretet argumentumokkal felül lehet definiálni
 int blocksize_x=32;
 int blocksize_y=8;
 int blocksize_z=4;
@@ -76,48 +102,54 @@ if(argc>=4){
     blocksize_y=atoi(argv[2]);
     blocksize_z=atoi(argv[3]);
 }
-
+printf("block size: %d,%d,%d \n",blocksize_x,blocksize_y,blocksize_z);
 
 //printf("omp_get_max_threads = %d\n",omp_get_max_threads());
 //window size
 int window_size=4;
 
-size_t meret=sizex*sizey*sizez*4;
-printf("meret: %f Gb \n",meret/1e9f*3);
+size_t meret=sizex*sizey*sizez;
+printf("meret: %lu , %f Gb \n",meret,meret*4/1e9f*3);
 
 Spawn_stopper("offload and memory managment");
 
 //data and offloading OpenMP
-#ifdef LOMP
-float* data=NULL ;//= (float*) malloc(meret*4);
+
+//this we will use on the cpu
 float* out= (float*) malloc(meret*4);
 float* out2= (float*) malloc(meret*4);
 
-#pragma omp target data map(alloc:data[0:sizex*sizey*sizez])  map(from:out2[0:sizex*sizey*sizez]) map(from:out[0:sizex*sizey*sizez]) map(to:sizex) map(to:sizey) map(to:sizez) map(to:blocksize_x) map(to:blocksize_y) map(to:blocksize_z) map(to:window_size)
-                                                            
+#ifdef LOMP
+float* data=NULL ;//4= (float*) malloc(meret*4);
+
+#pragma omp target data map(alloc:data[0:sizex*sizey*sizez])  map(from:out2[0:sizex*sizey*sizez]) map(from:out[0:sizex*sizey*sizez]) \
+        map(to:sizex) map(to:sizey) map(to:sizez) map(to:blocksize_x) map(to:blocksize_y) map(to:blocksize_z) map(to:window_size)                                                    
 {
 
-float(*__restrict out2_)[sizey][sizez] = (float(*)[sizey][sizez])out2;
 #endif
 
-
+//data and offloading OpenACC
 #ifdef LACC
-#pragma acc data copy(sizex,sizey,sizez,blocksize_x,blocksize_y,blocksize_z,window_size)
+#pragma acc data copyout(out[0:meret]) copyout(out2[0:meret])  \
+copy(sizex,sizey,sizez,blocksize_x,blocksize_y,blocksize_z,window_size)
 {
-float* restrict data=(float*)acc_malloc(meret);
-float* restrict out=(float*)acc_malloc(meret);
+float* restrict data=(float*)acc_malloc(meret*4);
+//float* restrict out=(float*)acc_malloc(meret);
+//float* restrict out2=(float*)acc_malloc(meret);
+
 #endif
 
 Kill_stopper();
 
 float(*__restrict data_)[sizey][sizez] = (float(*)[sizey][sizez])data;
 float(*__restrict out_)[sizey][sizez] = (float(*)[sizey][sizez])out;
+float(*__restrict out2_)[sizey][sizez] = (float(*)[sizey][sizez])out2;
 
 //printf("size meret %d \n",meret);
 
 
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Spawn_stopper("3d zeroing");
 #ifdef LOMP
@@ -125,7 +157,9 @@ Spawn_stopper("3d zeroing");
 #pragma omp distribute parallel for collapse(3)
 #endif
 #ifdef LACC
-#pragma acc parallel loop collapse(3) deviceptr(out_,data_)
+#pragma acc parallel loop collapse(3) deviceptr(data_) //deviceptr(out_,out2_,data_)
+// megjegyzés ha csak a gpun allocálunk akkor kell deviceptr, ha nem csak ott akkor nem fog működni futásnál
+
 #endif
     for(int x=0;x<sizex;x++)
     {
@@ -133,28 +167,28 @@ Spawn_stopper("3d zeroing");
         {
             for(int z=0;z<sizez;z++)
             {
-                out_[x][y][z]=1;
                 data_[x][y][z]=1;
+                out_[x][y][z]=0;
+                out2_[x][y][z]=0;
                 
-                #ifdef LOMP
-                out2_[x][y][z]=1;
-                #endif
+                //#ifdef LOMP
+                //#endif
             }        
         }
     }
 
 Kill_stopper();
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 Spawn_stopper("3d computation");
 #ifdef LOMP
-//num_teams(128) thread_limit(8*8*8) 
-//printf("size0,size1  %d",size1);
-#pragma omp target teams //num_teams(65535) thread_limit(32)
+#pragma omp target teams
 #pragma omp distribute parallel for collapse(3) 
 #endif
 #ifdef LACC
-#pragma acc parallel loop collapse(3) deviceptr(out_,data_)
+#pragma acc parallel loop collapse(3) deviceptr(data_)
 #endif
 for(int x=window_size;x<sizex-window_size;x++)
     {
@@ -163,7 +197,7 @@ for(int x=window_size;x<sizex-window_size;x++)
             for(int z=window_size;z<sizez-window_size;z++)
             {
                 //kernel start
-                            out_[x][y][z]+=
+                out_[x][y][z]+=
 				data_[x][y][z-4]+data_[x][y][z-3]+data_[x][y][z-2]+data_[x][y][z-1]+
 				data_[x][y][z+4]+data_[x][y][z+3]+data_[x][y][z+2]+data_[x][y][z+1]+
 				data_[x][y-4][z]+data_[x][y-3][z]+data_[x][y-2][z]+data_[x][y-1][z]+
@@ -177,15 +211,15 @@ for(int x=window_size;x<sizex-window_size;x++)
     }
 Kill_stopper();
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-Spawn_stopper("3d computation with tile() parancs");
+Spawn_stopper("3d computation with tile parancs");
 #ifdef LOMP
-#pragma omp target teams //num_teams(128) thread_limit(1024) 
-#pragma omp distribute parallel for collapse(3) tile(sizex,sizey,sizez)
+#pragma omp target teams
+#pragma omp distribute parallel for collapse(3) 
 #endif
 #ifdef LACC
-#pragma acc parallel loop deviceptr(out_,data_) tile(32,8,4)
+#pragma acc parallel loop deviceptr(data_) tile(32,8,4)
 #endif
 for(int x=window_size;x<sizex-window_size;x++)
     {
@@ -194,7 +228,7 @@ for(int x=window_size;x<sizex-window_size;x++)
             for(int z=window_size;z<sizez-window_size;z++)
             {
                 //kernel start
-                            out_[x][y][z]+=
+                out2_[x][y][z]+=
 				data_[x][y][z-4]+data_[x][y][z-3]+data_[x][y][z-2]+data_[x][y][z-1]+
 				data_[x][y][z+4]+data_[x][y][z+3]+data_[x][y][z+2]+data_[x][y][z+1]+
 				data_[x][y-4][z]+data_[x][y-3][z]+data_[x][y-2][z]+data_[x][y-1][z]+
@@ -206,11 +240,11 @@ for(int x=window_size;x<sizex-window_size;x++)
             }        
         }
     }
-
 Kill_stopper();
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+/*
 #ifdef LOMP
 
 //sizex = 5;
@@ -219,6 +253,7 @@ Kill_stopper();
 
 //int bsx=2,bsy=2,bsz=2;
 
+
 int blockdbx=sizex/blocksize_x+((sizex%blocksize_x!=0)?1:0);
 int blockdby=sizey/blocksize_y+((sizey%blocksize_y!=0)?1:0);
 int blockdbz=sizez/blocksize_z+((sizez%blocksize_z!=0)?1:0);
@@ -226,9 +261,9 @@ printf("block number dim %d %d %d\n",blockdbx,blockdby,blockdbz);
 printf("thread_num %d \n",blocksize_x*blocksize_y*blocksize_z);
 printf("team_num %d \n",blockdbx*blockdby*blockdbz);
 int team_num=blockdbx*blockdby*blockdbz;
-
-
 int thread_limit=blocksize_x*blocksize_y*blocksize_z;
+
+
 Spawn_stopper("2 loop blocking hack");
 #pragma omp target teams distribute parallel for collapse(2) thread_limit(thread_limit) private(blockdbx,blockdbx,blockdbx)
 for(int bid=0;bid<team_num;bid++)
@@ -250,7 +285,7 @@ for(int bid=0;bid<team_num;bid++)
     y+=(tid/blocksize_x);
     x+=tid%blocksize_x;
     //printf("kord %d %d %d\n",x,y,z);
-   /*
+   
     if(omp_get_team_num()==65535)
     {
         printf(" %d,%d,%d   \n",x,y,z);
@@ -259,7 +294,7 @@ for(int bid=0;bid<team_num;bid++)
                 {
                     printf(" %d,%d,%d   \n",x,y,z);
                 }
-*/
+
 
     //kernel start
     // sum for the scope of the window..
@@ -283,12 +318,12 @@ for(int bid=0;bid<team_num;bid++)
 
     Kill_stopper();
 
-
-
-
-
-
 #endif
+
+*/
+
+
+
 
 /*
 #ifdef LOMP
@@ -343,7 +378,7 @@ int blockdbz=sizez/bsz+1;
 
 
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 /*
@@ -377,12 +412,16 @@ Spawn_stopper("6 collapsed loop");
 }
 Kill_stopper();
 */
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 Spawn_stopper("back to ram");
 }
 Kill_stopper();
 
-//data verification only in openmp for now
-#ifdef LOMP
+//data verification
+//#ifdef DATA_V
 
 float(*__restrict out2_)[sizey][sizez] = (float(*)[sizey][sizez])out2;
 float(*__restrict out_)[sizey][sizez] = (float(*)[sizey][sizez])out;
@@ -417,8 +456,8 @@ else
 printf("out testing is failed.\n");
 
 //float(*__restrict out2_)[sizey][sizez] = (float(*)[sizey][sizez])out2;
-printf("ertek: %f\n",out2_[0][0][0]);
-#endif
+printf("ertek: %f\n",out2_[50][50][50]);
+//#endif
 
 
 /*{

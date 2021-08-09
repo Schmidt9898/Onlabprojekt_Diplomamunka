@@ -12,7 +12,7 @@ mode=$1
         fi
 
         echo "---k80 or any gpu---" 
-        clang -I ../../Smart_Stopper mainbase.c  -o run -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -D LOMP
+        clang -I ../../Smart_Stopper mainbase.c  -o run_k80 -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -D LOMP 
         echo "---end compiling----"
 
     fi
