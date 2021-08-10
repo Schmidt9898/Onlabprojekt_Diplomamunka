@@ -35,9 +35,9 @@ data ból számolunk és out, out2 be írunk
 
 
 /* constans méretek */
-int sizex = 100;
-int sizey = 100;
-int sizez = 100;
+const int sizex = 800;
+const int sizey = 800;
+const int sizez = 800;
 
 struct dataobj
 {
@@ -104,7 +104,8 @@ if(argc>=4){
 }
 printf("block size: %d,%d,%d \n",blocksize_x,blocksize_y,blocksize_z);
 
-//printf("omp_get_max_threads = %d\n",omp_get_max_threads());
+printf("thread size = %d\n",blocksize_x*blocksize_y*blocksize_z);
+
 //window size
 int window_size=4;
 
@@ -122,7 +123,9 @@ float* out2= (float*) malloc(meret*4);
 #ifdef LOMP
 float* data=NULL ;//4= (float*) malloc(meret*4);
 
-#pragma omp target data map(alloc:data[0:sizex*sizey*sizez])  map(from:out2[0:sizex*sizey*sizez]) map(from:out[0:sizex*sizey*sizez]) \
+#pragma omp target data map(alloc:data[0:meret])\
+                        map(from:out2[0:meret])\
+                        map(from:out[0:meret])\
         map(to:sizex) map(to:sizey) map(to:sizez) map(to:blocksize_x) map(to:blocksize_y) map(to:blocksize_z) map(to:window_size)                                                    
 {
 
@@ -159,7 +162,6 @@ Spawn_stopper("3d zeroing");
 #ifdef LACC
 #pragma acc parallel loop collapse(3) deviceptr(data_) //deviceptr(out_,out2_,data_)
 // megjegyzés ha csak a gpun allocálunk akkor kell deviceptr, ha nem csak ott akkor nem fog működni futásnál
-
 #endif
     for(int x=0;x<sizex;x++)
     {
@@ -170,7 +172,7 @@ Spawn_stopper("3d zeroing");
                 data_[x][y][z]=1;
                 out_[x][y][z]=0;
                 out2_[x][y][z]=0;
-                
+                //printf("%f\n",data_[x][y][z]);
                 //#ifdef LOMP
                 //#endif
             }        
@@ -213,14 +215,18 @@ Kill_stopper();
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Spawn_stopper("3d computation with tile parancs");
 #ifdef LOMP
-#pragma omp target teams
-#pragma omp distribute parallel for collapse(3) 
+// we dont use this, omp doesn't have tile yet 
+//#pragma omp target teams
+//#pragma omp distribute parallel for collapse(3) 
+
 #endif
+
+/////same with openACC
+
 #ifdef LACC
+Spawn_stopper("3d computation with tile parancs");
 #pragma acc parallel loop deviceptr(data_) tile(32,8,4)
-#endif
 for(int x=window_size;x<sizex-window_size;x++)
     {
         for(int y=window_size;y<sizey-window_size;y++)
@@ -241,9 +247,80 @@ for(int x=window_size;x<sizex-window_size;x++)
         }
     }
 Kill_stopper();
+#endif
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+//This is a small scale testing.
+Spawn_stopper("3 team loop of 3 thread loops");
+#pragma omp target teams distribute collapse(2) // run on the teamleaders
+    for (int x = 0; x < 2; x += 1)
+    {
+        for (int y = 0; y < 2; y += 1)
+        {
+            //for (int z = 0; z < 2; z += 1)
+            printf("just a teamleader\n");
+                #pragma omp parallel for collapse(1)// run on the threads
+                for (int i = 0; i < 2; i+=1)
+                {
+                    
+                    int bid=omp_get_team_num();
+                    int tid=omp_get_thread_num();
+                    printf("bid %d, tid %d\n",bid,tid);
+                    /*for (int j = 0; j < 2; j+=1)
+                    {
+                        for (int k = 0; k < 2; k+=1)
+                        {
+                            printf("xyzijk: %d %d %d %d %d %d\n",x,y,z,i,j,k);
+                        }
+                    }*/
+                }
+            
+        }
+    }
+Kill_stopper();
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Spawn_stopper("3d tiling with omp teams");
+//#pragma omp target teams
+//#pragma omp distribute parallel for collapse(3) 
+#pragma omp target teams distribute collapse(3)
+    for (int x = window_size; x < sizex-window_size; x += blocksize_x)
+        for (int y = window_size; y < sizey-window_size; y += blocksize_y)
+            for (int z = window_size; z < sizez-window_size; z += blocksize_z)
+            {
+                #pragma omp parallel for collapse(3)
+                for (int bx = x; bx < x + blocksize_x; bx++)
+                    for (int by = y; by < y + blocksize_y; by++)
+                        for (int bz = z; bz < z + blocksize_z; bz++)
+                        {
+                            if (bx < sizex-window_size &&
+                                by < sizey-window_size &&
+                                bz < sizez-window_size){
+                                //float(*__restrict data_)[10][10] = (float(*)[10][10])data;
+                                //printf("%f\n",data_[0][0][0]);
+                                    
+                                    //printf("xyz: %d %d %d\n",bx,by,bz);
+                            out2_[bx][by][bz]+=
+				data_[bx][by][bz-4]+data_[bx][by][bz-3]+data_[bx][by][bz-2]+data_[bx][by][bz-1]+
+				data_[bx][by][bz+4]+data_[bx][by][bz+3]+data_[bx][by][bz+2]+data_[bx][by][bz+1]+
+				data_[bx][by-4][bz]+data_[bx][by-3][bz]+data_[bx][by-2][bz]+data_[bx][by-1][bz]+
+				data_[bx][by+4][bz]+data_[bx][by+3][bz]+data_[bx][by+2][bz]+data_[bx][by+1][bz]+
+				data_[bx-4][by][bz]+data_[bx-3][by][bz]+data_[bx-2][by][bz]+data_[bx-1][by][bz]+
+				data_[bx+4][by][bz]+data_[bx+3][by][bz]+data_[bx+2][by][bz]+data_[bx+1][by][bz];
+                                }
+                        }
+            }
+                    
+                
+    
+Kill_stopper();
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*
 #ifdef LOMP
 
@@ -381,37 +458,8 @@ int blockdbz=sizez/bsz+1;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-/*
 
-Spawn_stopper("6 collapsed loop");
-#pragma omp target teams //num_teams(128) thread_limit(1024) 
-{
-    //printf("size0,size1  %d",size1);
-    //int num2=2;
-#pragma omp distribute parallel for collapse(3) //private(num2)
-    for (int x = 0; x < 2; x += 1)
-    {
-        for (int y = 0; y < 2; y += 1)
-        {
-            for (int z = 0; z < 2; z += 1)
-            {
-                #pragma omp parallel for collapse(3)
-                for (int i = 0; i < 2; i+=1)
-                {
-                    for (int j = 0; j < 2; j+=1)
-                    {
-                        for (int k = 0; k < 2; k+=1)
-                        {
-                            printf("xyzijk: %d %d %d %d %d %d\n",x,y,z,i,j,k);
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-Kill_stopper();
-*/
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -456,7 +504,7 @@ else
 printf("out testing is failed.\n");
 
 //float(*__restrict out2_)[sizey][sizez] = (float(*)[sizey][sizez])out2;
-printf("ertek: %f\n",out2_[50][50][50]);
+printf("ertek: %f\n",out2_[5][5][5]);
 //#endif
 
 
