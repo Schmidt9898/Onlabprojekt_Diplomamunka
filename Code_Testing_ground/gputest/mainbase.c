@@ -105,7 +105,7 @@ if(argc>=4){
 printf("block size: %d,%d,%d \n",blocksize_x,blocksize_y,blocksize_z);
 
 printf("thread size = %d\n",blocksize_x*blocksize_y*blocksize_z);
-
+int thread_size=blocksize_x*blocksize_y*blocksize_z;
 //window size
 int window_size=4;
 
@@ -251,20 +251,23 @@ Kill_stopper();
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+#ifdef LOMP
 //This is a small scale testing.
+omp_set_num_threads(1024);
+//omp_get_max_threads();
+printf("omp_get_max_threads = %d\n",omp_get_max_threads());
 Spawn_stopper("3 team loop of 3 thread loops");
-#pragma omp target teams distribute collapse(2) // run on the teamleaders
-    for (int x = 0; x < 2; x += 1)
+#pragma omp target teams distribute collapse(2) thread_limit(1024) // run on the teamleaders
+    for (int x = 0; x < 1; x += 1)
     {
-        for (int y = 0; y < 2; y += 1)
+        for (int y = 0; y < 1; y += 1)
         {
             //for (int z = 0; z < 2; z += 1)
             printf("just a teamleader\n");
                 #pragma omp parallel for collapse(1)// run on the threads
                 for (int i = 0; i < 2; i+=1)
                 {
-                    
+                    printf("omp_get_num_threads = %d\n",omp_get_num_threads());
                     int bid=omp_get_team_num();
                     int tid=omp_get_thread_num();
                     printf("bid %d, tid %d\n",bid,tid);
@@ -281,17 +284,22 @@ Spawn_stopper("3 team loop of 3 thread loops");
     }
 Kill_stopper();
 
-
+#endif
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#ifdef LOMP
+omp_set_num_threads(1024);
+printf("omp_get_level = %d\n",omp_get_level());
 
 Spawn_stopper("3d tiling with omp teams");
 //#pragma omp target teams
 //#pragma omp distribute parallel for collapse(3) 
-#pragma omp target teams distribute collapse(3)
+#pragma omp target teams distribute collapse(3)  thread_limit(1024)
     for (int x = window_size; x < sizex-window_size; x += blocksize_x)
         for (int y = window_size; y < sizey-window_size; y += blocksize_y)
             for (int z = window_size; z < sizez-window_size; z += blocksize_z)
             {
+    
                 #pragma omp parallel for collapse(3)
                 for (int bx = x; bx < x + blocksize_x; bx++)
                     for (int by = y; by < y + blocksize_y; by++)
@@ -318,7 +326,7 @@ Spawn_stopper("3d tiling with omp teams");
                 
     
 Kill_stopper();
-
+#endif
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*

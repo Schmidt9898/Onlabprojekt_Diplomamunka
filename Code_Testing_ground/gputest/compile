@@ -7,21 +7,21 @@ Compile_openmp()
 mode=$1
 #echo $1
     if [[ "$mode" == "k80" ]];then
-        if test -f run;then
-            rm run_k80
+        if test -f runk80;then
+            rm runk80
         fi
 
         echo "---k80 or any gpu---" 
-        clang -I ../../Smart_Stopper mainbase.c  -o run_k80 -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -D LOMP 
+        clang -I ../../Smart_Stopper mainbase.c  -o runk80 -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -O3 -fast -gline-tables-only -lm -D LOMP 
         echo "---end compiling----"
 
     fi
     if [[ "$mode" == "v100" ]];then
-        if test -f run_v100;then
-            rm run_v100
+        if test -f runv100;then
+            rm runv100
         fi
         echo "---tesla v100-------" 
-        clang -I ../../Smart_Stopper mainbase.c  -o run_v100 -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -Xopenmp-target -march=sm_70 -D LOMP
+        clang -I ../../Smart_Stopper mainbase.c  -o runv100 -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -O3 -fast -gline-tables-only -lm -Xopenmp-target -march=sm_70 -D LOMP
         echo "---end compiling----"
     fi
 } 
