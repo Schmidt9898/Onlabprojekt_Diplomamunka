@@ -1,0 +1,85 @@
+Libomptarget device 0 info: OpenMP Host-Device pointer mappings after block at unknown:0:0:
+Libomptarget device 0 info: Host Ptr           Target Ptr         Size (B) RefCount Declaration
+Libomptarget device 0 info: 0x0000000000000000 0x00007ff38c000000 2048000000 4        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ff475edf010 0x00007ff310000000 2048000000 1        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ffc7edb4468 0x00007ff38a200600 4        1        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ffc7edb446c 0x00007ff38a200400 4        1        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ffc7edb4470 0x00007ff38a200200 4        1        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ffc7edb4474 0x00007ff38a200000 4        1        unknown at unknown:0:0
+Libomptarget device 0 info: OpenMP Host-Device pointer mappings after block at unknown:0:0:
+Libomptarget device 0 info: Host Ptr           Target Ptr         Size (B) RefCount Declaration
+Libomptarget device 0 info: 0x0000000000000000 0x00007ff38c000000 2048000000 4        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ff475edf010 0x00007ff310000000 2048000000 1        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ffc7edb4468 0x00007ff38a200600 4        1        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ffc7edb446c 0x00007ff38a200400 4        1        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ffc7edb4470 0x00007ff38a200200 4        1        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ffc7edb4474 0x00007ff38a200000 4        1        unknown at unknown:0:0
+Hi this is openMP testing..
+
+block size: 32,8,4 
+thread size needed = 1024
+memory size needed: 1024000000 , 4.096000 Gb 
+offload and memory managment ID:0 started->
+offload and memory managment took: 0.233529 sec.
+3d computation ID:1 started->
+3d computation took: 0.049448 sec.
+3 team loop of 3 thread loops ID:2 started->
+just a teamleader run this command. The max thread_size is 608 
+just a teamleader run this command. The max thread_size is 608 
+just a teamleader run this command. The max thread_size is 608 
+just a teamleader run this command. The max thread_size is 608 
+omp_get_num_threads = 608
+omp_get_num_threads = 608
+omp_get_num_threads = 608
+omp_get_num_threads = 608
+omp_get_num_threads = 608
+omp_get_num_threads = 608
+omp_get_num_threads = 608
+omp_get_num_threads = 608
+omp_get_num_threads = 608
+omp_get_num_threads = 608
+omp_get_num_threads = 608
+omp_get_num_threads = 608
+omp_get_num_threads = 608
+omp_get_num_threads = 608
+omp_get_num_threads = 608
+omp_get_num_threads = 608
+bid 0, tid 0 xyij: 0 0 0 0
+bid 0, tid 1 xyij: 0 0 0 1
+bid 0, tid 2 xyij: 0 0 1 0
+bid 0, tid 3 xyij: 0 0 1 1
+bid 3, tid 0 xyij: 1 1 0 0
+bid 3, tid 1 xyij: 1 1 0 1
+bid 3, tid 2 xyij: 1 1 1 0
+bid 3, tid 3 xyij: 1 1 1 1
+bid 1, tid 0 xyij: 0 1 0 0
+bid 1, tid 1 xyij: 0 1 0 1
+bid 1, tid 2 xyij: 0 1 1 0
+bid 1, tid 3 xyij: 0 1 1 1
+bid 2, tid 0 xyij: 1 0 0 0
+bid 2, tid 1 xyij: 1 0 0 1
+bid 2, tid 2 xyij: 1 0 1 0
+bid 2, tid 3 xyij: 1 0 1 1
+Libomptarget device 0 info: OpenMP Host-Device pointer mappings after block at unknown:0:0:
+Libomptarget device 0 info: Host Ptr           Target Ptr         Size (B) RefCount Declaration
+Libomptarget device 0 info: 0x0000000000000000 0x00007ff38c000000 2048000000 4        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ff475edf010 0x00007ff310000000 2048000000 1        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ffc7edb4468 0x00007ff38a200600 4        1        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ffc7edb446c 0x00007ff38a200400 4        1        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ffc7edb4470 0x00007ff38a200200 4        1        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ffc7edb4474 0x00007ff38a200000 4        1        unknown at unknown:0:0
+3 team loop of 3 thread loops took: 0.005474 sec.
+3d tiling with omp teams ID:3 started->
+CUDA error: an illegal memory access was encountered 
+Libomptarget error: Call to targetDataEnd failed, abort target.
+Libomptarget error: Failed to process data after launching the kernel.
+Libomptarget device 0 info: OpenMP Host-Device pointer mappings after block at unknown:0:0:
+Libomptarget device 0 info: Host Ptr           Target Ptr         Size (B) RefCount Declaration
+Libomptarget device 0 info: 0x0000000000000000 0x00007ff38c000000 2048000000 4        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ff475edf010 0x00007ff310000000 2048000000 1        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ffc7edb4468 0x00007ff38a200600 4        1        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ffc7edb446c 0x00007ff38a200400 4        1        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ffc7edb4470 0x00007ff38a200200 4        1        unknown at unknown:0:0
+Libomptarget device 0 info: 0x00007ffc7edb4474 0x00007ff38a200000 4        1        unknown at unknown:0:0
+Libomptarget error: Source location information not present. Compile with -g or -gline-tables-only.
+Libomptarget fatal error 1: failure of target construct while offloading is mandatory

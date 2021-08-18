@@ -1,0 +1,62 @@
+#!/usr/bin/bash
+
+#options
+#-tile
+#-slow
+#-segfa
+
+
+Compile_tile()
+{
+if test -f runtile;then
+    rm runtile
+fi
+echo "---Tile-------" 
+clang -I ../../Smart_Stopper maintile.c  -o runtile -Wall -fopenmp=libomp -Ofast -gline-tables-only -lm -fopenmp-version=51 -Rpass-analysis=loop-vectorize -Rpass=loop-vectorize -Rpass-missed=loop-vectorize -march=native
+echo "---end compiling----"
+}
+Compile_slow()
+{
+
+	runname="runslow"
+
+	if test -f $runname;then
+    rm $runname
+fi
+echo "---$runname-------" 
+clang -I ../../Smart_Stopper mainslow.c  -o $runname -Wall -fopenmp=libomp -O3 -fast -lm -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -gline-tables-only
+echo "---end compiling----"
+}
+
+echo "Compiling script"
+
+
+
+if (($#==0)) ;then
+echo "No input argument."
+exit 1
+fi
+IFS=' ' read -r -a tomb <<< $@
+
+for ((i=0;i<$#;i++));do
+case ${tomb[$i]} in 
+		-tile)
+			Compile_tile
+			;;
+		-segfa)
+			Compile_segfa 
+			;;
+		-slow)
+			Compile_slow
+			;;
+
+esac
+done
+
+
+#echo "compile for any? gpu..." 
+#clang -I ../../Smart_Stopper mainbase.c  -o run -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -D LOMP
+
+#clang -I ../../Smart_Stopper mainbase.c  -o run_v100 -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -Xopenmp-target -march=sm_70 -D LOMP
+
+#pgcc -acc -Minfo=accel -ta=tesla -Wall -I ../../Smart_Stopper -c99 mainbase.c -o runacc -D LACC
