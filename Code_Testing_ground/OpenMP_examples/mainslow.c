@@ -8,7 +8,13 @@ Cpu ram-> gpu vram -> compute -> gpu vram- > cpu ram
 
 #include "stdlib.h"
 #include <stdio.h>
+
+#ifdef NO_TIME
+void Spawn_stopper(char* name){};
+double Kill_stopper(){};
+#else
 #include "stopper.h"
+#endif
 
 /* constans méretek */
 const int sizex = 800; //If this is not constant, will cause a segfault in runtime.
@@ -22,15 +28,11 @@ struct dataobj
 
 int main(int argc, char **argv)
 {
+//Stopper_Filemode = false; //Needed for the timer.
 
-	Stopper_Filemode = false; //Needed for the timer.
 
 printf("Hi this is openMP testing..\n\n");
-/*
-printf(" = %d\n",);
 
-printf(" = %d\n",);
-*/
 
 	//The block size can be overridden by arguments.
 	int blocksize_x = 32;
@@ -75,14 +77,16 @@ printf(" = %d\n",);
 	{
 
 		Kill_stopper();
-
+		//pointer folding to 3 dimension array
 		float(*__restrict data_)[sizey][sizez] = (float(*__restrict)[sizey][sizez])data;
 		float(*__restrict out_)[sizey][sizez] = (float(*__restrict)[sizey][sizez])out;
 
 		//printf("size meret %d \n",meret);
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
+Computation on gpu with simple parallel for collapse(3)
+*/
 Spawn_stopper("3d computation");
 #pragma omp target teams
 #pragma omp distribute parallel for collapse(3)
@@ -117,7 +121,9 @@ Spawn_stopper("3 team loop of 3 thread loops");
 #pragma omp target teams distribute collapse(2) thread_limit(1024) // run on the teamleaders
 /*
 we set the thread limit to 1024 and this sets the max thread variable but we dont get 
-that many thread / block. We only get 992. 32 les than the max. It is like all the teamleader thread dont count. s
+that many thread / block. We only get 992. 32 les than the max. It is like all the teamleader thread dont count.
+Also this is not the final thread count either, thread count depends on the register/thread value. but this is not knowed from 
+here.
 */
 for (int x = 0; x < 2; x += 1)
 {
@@ -152,6 +158,8 @@ Kill_stopper();
 In this example we simulate Tile or blocking methods by manualy distribute the threads.
 This part of the code only works with clang-12 or clang-11 in case of static sizexyz parameter.
 
+In clang-14 we can get segmentation fault or nothing but in that case out_ and data_ will not be modified.
+
 In Nvidia visual profiler. If we examine the kernel we see that the blocksize is 640,1,1
 and the Occupancy is ~ 31.2 
 in the program omp_get_num_threads() is 992.
@@ -159,8 +167,6 @@ in the program omp_get_num_threads() is 992.
 */
 
 Spawn_stopper("3d tiling with omp teams");
-//#pragma omp target teams
-//#pragma omp distribute parallel for collapse(3)
 #pragma omp target teams distribute collapse(3) thread_limit(1024)
 		for (int x = window_size; x < sizex - window_size; x += blocksize_x)
 			for (int y = window_size; y < sizey - window_size; y += blocksize_y)
@@ -176,20 +182,21 @@ Spawn_stopper("3d tiling with omp teams");
 									by < sizey - window_size &&
 									bz < sizez - window_size)
 								{
-									/*out_[bx][by][bz] +=
+									
+									out_[bx][by][bz] +=
 										data_[bx][by][bz - 4] + data_[bx][by][bz - 3] + data_[bx][by][bz - 2] + data_[bx][by][bz - 1] +
 										data_[bx][by][bz + 4] + data_[bx][by][bz + 3] + data_[bx][by][bz + 2] + data_[bx][by][bz + 1] +
 										data_[bx][by - 4][bz] + data_[bx][by - 3][bz] + data_[bx][by - 2][bz] + data_[bx][by - 1][bz] +
 										data_[bx][by + 4][bz] + data_[bx][by + 3][bz] + data_[bx][by + 2][bz] + data_[bx][by + 1][bz] +
 										data_[bx - 4][by][bz] + data_[bx - 3][by][bz] + data_[bx - 2][by][bz] + data_[bx - 1][by][bz] +
-										data_[bx + 4][by][bz] + data_[bx + 3][by][bz] + data_[bx + 2][by][bz] + data_[bx + 1][by][bz];*/
+										data_[bx + 4][by][bz] + data_[bx + 3][by][bz] + data_[bx + 2][by][bz] + data_[bx + 1][by][bz];
 								}
 							}
 				}
 
 Kill_stopper();
 
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Spawn_stopper("back to ram");
 }

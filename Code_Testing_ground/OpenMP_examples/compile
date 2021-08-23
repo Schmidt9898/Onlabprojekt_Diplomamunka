@@ -12,7 +12,7 @@ if test -f runtile;then
     rm runtile
 fi
 echo "---Tile-------" 
-clang -I ../../Smart_Stopper maintile.c  -o runtile -Wall -fopenmp=libomp -Ofast -gline-tables-only -lm -fopenmp-version=51 -Rpass-analysis=loop-vectorize -Rpass=loop-vectorize -Rpass-missed=loop-vectorize -march=native
+clang -I ../../Smart_Stopper maintile.c  -o runtile -Wall -fopenmp=libomp -Ofast -gline-tables-only -lm -fopenmp-version=51 -Rpass-analysis=loop-vectorize -Rpass=loop-vectorize -Rpass-missed=loop-vectorize -march=native 
 echo "---end compiling----"
 }
 Compile_slow()
@@ -24,7 +24,7 @@ Compile_slow()
     rm $runname
 fi
 echo "---$runname-------" 
-clang -I ../../Smart_Stopper mainslow.c  -o $runname -Wall -fopenmp=libomp -O3 -fast -lm -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -gline-tables-only
+clang -I ../../Smart_Stopper mainslow.c  -o $runname -Wall -fopenmp=libomp -O3 -fast -lm -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -gline-tables-only #-D NO_TIME
 echo "---end compiling----"
 }
 

@@ -186,7 +186,7 @@ Kill_stopper();
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
 Spawn_stopper("omp with collapse 2 and simd");
 #pragma omp parallel for
 #pragma omp tile sizes(2,2)
@@ -204,7 +204,7 @@ for(int x=0;x<2;x++)
         }
     }
 
-
+*/
 
 //#pragma omp tile sizes(blocksize_x,blocksize_y,blocksize_z)
 #pragma omp parallel for collapse(2) 
