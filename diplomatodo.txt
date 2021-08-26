@@ -19,4 +19,119 @@ pgcc fordító
 
 ----
 Miért lenne gyorsabb
+
+különböző blockméret
+
+openacc tiling
+openapp tiling
+
+összehasonlítás
+
+
+nphcc fordító kipróbálás diasor
+
+
+------fejlemény kérdés
+
+nphcc pipa
+acc megnézve nvvp még nem
+mérés szerint lassabb jóval
+tiling még nincs megnézve
+Másik módszer a collapse 2 
+program áttétele visco
+
+5.1 openmp?
+tiling probléma a mutatott kóddal
+direktívák egybevétele
+simd mit tud még?
+
+esetleg: bemutatón kérdezték it lehet erről még megtudni?
+hogyan kezdjem írni.
+
+3d problémák 3d bejárása leképzése amd leképzése 
+
+-----------------------------------------
+
+open ACC collapse(6) működik tilingra de csak a 20.7 en 
+20.9 en internal compiler error
+
+open MP collapse(n) n>3 esetén a loopok belső változóik csak is constans értékek lehetnek
+ha nem azok akkor üres kernel fordul 
+
+---------
+
+
+
+distribute és parallel utasítások és a lényeg | done
+minden team egy block forciklust kapjon | done
+
+ezt teszteld le kicsi dimenzióra kííratással | done
+
+keresd meg a segfault hibát | done
+
+ha még marad idő akkor 1 dim for loop // not done yet
+
+-----------
+
+1. size vs prev size-> hiba a stopperben :( 
+2. segfault hiba -> valamiért a 6 ciklusos résznél nem fogadta el hogy a sizexyz nem konstans érték volt és mostmár csak panaszkodik érte
+3. omp valid és az ellenörzésrésze működik
+4. omp lassú mert block size 128,1,1 acc mellette 1024,1,1
+
+-------------
+
+legfrossebb clang llvm 
+fordítsd le
+
+-DCMAKE_INSTALL_PREFIX=/home/shared/software/clang/14
+module?
+
+---------------------
+max thread függ a thread limittől, thread limit nem függ a maxtreadtől 
+max thread team num all állítható a thread limitet felülírja
+608 nál több szál nem hozható létre
+alapól mindig 96
+
+érdekesség a = és az += között = gyorsabb
+
+
+maintile meglepően gyorsabb
+tile size seveled se nélküled
+
+mainslow lassu blocking/tiling miért
+itt simán Occupancy 100% 128
+1024 helyett 992 cl-12
+608 ha cl-14
+
+
+-gline-tables-only szeretjük <3
+
+
+most meg valamiét működni akar de nem csinál semmit
+valószínűleg ugyan az a hiba csak más nem használja.
+
+-------------------
+
+llvm openmp projekt tesztek között keresni példákat 
+z folytonos legyen belső loop simdi és ez a 6 loop
+
+
+bevezetés
+eszközök 
+eredmények
+
+-----------------
+
+0826
+
+
+tile pragma
+3d -> 1d átváltás done
+overleaf
+
+
+
+
+
+
 	
