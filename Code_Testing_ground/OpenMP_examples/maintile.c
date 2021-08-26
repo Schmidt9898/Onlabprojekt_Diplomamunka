@@ -51,15 +51,15 @@ printf(" = %d\n",);
 
 
 //blokméretet argumentumokkal felül lehet definiálni
-int blocksize_x=32;
-int blocksize_y=8;
-int blocksize_z=4;
-if(argc>=4){
+#define blocksize_x 8
+#define blocksize_y 8
+#define blocksize_z 16
+/*if(argc>=4){
     blocksize_x=atoi(argv[1]);
     blocksize_y=atoi(argv[2]);
     blocksize_z=atoi(argv[3]);
 }
-
+*/
 //printf("block size: %d,%d,%d \n",blocksize_x,blocksize_y,blocksize_z);
 //printf("thread size = %d\n",blocksize_x*blocksize_y*blocksize_z);
 //int thread_size=blocksize_x*blocksize_y*blocksize_z;
@@ -186,7 +186,7 @@ Kill_stopper();
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
+
 Spawn_stopper("omp with collapse 2 and simd");
 #pragma omp parallel for
 #pragma omp tile sizes(2,2)
@@ -204,7 +204,7 @@ for(int x=0;x<2;x++)
         }
     }
 
-*/
+
 
 //#pragma omp tile sizes(blocksize_x,blocksize_y,blocksize_z)
 #pragma omp parallel for collapse(2) 
@@ -247,9 +247,10 @@ Spawn_stopper("computing manual tiling");
         for (int y = window_size; y < sizey-window_size; y += blocksize_y)
             for (int z = window_size; z < sizez-window_size; z += blocksize_z)
             {
-                //#pragma omp parallel for collapse(3)
+                //#pragma omp parallel for collapse(2)
                 for (int bx = x; bx < x + blocksize_x; bx++)
                     for (int by = y; by < y + blocksize_y; by++)
+                    #pragma omp simd
                         for (int bz = z; bz < z + blocksize_z; bz++)
                         {
                             if (bx < sizex-window_size &&
