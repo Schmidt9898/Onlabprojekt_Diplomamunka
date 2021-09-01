@@ -34,15 +34,15 @@ printf("Hi this is openMP testing..\n\n");
 
 
 	//The block size can be overridden by arguments.
-	int blocksize_x = 32;
-	int blocksize_y = 8;
-	int blocksize_z = 4;
-	if (argc >= 4)
+	const int blocksize_x = 4;
+	const int blocksize_y = 8;
+	const int blocksize_z = 32;
+	/*if (argc >= 4)
 	{
 		blocksize_x = atoi(argv[1]);
 		blocksize_y = atoi(argv[2]);
 		blocksize_z = atoi(argv[3]);
-	}
+	}*/
 	printf("block size: %d,%d,%d \n", blocksize_x, blocksize_y, blocksize_z);
 
 	printf("thread size needed = %d\n", blocksize_x * blocksize_y * blocksize_z);
@@ -52,7 +52,7 @@ printf("Hi this is openMP testing..\n\n");
 	const size_t meret = sizex * sizey * sizez;
 	printf("memory size needed: %lu , %f Gb \n", meret*2, meret * 4 / 1e9f * 2);
 
-	Spawn_stopper("offload and memory managment");
+	//Spawn_stopper("offload and memory managment");
 
 	//data and offloading OpenMP
 
@@ -75,12 +75,12 @@ printf("Hi this is openMP testing..\n\n");
 																											: window_size)
 	{
 
-		Kill_stopper();
+		//Kill_stopper();
 		//pointer folding to 3 dimension array
 		float(*__restrict data_)[sizey][sizez] = (float(*__restrict)[sizey][sizez])data;
 		float(*__restrict out_)[sizey][sizez] = (float(*__restrict)[sizey][sizez])out;
 
-		////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 		Spawn_stopper("3d computation");
@@ -105,13 +105,13 @@ printf("Hi this is openMP testing..\n\n");
 		}
 Kill_stopper();
 
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define D1(x,y,z) [(z) + (y) * sizez + (x) * sizez*sizey]
 
 
 Spawn_stopper("3d tiling with omp teams");
-#pragma omp target teams distribute collapse(3) thread_limit(1024)
+#pragma omp target teams distribute collapse(3) thread_limit(512)
 		for (int x = window_size; x < sizex - window_size; x += blocksize_x)
 			for (int y = window_size; y < sizey - window_size; y += blocksize_y)
 				for (int z = window_size; z < sizez - window_size; z += blocksize_z)
@@ -152,10 +152,35 @@ Spawn_stopper("3d tiling with omp teams");
 Kill_stopper();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Spawn_stopper("back to ram");
-}
+/*
+Spawn_stopper("gpu tile pragma");
+#pragma omp target teams
+#pragma omp distribute parallel for tile sizes(blocksize_x,blocksize_y,blocksize_z)
+		for (int x = window_size; x < sizex - window_size; x++)
+		{
+			for (int y = window_size; y < sizey - window_size; y++)
+			{
+				for (int z = window_size; z < sizez - window_size; z++)
+				{
+					//kernel start
+					out_[x][y][z] +=
+						data_[x][y][z - 4] + data_[x][y][z - 3] + data_[x][y][z - 2] + data_[x][y][z - 1] +
+						data_[x][y][z + 4] + data_[x][y][z + 3] + data_[x][y][z + 2] + data_[x][y][z + 1] +
+						data_[x][y - 4][z] + data_[x][y - 3][z] + data_[x][y - 2][z] + data_[x][y - 1][z] +
+						data_[x][y + 4][z] + data_[x][y + 3][z] + data_[x][y + 2][z] + data_[x][y + 1][z] +
+						data_[x - 4][y][z] + data_[x - 3][y][z] + data_[x - 2][y][z] + data_[x - 1][y][z] +
+						data_[x + 4][y][z] + data_[x + 3][y][z] + data_[x + 2][y][z] + data_[x + 1][y][z];
+				}
+			}
+		}
 Kill_stopper();
+*/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Spawn_stopper("back to ram");
+}
+//Kill_stopper();
 
 free(out);
 

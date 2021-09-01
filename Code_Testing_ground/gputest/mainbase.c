@@ -94,9 +94,9 @@ printf(" = %d\n",);
 
 
 //blokméretet argumentumokkal felül lehet definiálni
-int blocksize_x=32;
+int blocksize_x=4;
 int blocksize_y=8;
-int blocksize_z=4;
+int blocksize_z=32;
 if(argc>=4){
     blocksize_x=atoi(argv[1]);
     blocksize_y=atoi(argv[2]);
@@ -226,7 +226,7 @@ Kill_stopper();
 
 #ifdef LACC
 Spawn_stopper("3d computation with tile parancs");
-#pragma acc parallel loop deviceptr(data_) tile(32,8,4)
+#pragma acc parallel loop deviceptr(data_) tile(4,8,32)
 for(int x=window_size;x<sizex-window_size;x++)
     {
         for(int y=window_size;y<sizey-window_size;y++)

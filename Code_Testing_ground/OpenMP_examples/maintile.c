@@ -60,7 +60,7 @@ printf(" = %d\n",);
     blocksize_z=atoi(argv[3]);
 }
 */
-//printf("block size: %d,%d,%d \n",blocksize_x,blocksize_y,blocksize_z);
+printf("block size: %d,%d,%d \n",blocksize_x,blocksize_y,blocksize_z);
 //printf("thread size = %d\n",blocksize_x*blocksize_y*blocksize_z);
 //int thread_size=blocksize_x*blocksize_y*blocksize_z;
 
@@ -69,7 +69,7 @@ const int window_size=4;
 const size_t meret=sizex*sizey*sizez;
 printf("meret: %lu , %f Gb \n",meret*4,meret*4/1e9f*2);
 
-Spawn_stopper("offload or/nd memory managment");
+Spawn_stopper("offload or/and memory managment");
 
 
 //data and offloading OpenMP
@@ -187,7 +187,35 @@ Kill_stopper();
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Spawn_stopper("omp with collapse 2 and simd");
+
+Spawn_stopper("tile size pragma");
+#pragma omp tile sizes(blocksize_x,blocksize_y,blocksize_z)
+for(int x=window_size;x<sizex-window_size;x++)
+    {
+        for(int y=window_size;y<sizey-window_size;y++)
+        {
+            //#pragma clang loop vectorize(enable)
+            for(int z=window_size;z<sizez-window_size;z++)
+            {
+                //kernel start
+                
+                out_[x][y][z]+=
+				data_[x][y][z-4]+data_[x][y][z-3]+data_[x][y][z-2]+data_[x][y][z-1]+
+				data_[x][y][z+4]+data_[x][y][z+3]+data_[x][y][z+2]+data_[x][y][z+1]+
+				data_[x][y-4][z]+data_[x][y-3][z]+data_[x][y-2][z]+data_[x][y-1][z]+
+				data_[x][y+4][z]+data_[x][y+3][z]+data_[x][y+2][z]+data_[x][y+1][z]+
+				data_[x-4][y][z]+data_[x-3][y][z]+data_[x-2][y][z]+data_[x-1][y][z]+
+				data_[x+4][y][z]+data_[x+3][y][z]+data_[x+2][y][z]+data_[x+1][y][z];
+                //kernel end
+                //printf("x:%d,y:%d,z:%d   val: %f\n",x,y,z,out_[x][y][z]);
+            }        
+        }
+    }
+Kill_stopper();
+
+
+
+/*
 #pragma omp parallel for
 #pragma omp tile sizes(2,2)
 for(int x=0;x<2;x++)
@@ -204,16 +232,17 @@ for(int x=0;x<2;x++)
         }
     }
 
+*/
 
-
+Spawn_stopper("omp with collapse 2 and simd");
 //#pragma omp tile sizes(blocksize_x,blocksize_y,blocksize_z)
 #pragma omp parallel for collapse(2) 
 for(int x=window_size;x<sizex-window_size;x++)
     {
         for(int y=window_size;y<sizey-window_size;y++)
         {
-            //#pragma omp simd
-            #pragma clang loop vectorize(enable)
+            #pragma omp simd
+            //#pragma clang loop vectorize(enable)
             for(int z=window_size;z<sizez-window_size;z++)
             {
                 //int bid=omp_get_team_num();
@@ -250,7 +279,7 @@ Spawn_stopper("computing manual tiling");
                 //#pragma omp parallel for collapse(2)
                 for (int bx = x; bx < x + blocksize_x; bx++)
                     for (int by = y; by < y + blocksize_y; by++)
-                    #pragma omp simd
+                        #pragma omp simd
                         for (int bz = z; bz < z + blocksize_z; bz++)
                         {
                             if (bx < sizex-window_size &&

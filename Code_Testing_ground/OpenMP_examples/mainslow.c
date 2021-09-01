@@ -37,12 +37,12 @@ printf("Hi this is openMP testing..\n\n");
 	int blocksize_x = 32;
 	int blocksize_y = 8;
 	int blocksize_z = 4;
-	if (argc >= 4)
+	/*if (argc >= 4)
 	{
 		blocksize_x = atoi(argv[1]);
 		blocksize_y = atoi(argv[2]);
 		blocksize_z = atoi(argv[3]);
-	}
+	}*/
 	printf("block size: %d,%d,%d \n", blocksize_x, blocksize_y, blocksize_z);
 
 	printf("thread size needed = %d\n", blocksize_x * blocksize_y * blocksize_z);
@@ -128,17 +128,19 @@ for (int x = 0; x < 2; x += 1)
 {
 	for (int y = 0; y < 2; y += 1)
 		{
-			printf("just a teamleader run this command. The max thread_size is %d \n", omp_get_max_threads());
+			//omp_get_max_threads();
+			//printf("just a teamleader run this command. The max thread_size is %d \n", omp_get_max_threads());
+			//printf("a"); //<---this row cause segfault in row 188
 			//data_[x][y][0]=1; //this cause compiler crash with clang-14
 		#pragma omp parallel for collapse(2) // run on the threads
 		for (int i = 0; i < 2; i += 1)
 			{
 			for (int j = 0; j < 2; j += 1)
 				{
-					printf("omp_get_num_threads = %d\n", omp_get_num_threads());
-					int bid = omp_get_team_num();
-					int tid = omp_get_thread_num();
-					printf("bid %d, tid %d xyij: %d %d %d %d\n", bid, tid, x, y, i, j);
+			//		printf("omp_get_num_threads = %d\n", omp_get_num_threads());
+			//		int bid = omp_get_team_num();
+			//		int tid = omp_get_thread_num();
+			//		printf("bid %d, tid %d xyij: %d %d %d %d\n", bid, tid, x, y, i, j);
 						//data_[0][0][0]=1; // this cause segfault when compiled with clang-14
 						/*
 					it also couse segfault when compiled with clang-12 or clang-11, but it will  only cause warnings 

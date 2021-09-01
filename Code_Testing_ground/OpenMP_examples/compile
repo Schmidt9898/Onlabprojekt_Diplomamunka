@@ -7,7 +7,7 @@
 #-slow
 #-segfa
 #-1d
-declare -a options=("-help" "-tile" "-slow" "-segfa" "-1d")
+declare -a options=("-help" "-tile" "-slow" "-segfa" "-1d" "-optim")
 Compile_tile()
 {
 	runname="runtile"
@@ -42,10 +42,29 @@ Compile_1d()
     rm $runname
 fi
 echo "---$runname-------" 
-clang -I ../../Smart_Stopper main1d.c  -o $runname -Wall -fopenmp=libomp -O3 -fast -lm -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -gline-tables-only #-D NO_TIME
+clang -I ../../Smart_Stopper main1d.c  -o $runname -Wall -fopenmp=libomp -O3 -fast -lm -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -gline-tables-only -fopenmp-version=51 #-D NO_TIME
 echo "---end compiling----"
 }
 
+
+Compile_optim()
+{
+	echo $1 $2
+	runname="runoptim"
+
+	if test -f $runname;then
+    rm $runname
+fi
+echo "---$runname-------" 
+if [[ "$1" == "LOMP" ]];then
+echo "omp"
+clang -I ../../Smart_Stopper mainoptim.c  -o $runname -Wall -fopenmp=libomp -O3 -fast -lm -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -gline-tables-only -D $1 -D $2 #-D L1D #-fopenmp-version=51 #-D NO_TIME
+else
+echo "acc"
+pgcc -acc -Minfo=accel -ta=tesla -Wall -I ../../Smart_Stopper -c99 mainoptim.c -o $runname -D LACC -D $2
+fi
+echo "---end compiling----"
+}
 
 
 
@@ -79,6 +98,10 @@ case ${tomb[$i]} in
 			;;
 		-1d)
 			Compile_1d
+			;;
+		-optim)
+			Compile_optim  ${tomb[$i+1]} ${tomb[$i+2]}
+			i+=2
 			;;
 
 esac
