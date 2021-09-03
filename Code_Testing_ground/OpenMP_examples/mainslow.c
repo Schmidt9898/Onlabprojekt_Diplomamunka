@@ -215,7 +215,7 @@ return 0;
 
 //This code is for the stopper not part of the example
 //Do not change this code
-//The example code if up
+//The example code is up
 
 #ifdef NO_TIME
 void Spawn_stopper(char* name){};

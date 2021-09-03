@@ -22,10 +22,10 @@ fi
 echo "---$runname-------" 
 if [[ "$mode" == "LOMP" ]];then
 echo "omp"
-clang -I ../../Smart_Stopper mainoptim.c  -o $runname -Wall -fopenmp=libomp -O3 -fast -lm -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -gline-tables-only -D LOMP -D $dim #-fopenmp-version=51 #-D NO_TIME
+clang mainoptim.c  -o $runname -Wall -fopenmp=libomp -O3 -fast -lm -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -gline-tables-only -D LOMP -D $dim #-fopenmp-version=51 #-D NO_TIME
 else
 echo "acc"
-pgcc -acc -Minfo=accel -ta=tesla -Wall -I ../../Smart_Stopper -c99 mainoptim.c -o $runname -D LACC -D $dim
+pgcc -acc -Minfo=accel -ta=tesla -Wall -c99 mainoptim.c -o $runname -D LACC -D $dim
 fi
 echo "---end compiling----"
 }
@@ -35,10 +35,10 @@ preproces()
 	
 	if [[ "$mode" == "LOMP" ]];then
 	prefile="omp.pre"
-	clang -I ../../Smart_Stopper mainoptim.c  -o $prefile -Wall -D LOMP -D $dim -E
+	clang mainoptim.c  -o $prefile -Wall -D LOMP -D $dim -E
 	else
 	prefile="acc.pre"
-	pgcc -acc -Wall -I ../../Smart_Stopper -c99 mainoptim.c -o $prefile -D LACC -D $dim -E
+	pgcc -acc -Wall -c99 mainoptim.c -o $prefile -D LACC -D $dim -E 
 	fi
 }
 
