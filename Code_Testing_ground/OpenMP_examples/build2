@@ -1,0 +1,92 @@
+#!/usr/bin/bash
+
+
+add_this=""
+
+file="mainoptim_diftest.c"
+runable="runoptim"
+
+prefile="pre"
+
+mode="LOMP"
+dim="L1D"
+declare -a options=("-help" "-run" "-pre" "-omp" "acc" "-1d" "3d")
+
+
+Compile_optim()
+{
+	echo $mode $dim
+	runname="runoptim"
+
+	if test -f $runname;then
+    rm $runname
+fi
+echo "---$runname-------" 
+if [[ "$mode" == "LOMP" ]];then
+echo "omp"
+clang $file -I ../../Smart_Stopper -o $runname -Wall -fopenmp=libomp -O3 -fast -lm -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -gline-tables-only -D LOMP -D $dim $add_this
+else
+echo "acc"
+pgcc -acc -Minfo=accel -ta=tesla -Wall -I ../../Smart_Stopper -c99 $file -o $runname -D LACC -D $dim $add_this
+fi
+echo "---end compiling----"
+}
+
+preproces()
+{
+	
+	if [[ "$mode" == "LOMP" ]];then
+	prefile="omp.pre"
+	clang $file  -o $prefile -Wall -D LOMP -D $dim -E -I ../../Smart_Stopper
+	else
+	prefile="acc.pre"
+	pgcc -acc -Wall -c99 $file -o $prefile -D LACC -D $dim -E -I ../../Smart_Stopper
+	fi
+}
+
+
+echo "Compiling script"
+
+
+
+if (($#==0)) ;then
+echo "No input argument."
+exit 1
+fi
+IFS=' ' read -r -a tomb <<< $@
+
+for ((i=0;i<$#;i++));do
+case ${tomb[$i]} in 
+		-pre)
+			preproces
+			;;
+		-help)
+			for i in "${options[@]}"
+				do
+				echo "$i"
+				done
+			;;
+		-run)
+			Compile_optim
+			;;
+		omp)
+			mode="LOMP"
+			;;
+		acc)
+			mode="LACC"
+			;;
+		1d)
+			dim="L1D"
+			;;
+		3d)
+			dim="L3D"
+			;;
+		-p)
+			add_this="-D TSIZE=${tomb[$i+1]} -D X=${tomb[$i+2]} -D Y=${tomb[$i+3]} -D Z=${tomb[$i+4]}"
+			i+=4
+			echo $add_this
+			;;		
+
+esac
+done
+

@@ -29,11 +29,12 @@ char filename[256];
 //member functions in C 
 fsp (*Print)(FileStream *);
 fsp (*Write)(FileStream *,const char *s2);
+//fsp (*Write_buff)(FileStream *,char *buff);
 fsp (*Flush)(FileStream *);
 
 };
 //-----------------------------------------------------------------------
-// dont ever call this functions outside of this file
+// don't ever call this functions outside of this file
 fsp fsp_Print(FileStream* self)
 {
 printf("%s",self->_buffer);

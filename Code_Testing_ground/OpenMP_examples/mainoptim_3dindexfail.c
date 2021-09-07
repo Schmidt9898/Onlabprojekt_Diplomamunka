@@ -1,11 +1,12 @@
-/*******************************************************************************************
-*                                                                                          *
-*This is an example for making tiling/blocking in OpenMP, OpenACC.                         *
-*The calculation purpose is to reach a lot of memory from a single kernel.                 *
-*                                                                                          *
-*Cpu ram-> gpu vram -> compute -> gpu vram- > cpu ram                                      *
-*                                                                                          *
+/******************************************************************************************
+*                                                                                         *
+* This code was copied from an example for making tiling/blocking in openMP and openACC.  *
+* The calculation purpose is to reach a lot of memory from a single kernel.               * 
+* This test will help locate the memory problem with 3d indexing                          *
+*                                                                                         *
+*                                                                                         *
 *******************************************************************************************/
+
 //stopper functions defined here, you may choose not to use them with -D NO_TIME
 void Spawn_stopper(char *name);
 double Kill_stopper();
@@ -26,10 +27,12 @@ double Kill_stopper();
 #define Z 32
 //#define TSIZE not matter
 #endif
+/* constans méretek */
 
-const int sizex = 800; //If this is not constant, will cause a segfault in runtime with clang-12
-const int sizey = 800; //and clang-14 if -D
-const int sizez = 800;
+
+const int sizex = 10; //If this is not constant, will cause a segfault in runtime with clang-12
+const int sizey = 10; //and clang-14 if -D
+const int sizez = 10;
 
 struct dataobj{void *data;};
 
@@ -153,15 +156,20 @@ Spawn_stopper("3d computation collapse (3)");
 Kill_stopper();
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*if(out2_==out2)
+printf("pointer: %x   %x\n",out2_,out2);
+else
+printf("asd\n");*/
+
 
 #ifdef LOMP
 Spawn_stopper("3d tiling OpenMP");
-#pragma omp target teams distribute collapse(3) thread_limit(TSIZE)
+#pragma omp target teams distribute collapse(3) thread_limit(512)
   for (int x = window_size; x < sizex - window_size; x += blocksize_x)
     for (int y = window_size; y < sizey - window_size; y += blocksize_y)
       for (int z = window_size; z < sizez - window_size; z += blocksize_z)
       {
-  #pragma omp parallel for collapse(3)
+  #pragma omp parallel for collapse(3) //shared(out2_,data_)
         for (int bx = x; bx < x + blocksize_x; bx++)
           for (int by = y; by < y + blocksize_y; by++)
             for (int bz = z; bz < z + blocksize_z; bz++)
@@ -170,7 +178,16 @@ Spawn_stopper("3d tiling OpenMP");
                 by < sizey - window_size &&
                 bz < sizez - window_size)
               {
+				  //data_=1;
+				  //printf("%p %p %p\n",data_,out_,out2_);
                 	KERNEL_WINDOW(out2,bx,by,bz);
+				 /* printf("----");
+				  if(out2==out2_)
+						printf("pointer: %x   %x\n",out2,out2);
+					else
+					printf("asd\n");*/
+				//out2_[x][y][z] +=24;
+
               }
             }
       }
@@ -215,7 +232,7 @@ return 0;
 
 //If you dont want to compile this code use -D NO_TIME in compile option.
 
-//This code is for the stopper not part of the example, this was copied and trimed from stopper.h
+//This code is for the stopper not part of the example
 //Do not change this code
 //The example code is up
 

@@ -1,0 +1,29 @@
+#!/usr/bin/bash
+
+
+#for
+
+
+#build
+#run
+
+for ((S=4 ;S<=2048 ;S*=2))
+do
+    for ((x=4 ;x<=64 ;x*=2))
+    do
+        for ((y=4 ;y<=64 ;y*=2))
+        do
+            for ((z=4 ;z<=64 ;z*=2))
+            do
+            if (( $x*$y*$z <= $S ))
+            then
+            ./build2 -p $S $x $y $z -run
+            ./runoptim 
+            #((osz=$x*$y*$z))
+            #echo -p "TSIZE=$S" "X=$x" "Y=$y" "Z=$z ösz:$osz"
+            #exit 1
+            fi
+            done
+        done
+    done
+done

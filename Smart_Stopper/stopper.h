@@ -32,7 +32,7 @@ int Sum_Stopper=0;
 struct Stopper * Stopper_root=NULL; //root of the timers
 
 bool Stopper_Filemode=false; // false write to console true write to filename file
-char* _buffer=NULL;// buffer for the strings if we write to file
+char* stopper_str_buffer=NULL;// buffer for the strings if we write to file
 
 
 //get the curent time 
@@ -81,8 +81,8 @@ double Kill_stopper()
     else {//file mode
         char output[64];// 64 comes from the air,... i gues
         snprintf(output, 64, "%s:%f\n",Stopper_root->name,Stopper_root->end);
-        char* temp_del=_buffer;
-        _buffer=concat(_buffer,output);
+        char* temp_del=stopper_str_buffer;
+        stopper_str_buffer=concat(stopper_str_buffer,output);
         free(temp_del);
 
     }
@@ -92,12 +92,14 @@ double Kill_stopper()
     return ret;
 
 }
+
+
 void Stopper_print2file(const char * filename)
 {
     FILE* file = fopen(filename, "a" ); // this will append the file
-    //printf("%s",_buffer);
-    fputs(_buffer, file);
-    printf("%lu",sizeof(_buffer));
+    //printf("%s",stopper_str_buffer);
+    fputs(stopper_str_buffer, file);
+    printf("%lu",sizeof(stopper_str_buffer));
     fclose(file);
 }
 
