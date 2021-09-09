@@ -8,8 +8,8 @@ runable="runoptim"
 
 prefile="pre"
 
-mode="LOMP"
-dim="L1D"
+mode="LACC"
+dim="L3D"
 declare -a options=("-help" "-run" "-pre" "-omp" "acc" "-1d" "3d")
 
 

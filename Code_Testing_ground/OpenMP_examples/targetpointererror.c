@@ -14,63 +14,32 @@ double Kill_stopper();
 #include "stdlib.h"
 #include <stdio.h>
 #include <math.h>
-#ifdef LOMP
+
 #include "omp.h"
-#define X 5
-#define Y 5
-#define Z 5
-#define TSIZE 125 
-#elif LACC
-#include "openacc.h"
-#define X 5
-#define Y 5
-#define Z 5
-//#define TSIZE not matter
-#endif
+#define X 2
+#define Y 2
+#define Z 1
+#define TSIZE 1000 
+
 /* constans méretek */
 
 
-const int sizex = 10; //If this is not constant, will cause a segfault in runtime with clang-12
-const int sizey = 10; //and clang-14 if -D
-const int sizez = 10;
+#define sizex 2 //If this is not constant, will cause a segfault in runtime with clang-12
+#define sizey 2 //and clang-14
+#define sizez 2
 
 struct dataobj{void *data;};
 
 int main(int argc, char **argv)
 {
 
-#ifdef LOMP
 printf("Hi this is openMP tiling test, \n");
-#elif LACC
-printf("Hi this is openACC tiling test, \n");
-#else
-#pragma message "OpenMP or OpenACC was not defined use one of -LACC or LOMP "  __FILE__
-#endif
-
-#ifdef L1D
-	printf("compiled with 1 dimensional arrays.\n");
-	#define Ddim(arr,x,y,z) arr[(z) + (y)*sizez + (x)*sizez * sizey]
-
-#elif L3D
-	printf("compiled with 3 dimensional arrays.\n");
-	#define Ddim(arr,x,y,z) arr ## _[x][y][z]
-#else
-	#pragma message "Dimension was not defined use one of L1D or L3D " 
-#endif
-
-#define KERNEL_WINDOW(out,x,y,z) Ddim(out,x,y,z) += \
-                 Ddim(data,x,y,z - 4) + Ddim(data,x,y,z - 3) + Ddim(data,x,y,z - 2) + Ddim(data,x,y,z - 1) +\
-                 Ddim(data,x,y,z + 4) + Ddim(data,x,y,z + 3) + Ddim(data,x,y,z + 2) + Ddim(data,x,y,z + 1) +\
-                 Ddim(data,x,y - 4,z) + Ddim(data,x,y - 3,z) + Ddim(data,x,y - 2,z) + Ddim(data,x,y - 1,z) +\
-                 Ddim(data,x,y + 4,z) + Ddim(data,x,y + 3,z) + Ddim(data,x,y + 2,z) + Ddim(data,x,y + 1,z) +\
-                 Ddim(data,x - 4,y,z) + Ddim(data,x - 3,y,z) + Ddim(data,x - 2,y,z) + Ddim(data,x - 1,y,z) +\
-                 Ddim(data,x + 4,y,z) + Ddim(data,x + 3,y,z) + Ddim(data,x + 2,y,z) + Ddim(data,x + 1,y,z);
 
 
 
-const int blocksize_x = 4;
-const int blocksize_y = 8;
-const int blocksize_z = 32;
+const int blocksize_x = X;
+const int blocksize_y = Y;
+const int blocksize_z = Z;
 
 printf("block size: %d,%d,%d \n", blocksize_x, blocksize_y, blocksize_z);
 
@@ -88,45 +57,43 @@ printf("memory size needed: %lu , %f Gb \n", meret * 2, meret * 4 / 1e9f * 2);
 //data and offloading OpenMP
 
 //this we will use on the cpu
-float * out = (float *)malloc(meret * 4);
-float * out2 = (float *)malloc(meret * 4);
 
-#ifdef LOMP
-float * data = NULL;
-#pragma omp target data map(alloc : data[0:meret]) \
-            map(from  : out[0:meret])  \
-            map(from  : out2[0:meret])
-#elif LACC
-#pragma acc data copyout(out[0:meret]) copyout(out2[0:meret]) 
-#endif
+float * data = (float *)malloc(meret * 4);
+//float(*__restrict data_)[sizey][sizez] =(float(*__restrict)[sizey][sizez])data;
+
+#pragma omp target data map(from: data[0:meret]) 
 {
 //Kill_stopper();
 
-#ifdef LACC
-float* data=(float*)acc_malloc(meret*4);
-#endif
+
 
 
 float(*__restrict data_)[sizey][sizez] =(float(*__restrict)[sizey][sizez])data;
-float(*__restrict out_)[sizey][sizez] = (float(*__restrict)[sizey][sizez])out;
-float(*__restrict out2_)[sizey][sizez] = (float(*__restrict)[sizey][sizez])out2;
+
+
+
+/*
+
+#pragma omp target teams distribute collapse(1) thread_limit(2)
+  for (int x = 0; x < 10; x += 2)
+  #pragma omp parallel for collapse(1) 
+        for (int bx = x; bx < x + 2; bx++)
+					printf("pointer data data_: %p \n",tomb);
+      */
+
 
 /*
 #pragma omp target team
 {
-data_=data;
-out_ = out;
-out2_ = out2;
+data_=(float(*__restrict)[sizey][sizez])data;
 }
-*/
 
+*/
 //init aka zeroing
-#ifdef LOMP
+
 #pragma omp target teams
 #pragma omp distribute parallel for collapse(3)
-#elif LACC
-#pragma acc parallel loop collapse(3) deviceptr(data,data_)
-#endif
+
   for (int x = 0; x < sizex ; x++)
   {
     for (int y = 0; y < sizey ; y++)
@@ -134,30 +101,28 @@ out2_ = out2;
       for (int z = 0; z < sizez ; z++)
       {
         //kernel start
-        Ddim(data,x,y,z) = 1.0;
-        Ddim(out,x,y,z) = 0.0;
-        Ddim(out2,x,y,z) = 0.0;
+        data_[x][y][z] = 0.0f;
       }
     }
   }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 Spawn_stopper("3d computation collapse (3)");
-#ifdef LOMP
 #pragma omp target teams
 #pragma omp distribute parallel for collapse(3)
-#elif LACC
-#pragma acc parallel loop collapse(3) deviceptr(data,data_)
-#endif
-  for (int x = window_size; x < sizex - window_size; x++)
+
+  for (int x = 0; x < sizex ; x++)
   {
-    for (int y = window_size; y < sizey - window_size; y++)
+    for (int y = 0; y < sizey ; y++)
     {
-      for (int z = window_size; z < sizez - window_size; z++)
+      for (int z = 0; z < sizez ; z++)
       {
         //kernel start
-         KERNEL_WINDOW(out,x,y,z)
-         printf("On the GPU from collapse3 %p %p %p\n",data_,out_,out2_);
+         //KERNEL_WINDOW(out,x,y,z)
+         data_[x][y][z]+=1;
+         //printf("On the GPU from collapse3 %p %p \n",data,data_);
+         printf("pointer data data_: %p   %p       x,y,z %d %d %d   data %f     T:%d\n",data,data_,x,y,z,data_[x][y][z],omp_get_thread_num());
       }
     }
   }
@@ -176,52 +141,36 @@ printf("asd\n");*/
 }
 */
 
-printf("\nOn the CPU: %p %p %p\n\n",data_,out_,out2_);
+printf("\nOn the CPU: %p %p\n\n",data,data_);
 
-#ifdef LOMP
+
 Spawn_stopper("3d tiling OpenMP");
-#pragma omp target teams distribute collapse(3) thread_limit(512)
-  for (int x = window_size; x < sizex - window_size; x += blocksize_x)
-    for (int y = window_size; y < sizey - window_size; y += blocksize_y)
-      for (int z = window_size; z < sizez - window_size; z += blocksize_z)
+
+//#pragma omp target data use_device_ptr(data_)
+#pragma omp target teams distribute collapse(3) thread_limit(512) firstprivate(data_)
+  for (int x = 0; x < sizex ; x += blocksize_x)
+    for (int y = 0; y < sizey ; y += blocksize_y)
+      for (int z = 0; z < sizez ; z += blocksize_z)
       {
         
 				  //printf("On the GPU %p %p %p\n",data_,out_,out2_);
-  #pragma omp parallel for collapse(3) shared(out2_,data_)
+  #pragma omp parallel for collapse(3) firstprivate(data_)
         for (int bx = x; bx < x + blocksize_x; bx++)
           for (int by = y; by < y + blocksize_y; by++)
             for (int bz = z; bz < z + blocksize_z; bz++)
             {
-              if (bx < sizex - window_size &&
-                by < sizey - window_size &&
-                bz < sizez - window_size)
+              //printf("a");
+              if (bx < sizex  &&
+                by < sizey  &&
+                bz < sizez )
               {
-				  //data_=1;
-                	KERNEL_WINDOW(out2,bx,by,bz);
-				  //printf("----\n");
-				  //if(out2==out2_)
-						//printf("pointer out2 out2_: %p   %p\n",out2,out2_);
-					//else
-					//printf("nem egyenlo\n");
-				//out2_[x][y][z] +=24;
+						    printf("pointer data data_: %p   %p       x,y,z %d %d %d   data %f     T:%d\n",data,data_,bx,by,bz,data_[x][y][z],omp_get_thread_num());
+                	data_[bx][by][bz]+=1;
 
               }
             }
       }
-#elif LACC
-Spawn_stopper("3d tiling OpenACC");
-#pragma acc parallel loop deviceptr(data_) deviceptr(data) tile(blocksize_z,blocksize_y,blocksize_x) private(sizex,sizey,sizez) // tile(4,8,16) vector_length(512)
-for(int x=window_size;x<sizex-window_size;x++)
-  {
-      for(int y=window_size;y<sizey-window_size;y++)
-      {
-          for(int z=window_size;z<sizez-window_size;z++)
-          {
-              KERNEL_WINDOW(out2,x,y,z)
-          }
-      }
-  }
-#endif
+
 
 Kill_stopper();
 
@@ -230,18 +179,24 @@ Kill_stopper();
 //Spawn_stopper("back to ram");
 }
 //Kill_stopper();
-
-for (int i = 0; i < meret; i++) {
-	if (out[i]!=out2[i]) {
-    printf("Validation failed\n");
-	printf("out1 %f != out2 %f\n",out[i],out2[i]);
-    break;
-	}
-  
-}
-free(out);
-free(out2);
-
+float(*__restrict data_)[sizey][sizez] =(float(*__restrict)[sizey][sizez])data;
+  for (int x = 0; x < sizex ; x++)
+  {
+    for (int y = 0; y < sizey ; y++)
+    {
+      for (int z = 0; z < sizez ; z++)
+      {
+      if (data_[x][y][z] !=1) {
+        printf("Validation failed     ");
+        //goto ldone;
+      }else
+      printf("Validation passed     ");
+      printf("data_ %f != 1\n",data_[x][y][z]);
+      }
+    }
+  }
+ldone:
+free(data);
 return 0;
 }
 

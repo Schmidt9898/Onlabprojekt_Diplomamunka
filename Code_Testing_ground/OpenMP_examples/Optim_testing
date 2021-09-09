@@ -7,7 +7,7 @@
 #build
 #run
 
-for ((S=4 ;S<=2048 ;S*=2))
+for ((S=4 ;S<=1024 ;S*=2))
 do
     for ((x=4 ;x<=64 ;x*=2))
     do

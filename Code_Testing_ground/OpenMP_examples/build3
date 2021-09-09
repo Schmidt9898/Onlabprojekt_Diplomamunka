@@ -1,0 +1,62 @@
+#!/usr/bin/bash
+
+#build for indexfaile
+file="mainoptim_3dindexfail.c"
+kispelda="targetpointererror.c"
+
+runable="runoptim"
+
+prefile="pre"
+
+#mode="LOMP"
+#dim="L3D"
+#declare -a options=("-help" "-run" "-pre" "-omp" "acc" "-1d" "3d")
+
+
+Compile_optim()
+{
+	#echo $mode $dim
+	runname="runerror"
+
+	if test -f $runname;then
+    	rm $runname
+	fi
+echo "---$runname-------" 
+
+clang $file -o $runname -Wall -fopenmp=libomp -O3 -lm -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -gline-tables-only -D LOMP -D L3D #-fopenmp-version=51 #-D NO_TIME
+
+echo "---end compiling----"
+}
+
+preproces()
+{
+	prefile="omp.pre"
+	clang $file  -o $prefile -Wall -D LOMP -D $dim -E
+
+}
+
+
+echo "Compiling script"
+
+
+
+if (($#==0)) ;then
+echo "No input argument."
+exit 1
+fi
+IFS=' ' read -r -a tomb <<< $@
+
+for ((i=0;i<$#;i++));do
+case ${tomb[$i]} in 
+		-pre)
+			preproces
+			;;
+		-run)
+			Compile_optim
+			;;
+		kis)
+			file=$kispelda
+			;;	
+esac
+done
+

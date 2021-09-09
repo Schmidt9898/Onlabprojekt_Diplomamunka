@@ -1,3 +1,4 @@
+#!/bin/bash
 #!/usr/bin/bash
 
 
@@ -83,3 +84,6 @@ case ${tomb[$i]} in
 esac
 done
 
+
+
+#clang mainoptim.c  -o $runname -Wall  -O3 -fast -lm -gline-tables-only -D LOMP -D $dim -target x86_64-pc-linux-gnu -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx803

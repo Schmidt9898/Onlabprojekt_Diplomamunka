@@ -17,19 +17,25 @@ double Kill_stopper();
 #include "omp.h"
 #define X 8
 #define Y 4
-#define Z 16
+#define Z 32
 #define TSIZE 512 
 #elif LACC
 #include "openacc.h"
 #define X 8
 #define Y 4
 #define Z 32
-//#define TSIZE not matter
+//#define TSIZE 512
 #endif
 
-const int sizex = 800; //If this is not constant, will cause a segfault in runtime with clang-12
-const int sizey = 800; //and clang-14 if -D
-const int sizez = 800;
+
+#define TERX 800
+#define TERY 800
+#define TERZ 800
+
+
+const int sizex = TERX; //If this is not constant, will cause a segfault in runtime with clang-12
+const int sizey = TERY; //and clang-14 if -D
+const int sizez = TERZ;
 
 struct dataobj{void *data;};
 
@@ -65,9 +71,9 @@ printf("Hi this is openACC tiling test, \n");
 
 
 
-const int blocksize_x = 4;
-const int blocksize_y = 8;
-const int blocksize_z = 32;
+const int blocksize_x = X;
+const int blocksize_y = Y;
+const int blocksize_z = Z;
 
 printf("block size: %d,%d,%d \n", blocksize_x, blocksize_y, blocksize_z);
 
@@ -104,9 +110,9 @@ float* data=(float*)acc_malloc(meret*4);
 #endif
 
 
-float(*__restrict data_)[sizey][sizez] =(float(*__restrict)[sizey][sizez])data;
-float(*__restrict out_)[sizey][sizez] = (float(*__restrict)[sizey][sizez])out;
-float(*__restrict out2_)[sizey][sizez] = (float(*__restrict)[sizey][sizez])out2;
+float(*__restrict data_)[TERY][TERZ] =(float(*__restrict)[TERY][TERZ])data;
+float(*__restrict out_)[TERY][TERZ] = (float(*__restrict)[TERY][TERZ])out;
+float(*__restrict out2_)[TERY][TERZ] = (float(*__restrict)[TERY][TERZ])out2;
 
 
 //init aka zeroing
@@ -176,7 +182,7 @@ Spawn_stopper("3d tiling OpenMP");
       }
 #elif LACC
 Spawn_stopper("3d tiling OpenACC");
-#pragma acc parallel loop deviceptr(data_) deviceptr(data) tile(blocksize_z,blocksize_y,blocksize_x) private(sizex,sizey,sizez) // tile(4,8,16) vector_length(512)
+#pragma acc parallel loop deviceptr(data_) deviceptr(data) tile(blocksize_z,blocksize_y,blocksize_x) private(sizex,sizey,sizez) //num_workers( TSIZE )// tile(4,8,16) vector_length(512)
 for(int x=window_size;x<sizex-window_size;x++)
   {
       for(int y=window_size;y<sizey-window_size;y++)
@@ -196,15 +202,21 @@ Kill_stopper();
 //Spawn_stopper("back to ram");
 }
 //Kill_stopper();
+int good=0;
 
 for (int i = 0; i < meret; i++) {
 	if (out[i]!=out2[i]) {
     printf("Validation failed\n");
 	printf("out1 %f != out2 %f\n",out[i],out2[i]);
+    good++;
     break;
 	}
   
 }
+
+if(!good)
+  printf("Validation passed\n");
+
 free(out);
 free(out2);
 

@@ -51,7 +51,7 @@ FileStream *Fs= MakeFileStream("acctestfile.txt");
 Fs->Write(Fs,"++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 //printf("ez jön a commandline ról %d",LVAR);
 stopper_str_buffer = (char*)malloc(1);
-Stopper_Filemode=false;
+Stopper_Filemode=true;
 
 
 
