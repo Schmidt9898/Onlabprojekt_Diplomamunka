@@ -28,14 +28,15 @@ double Kill_stopper();
 #endif
 
 
-#define TERX 800
-#define TERY 800
-#define TERZ 800
+#define SIZEX 800 //On the gpu pointer folding is not allowed with variable size
+#define SIZEY 800 //this has to be knowed in compile time
+#define SIZEZ 800 //is this bad, for every scale you have to recompile 
 
 
-const int sizex = TERX; //If this is not constant, will cause a segfault in runtime with clang-12
-const int sizey = TERY; //and clang-14 if -D
-const int sizez = TERZ;
+const int sizex = SIZEX; //If this is not constant, will cause a segfault in runtime with clang-12
+const int sizey = SIZEY; //and clang-14 if -D
+const int sizez = SIZEZ;// no it will not anymore SIZEXYZ was the answer 
+                        //BUT if this is not constatn the program will be slower
 
 struct dataobj{void *data;};
 
@@ -71,7 +72,7 @@ printf("Hi this is openACC tiling test, \n");
 
 
 
-const int blocksize_x = X;
+const int blocksize_x = X;// if this is not constant the program will be slower
 const int blocksize_y = Y;
 const int blocksize_z = Z;
 
@@ -109,10 +110,10 @@ float * data = NULL;
 float* data=(float*)acc_malloc(meret*4);
 #endif
 
-
-float(*__restrict data_)[TERY][TERZ] =(float(*__restrict)[TERY][TERZ])data;
-float(*__restrict out_)[TERY][TERZ] = (float(*__restrict)[TERY][TERZ])out;
-float(*__restrict out2_)[TERY][TERZ] = (float(*__restrict)[TERY][TERZ])out2;
+// pointer folding exact size must be know at compile time
+float(*__restrict data_)[SIZEY][SIZEZ] =(float(*__restrict)[SIZEY][SIZEZ])data;
+float(*__restrict out_)[SIZEY][SIZEZ] = (float(*__restrict)[SIZEY][SIZEZ])out;
+float(*__restrict out2_)[SIZEY][SIZEZ] = (float(*__restrict)[SIZEY][SIZEZ])out2;
 
 
 //init aka zeroing
