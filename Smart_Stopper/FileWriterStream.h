@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef ushort bool;
+typedef unsigned short bool;
 #define true 1;
 #define false 0;
 
