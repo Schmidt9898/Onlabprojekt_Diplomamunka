@@ -125,13 +125,43 @@ eredmények
 0826
 
 
-tile pragma
+tile pragma ?
 3d -> 1d átváltás done
-overleaf
+overleaf started
+
+------------------
 
 
+acc és omp példa egy futathatóba ifdefekkel
+1d és 3d indexelés
+
+probléma a device pointer volt
 
 
+----
+acc 2d ha nem const a size akkor nem csinálja az indexelést failed
+-
+-------
+kis példa a failed indexekkel
 
+loopblocking? az az tiling
+intel api icc
+
+amd gpu fordítás
+
+fájlok rendezése
+új irányelv ami működik azt nem változtatjuk, de változtattam és jobb lett
+
+
+*******
+openacc elromlik ha 1024 nél nagyobb tile block size ot adunk neki
+
+cuda does not support variable size array declaration or casting in that case it will cause nullpointer after casting
+
+in tiling omp only use the first element in the array of the block
+this was my fault now it is working
+
+
+Mi az a -lm
 
 	
