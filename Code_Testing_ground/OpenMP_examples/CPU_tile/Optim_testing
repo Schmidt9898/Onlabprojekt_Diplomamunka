@@ -1,0 +1,29 @@
+#!/usr/bin/bash
+
+
+count=0
+
+
+for ((H=131072 ;H<=1048576 ;H+=131072)) 
+do
+    for ((x=4 ;x<=1024 ;x*=2))
+    do
+        for ((y=4 ;y<=1024 ;y*=2))
+        do
+            for ((z=4 ;z<=1024 ;z*=2))
+            do
+            if (( $x*$y*$z == $H ))
+            then
+            ./build_tile -p $x $y $z
+            OMP_PROC_BIND=true numactl --cpunodebind=0 ./runtile 
+            #((osz=$x*$y*$z))
+            #echo -p "X=$x" "Y=$y" "Z=$z ösz:$osz"
+            #exit 1
+            ((count++))
+            fi
+            done
+        done
+    done
+done
+
+echo $count

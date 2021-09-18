@@ -56,6 +56,10 @@ struct dataobj
 
 int main(int argc, char ** argv) {
 
+
+printf("ez az");
+
+
 Stopper_Filemode=false; 
 //printf("Hi this is the openMP testing..\n\n");
 
@@ -76,9 +80,9 @@ printf(" = %d\n",);
 
 
 //blokméretet argumentumokkal felül lehet definiálni
-#define blocksize_x 32
-#define blocksize_y 32
-#define blocksize_z 2048
+#define blocksize_x 16
+#define blocksize_y 16
+#define blocksize_z 512
 
 
 /*if(argc>=4){
@@ -194,6 +198,7 @@ for(int x=window_size;x<sizex-window_size;x++)
 	{
 		for(int y=window_size;y<sizey-window_size;y++)
 		{
+			#pragma clang loop vectorize(enable)
 			for(int z=window_size;z<sizez-window_size;z++)
 			{
 				//kernel start

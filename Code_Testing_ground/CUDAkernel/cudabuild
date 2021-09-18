@@ -1,0 +1,77 @@
+#!/bin/bash
+#!/usr/bin/bash
+
+
+file="maincuda.cu"
+runable="runcuda"
+
+prefile="pre"
+
+dim="L3D"
+declare -a options=("-help" "-run" "-pre" "-1d" "3d")
+
+
+Compile_optim()
+{
+	echo $mode $dim
+	
+
+	if test -f $runable;then
+    rm $runable
+	fi
+	echo "---$runable-------" 
+
+	nvcc $file  -o $runable -arch=sm_70 -O3 -D $dim
+
+	echo "---end compiling----"
+}
+
+preproces()
+{
+	nvcc $file -o $prefile -D $dim -E 
+}
+
+
+echo "CUDA Building script!"
+
+
+
+if (($#==0)) ;then
+echo "No input argument."
+exit 1
+fi
+IFS=' ' read -r -a tomb <<< $@
+
+for ((i=0;i<$#;i++));do
+case ${tomb[$i]} in 
+		-pre)
+			preproces
+			;;
+		-help)
+			for i in "${options[@]}"
+				do
+				echo "$i"
+				done
+			;;
+		-run)
+			Compile_optim
+			;;
+		omp)
+			mode="LOMP"
+			;;
+		acc)
+			mode="LACC"
+			;;
+		1d)
+			dim="L1D"
+			;;
+		3d)
+			dim="L3D"
+			;;		
+
+esac
+done
+
+
+
+#clang mainoptim.c  -o $runname -Wall  -O3 -fast -lm -gline-tables-only -D LOMP -D $dim -target x86_64-pc-linux-gnu -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx803
