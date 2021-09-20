@@ -3,7 +3,7 @@
 
 
 filename="mainsimd2.c"
-#filename="maincopy.c"
+#filename="mainloopblocking.c"
 
 runname="run"
 
