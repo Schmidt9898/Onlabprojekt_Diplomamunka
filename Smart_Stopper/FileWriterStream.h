@@ -29,7 +29,7 @@ char filename[256];
 //member functions in C 
 fsp (*Print)(FileStream *);
 fsp (*Write)(FileStream *,const char *s2);
-//fsp (*Write_buff)(FileStream *,char *buff);
+//fsp (*Write_byte)(FileStream *,char *buff,);
 fsp (*Flush)(FileStream *);
 
 };
@@ -75,4 +75,21 @@ FileStream* MakeFileStream(const char* filename)
 
     return f;
 }
+
+//with append
+void Write_byte_to_file(const char * filename,char *bytes,size_t length){
+    FILE* file = fopen(filename, "a" );
+    fwrite(bytes,1,length,file);
+    fflush(file);
+    fclose(file);
+}
+/*
+FILE * _Rffph_file=NULL;
+void Read_from_file_savepos(char * filename,char* whereto,size_t length){
+    if(_Rffph_file==NULL)
+        _Rffph_file= fopen(filename,"r");
+    //char* arr=malloc(length);
+    fread(whereto,1,length,_Rffph_file);
+}
+*/
 #endif

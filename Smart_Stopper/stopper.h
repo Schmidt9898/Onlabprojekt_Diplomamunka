@@ -34,6 +34,7 @@ struct Stopper * Stopper_root=NULL; //root of the timers
 bool Stopper_Filemode=false; // false write to console true write to filename file
 char* stopper_str_buffer=NULL;// buffer for the strings if we write to file
 
+bool Stopper_Startmode=true;
 
 //get the curent time 
 //also it does magic because i dont remember what it does actualy
@@ -57,7 +58,7 @@ struct Stopper
 void Spawn_stopper(char* name)
 {
         struct Stopper * stopper= malloc(sizeof(struct Stopper));
-        if(!Stopper_Filemode) //console mode
+        if(!Stopper_Filemode && Stopper_Startmode) //console mode
             printf("%s ID:%d started->\n",name,Sum_Stopper);
             else
             {

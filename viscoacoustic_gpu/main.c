@@ -1,12 +1,17 @@
 
 //#include <iostream>
-#include "Timer_C.h"
+//#include "Timer_C.h"
 
 
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
 #include "omp.h"
+
+
+
+#define filename_macro "gpu.dataobj"
+#include "stopper.h"
 
 /*
 size_t count_t=0,sum_t;
@@ -76,7 +81,7 @@ int Forward(struct dataobj *__restrict b_vec,
 //printf("eljut %d %d %d    \n",x_size,y_size,z_size);
 
 //char offloadname[10]="Offload";
-       Section_Start("Offload");
+       Spawn_stopper("Offload");
 
 #pragma omp target data map(tofrom: b[0:b_vec->size[0]][0:b_vec->size[1]][0:b_vec->size[2]]), \
             map(tofrom: damp[0:damp_vec->size[0]][0:damp_vec->size[1]][0:damp_vec->size[2]]),\
@@ -97,13 +102,13 @@ int Forward(struct dataobj *__restrict b_vec,
 
   {
 
-    Section_End();
+    Kill_stopper();
 
 
 
   
 
-  Section_Start("Section 0");
+  Spawn_stopper("Section 0");
 #pragma omp target teams distribute parallel for collapse(3)
    for (int x = x_m; x <= x_M; x += 1)
     {
@@ -115,17 +120,17 @@ int Forward(struct dataobj *__restrict b_vec,
         }
       }
     }
-  Section_End();
+  Kill_stopper();
 
     //count_t*=4;
     //prt("Section 0");
     //return 0;
     /* End section0 */
-    Section_Start("Time for loop");
+    Spawn_stopper("Time for loop");
     for (int time = time_m, t0 = (time) % (2), t1 = (time + 1) % (2); time <= time_M; time += 1, t0 = (time) % (2), t1 = (time + 1) % (2))
     {
       /* Begin section1 */
-       //Section_Start("Section 1");
+       //Spawn_stopper("Section 1");
       
       {
 
@@ -143,11 +148,11 @@ int Forward(struct dataobj *__restrict b_vec,
           bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,(x_M - x_m + 1)%(x1_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x1_blk0_size) + 1,(y_M - y_m + 1)%(y0_blk0_size),y_M,y_M - (y_M - y_m + 1)%(y0_blk0_size) + 1,z_M,z_m);
 
       }
-      //Section_End();
+      //Kill_stopper();
       /* End section1 */
       /* Begin section2 */
       
-      //Section_Start("Section 2");
+      //Spawn_stopper("Section 2");
       /*{
           // Timer t("Section 2");
           for (int p_src = p_src_m; p_src <= p_src_M; p_src += 1)
@@ -207,12 +212,12 @@ int Forward(struct dataobj *__restrict b_vec,
         }
       }
       */
-      //Section_End();
+      //Kill_stopper();
 
       /* End section2 */
       /* Begin section3 */
       
-      //Section_Start("Section 3");
+      //Spawn_stopper("Section 3");
       {
         //Timer t("Section 3");
         #pragma omp target teams distribute parallel for
@@ -266,13 +271,13 @@ int Forward(struct dataobj *__restrict b_vec,
           rec[time][p_rec] = sum;
         }
       }
-       //Section_End();/* End section3 */
+       //Kill_stopper();/* End section3 */
     }
-    Section_End();//Tiem loop end
+    Kill_stopper();//Tiem loop end
 
-  Section_Start("Back to Ram");
+  Spawn_stopper("Back to Ram");
   }
-  Section_End();
+  Kill_stopper();
   //free(r1_);
   
   return 0;
@@ -379,12 +384,28 @@ dataobj create_data(int size0, int size1, int size2, int size3, int elemsize) {
   dataobj a;
   a.data =  malloc(elemsize*size0*size1*size2*size3);//new char[elemsize*size0*size1*size2*size3]; // 340*340*340
   total_memory_needed+=elemsize*size0*size1*size2*size3;
+
+  size_t arrsize=size0*size1*size2*size3;
+  for(size_t i=0;i<arrsize;i++)
+  {
+    a.data[i]=1;
+  }
+
   a.size = malloc(sizeof(int)*4);//new int[4];
   a.size[0] = size0;
   a.size[1] = size1;
   a.size[2] = size2;
   a.size[3] = size3;
   return a;
+}
+void delete_dataobj(dataobj a)
+{
+Write_byte_to_file(filename_macro,(char*)a.data,a.size[0]*a.size[1]*a.size[2]*a.size[3]*sizeof(float));
+
+
+free(a.data);
+free(a.size);
+
 }
 
 int main(int argc, char ** argv) {
@@ -418,20 +439,38 @@ int main(int argc, char ** argv) {
   printf("took %f GB memory needed.\n", (float)total_memory_needed / 1000000000);
 
   //timer settings
-  Timer_Filemode=0;
-  Timer_buffer=malloc(1);
-  *Timer_buffer='\0';
-  
-  Section_Start("Forward");
+  //Timer_Filemode=0;
+  //Timer_buffer=malloc(1);
+  //*Timer_buffer='\0';
+    stopper_str_buffer=malloc(1);
+    Stopper_Filemode=false;
+    Stopper_Startmode=false;
+  Spawn_stopper("Forward");
 
 
   Forward(&b_vec, &damp_vec, dt, o_x, o_y, o_z, &p_vec, &qp_vec, &r_vec, &rec_vec, &rec_coords_vec, &src_vec,
     &src_coords_vec, &v_x_vec, &v_y_vec, &v_z_vec, &vp_vec, x_M, x_m, x_size, y_M, y_m, y_size, z_M, z_m,
     z_size, p_rec_M, p_rec_m, p_src_M, p_src_m, time_M, time_m, x0_blk0_size, x1_blk0_size, y0_blk0_size);
 
-  Section_End();
+  Kill_stopper();
 
-  Timer_print2file("viscoacoustic_gpu_v100.meres.txt");
+  remove(filename_macro);
+
+  delete_dataobj(b_vec         );
+  delete_dataobj(damp_vec      );
+  delete_dataobj(p_vec         );
+  delete_dataobj(qp_vec        );
+  delete_dataobj(r_vec         );
+  delete_dataobj(rec_vec       );
+  delete_dataobj(rec_coords_vec);
+  delete_dataobj(src_vec       );
+  delete_dataobj(src_coords_vec);
+  delete_dataobj(v_x_vec       );
+  delete_dataobj(v_y_vec       );
+  delete_dataobj(v_z_vec       );
+  delete_dataobj(vp_vec        );
+
+  //Timer_print2file("viscoacoustic_gpu_v100.meres.txt");
 
   return 0;
 

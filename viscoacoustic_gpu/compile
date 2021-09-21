@@ -1,7 +1,7 @@
 
-#clang -I ../Timer_C main.c  -o run -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -Xopenmp-target -march=sm_70
+clang -I ../Timer_C -I ../Smart_Stopper/ main.c  -o run -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -Xopenmp-target -march=sm_70
 #-Xarch_device sm_70
-clang -I ../Timer_C main.c  -o run -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm
+#clang -I ../Timer_C -I ../Smart_Stopper/ main.c  -o run -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm
 
 
 

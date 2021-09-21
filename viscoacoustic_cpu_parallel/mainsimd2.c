@@ -8,6 +8,9 @@
 #include <stdlib.h>
 #include "omp.h"
 
+
+#define filename_macro "valid.dataobj"
+
 /*
 size_t count_t=0,sum_t;
 void prt(std::string s)
@@ -92,16 +95,16 @@ int Forward(struct dataobj *__restrict b_vec,
     for (int time = time_m, t0 = (time) % (2), t1 = (time + 1) % (2); time <= time_M; time += 1, t0 = (time) % (2), t1 = (time + 1) % (2))
     {
       /* Begin section1 */
-       Spawn_stopper("Section 1");
+       //Spawn_stopper("Section 1");
       
       {
 
-          Spawn_stopper("bf0");
+          //Spawn_stopper("bf0");
           bf0(b_vec,damp_vec,dt,p_vec,v_x_vec,v_y_vec,v_z_vec,t0,t1,x0_blk0_size,x_M - (x_M - x_m + 1)%(x0_blk0_size),x_m,y_M,y_m,z_M,z_m);
 
           bf0(b_vec,damp_vec,dt,p_vec,v_x_vec,v_y_vec,v_z_vec,t0,t1,(x_M - x_m + 1)%(x0_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x0_blk0_size) + 1,y_M,y_m,z_M,z_m);
-          Kill_stopper();
-          Spawn_stopper("bf1");
+          //Kill_stopper();
+          //Spawn_stopper("bf1");
           bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,x1_blk0_size,x_M - (x_M - x_m + 1)%(x1_blk0_size),x_m,y0_blk0_size,y_M - (y_M - y_m + 1)%(y0_blk0_size),y_m,z_M,z_m);
 
           bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,x1_blk0_size,x_M - (x_M - x_m + 1)%(x1_blk0_size),x_m,(y_M - y_m + 1)%(y0_blk0_size),y_M,y_M - (y_M - y_m + 1)%(y0_blk0_size) + 1,z_M,z_m);
@@ -109,10 +112,10 @@ int Forward(struct dataobj *__restrict b_vec,
           bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,(x_M - x_m + 1)%(x1_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x1_blk0_size) + 1,y0_blk0_size,y_M - (y_M - y_m + 1)%(y0_blk0_size),y_m,z_M,z_m);
 
           bf1(b_vec,damp_vec,dt,p_vec,qp_vec,r_vec,(float *)r1,v_x_vec,v_y_vec,v_z_vec,vp_vec,x_size,y_size,z_size,t0,t1,(x_M - x_m + 1)%(x1_blk0_size),x_M,x_M - (x_M - x_m + 1)%(x1_blk0_size) + 1,(y_M - y_m + 1)%(y0_blk0_size),y_M,y_M - (y_M - y_m + 1)%(y0_blk0_size) + 1,z_M,z_m);
-          Kill_stopper();
+          //Kill_stopper();
 
       }
-      Kill_stopper();
+      //Kill_stopper();
       
 
       /* End section2 */
@@ -282,22 +285,44 @@ void bf1(struct dataobj *__restrict b_vec, struct dataobj *__restrict damp_vec, 
 }
 
 size_t total_memory_needed=0;
+
 dataobj create_data(int size0, int size1, int size2, int size3, int elemsize) {
   dataobj a;
+
   a.data =  malloc(elemsize*size0*size1*size2*size3);//new char[elemsize*size0*size1*size2*size3]; // 340*340*340
   total_memory_needed+=elemsize*size0*size1*size2*size3;
-  a.size = malloc(sizeof(int)*4);//new int[4];
+  size_t arrsize=size0*size1*size2*size3;
+  //Read_from_file_savepos("Startfile.dataobj",(char*)a.data,arrsize*sizeof(float));
+  for(size_t i=0;i<arrsize;i++)
+  {
+    /*if(a.data[i]!=1){
+      printf("dataobj %f\n",a.data[i]);
+      break;
+    }*/
+    a.data[i]=1;
+  }
+  a.size = malloc(sizeof(int)*4);
   a.size[0] = size0;
   a.size[1] = size1;
   a.size[2] = size2;
   a.size[3] = size3;
   return a;
 }
+void delete_dataobj(dataobj a)
+{
+Write_byte_to_file(filename_macro,(char*)a.data,a.size[0]*a.size[1]*a.size[2]*a.size[3]*sizeof(float));
+
+
+free(a.data);
+free(a.size);
+
+}
+
 
 int main(int argc, char ** argv) {
 
     //Timer setting
-    //Timer_filename="base.txt";
+    //Timer_filename_macro="base.txt";
     //Timer_Filemode=false;
 
 
@@ -326,6 +351,7 @@ int main(int argc, char ** argv) {
 
   //timer settings
   Stopper_Filemode=false;
+  Stopper_Startmode=false;
   stopper_str_buffer=malloc(1);
 
   
@@ -337,6 +363,28 @@ int main(int argc, char ** argv) {
     z_size, p_rec_M, p_rec_m, p_src_M, p_src_m, time_M, time_m, x0_blk0_size, x1_blk0_size, y0_blk0_size);
 
   Kill_stopper();
+  
+
+  remove(filename_macro);
+
+  delete_dataobj(b_vec         );
+  delete_dataobj(damp_vec      );
+  delete_dataobj(p_vec         );
+  delete_dataobj(qp_vec        );
+  delete_dataobj(r_vec         );
+  delete_dataobj(rec_vec       );
+  delete_dataobj(rec_coords_vec);
+  delete_dataobj(src_vec       );
+  delete_dataobj(src_coords_vec);
+  delete_dataobj(v_x_vec       );
+  delete_dataobj(v_y_vec       );
+  delete_dataobj(v_z_vec       );
+  delete_dataobj(vp_vec        );
+
+
+
+
+
 
   //Timer_print2file("viscoacoustic_gpu_v100.meres.txt");
 
