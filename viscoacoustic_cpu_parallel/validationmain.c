@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 #include <stdlib.h>
-
+#include <string.h>
 /*
 
 size_t total_memory_needed=0;
@@ -42,7 +42,7 @@ if(argc<3){
   return -1;
 }
 
-
+int silentmode= (argc>=4) ? strcmp(argv[3],"get") : 1;
 
 FILE* valid_file = fopen(argv[1],"r");
 FILE* test_file = fopen(argv[2],"r");
@@ -68,8 +68,7 @@ if(valid_size!=test_size){
     printf("Size not equal!! %lu != %lu",valid_size,test_size);
     return -1;
 }
-printf("Sizes equal.\n");
-
+printf("Sizes equal. %lu\n",valid_size);
 
 
 char * valid_bytes,*test_bytes;
@@ -79,10 +78,17 @@ test_bytes= malloc(test_size);
 fread(valid_bytes,1,valid_size,valid_file);
 fread(test_bytes,1,test_size,test_file);
 
+float* valid_f = (float*)valid_bytes
+	,* test_f = (float*)test_bytes;
+
 size_t error_count=0;
 
-printf("Testing validating bytes:-----------------------------------------------------------------------------------------v\n");
-printf("                        :=");
+valid_size/=sizeof(float);
+printf("Float numbe:  %lu\n",valid_size);
+
+printf("Testing validating bytes:---------------------------------------------------------------------------------------------------v\n");
+printf("                        :");
+
 
 int darab,perc=0;
 darab=valid_size/100;
@@ -94,8 +100,12 @@ for(size_t i = 0 ;i< valid_size;i++)
     fflush(stdout);
   }
 
-    if(valid_bytes[i]!=test_bytes[i])
+    if(valid_f[i]-test_f[i]>0.00001)
+	{
         error_count+=1;
+		if(silentmode==0)
+			printf("%f - %f = %f\n",valid_f[i],test_f[i],valid_f[i]-test_f[i]);
+	}
 }
 printf("\n");
 if(error_count>0)
@@ -106,6 +116,10 @@ else
 
 fclose(valid_file);
 fclose(test_file);
+
+free(valid_bytes);
+free(test_bytes);
+
 
   //Timer_print2file("viscoacoustic_gpu_v100.meres.txt");
 
