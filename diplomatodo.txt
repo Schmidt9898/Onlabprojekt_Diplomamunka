@@ -163,5 +163,49 @@ this was my fault now it is working
 
 
 Mi az a -lm
+-----
+cpu méretek scriptel
+amd méretek script
+
+visco loop újra
+
+
+******
+cuda kernel compiled and done meret was bad needed 4* for it.
+
+tile blocking is done
+
+https://stackoverflow.com/questions/49332717/cast-to-pointer-to-array-of-runtime-determined-size
+
+számít a név c vagy cpp h vagy hpp
+
+
+------------
+
+floatokat nézz ellenörzésnél
+cuda 2 pont
+visco gpu
+ptx kód
+...
+try intel api for visco
+use cpu node
+make 1d indexing in visco
+
+****
+fixe validation done
+cuda 2 pont done
+visco gpu not working on clang14
+visco gpu not working on clang12 same fault 3d indexing
+
+második lefutásra sokkal gyorsabb cpu
+
+
+
+---------
+másik cuda fordító, const -define nélkül
+
+
+devitoproject.org
+
 
 	
