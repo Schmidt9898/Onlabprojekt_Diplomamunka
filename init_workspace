@@ -1,4 +1,9 @@
 
-module load gcc/9.2.0
+#module load gcc/9.2.0
 
+alias lacika="Na Mivan már"
 
+export alias validate="$(pwd)/Validation_tools/validate"
+export alias _validobj="$(pwd)/Validation_tools/valid.dataobj"
+
+validate

@@ -30,7 +30,7 @@ Stopper_Filemode=true;
 
 printf("\n	%s Running.\n\n",__VERSION__);
 
-FileStream *Fs= MakeFileStream("clangloopblocking.txt");
+FileStream *Fs= MakeFileStream("intelapiloopblocking.txt");
 Fs->Write(Fs,"++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 
 

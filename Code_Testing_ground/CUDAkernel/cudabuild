@@ -2,7 +2,9 @@
 #!/usr/bin/bash
 
 
-file="maincuda.cu"
+#file="maincuda.cu"
+file="maincuda2p.cu"
+
 runable="runcuda"
 
 prefile="pre"

@@ -8,7 +8,7 @@ runname="runtile"
 
 optional=""
 
-mode="clang"
+mode="icc"
 
 Compile_tile()
 {

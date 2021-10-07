@@ -83,16 +83,10 @@ __global__ void simple(int window_size,
   float(*__restrict__ out_)[SIZEY][SIZEZ]
 #endif
   ) {
-  int z = threadIdx.x + blockIdx.x * blockDim.x*2 + window_size;
+  int z = threadIdx.x + blockIdx.x * blockDim.x + window_size;
   int y = threadIdx.y + blockIdx.y * blockDim.y + window_size;
   int x = threadIdx.z + blockIdx.z * blockDim.z + window_size;
 
-  if (x < SIZEX-window_size && y < SIZEY-window_size && z < SIZEZ-window_size) {
-    KERNEL_WINDOW(out,x,y,z)
-    //printf("xyz %d %d %d  out = %f\n",x,y,z,Ddim(out,x,y,z));
-  }
-  z += blockDim.x;
-  
   if (x < SIZEX-window_size && y < SIZEY-window_size && z < SIZEZ-window_size) {
     KERNEL_WINDOW(out,x,y,z)
     //printf("xyz %d %d %d  out = %f\n",x,y,z,Ddim(out,x,y,z));
@@ -161,14 +155,12 @@ init<<<blocks, threads>>>(data_, out_, out2_);
 #endif
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-Spawn_stopper("blocks by threads");
-dim3 blocks2((SIZEZ-2*window_size-1)/(blocksize_z*2)+1,(SIZEY-2*window_size-1)/blocksize_y+1,(SIZEX-2*window_size-1)/blocksize_x+1);
-printf("blocks dim %d %d %d \n",(SIZEZ-2*window_size-1)/(blocksize_z*2)+1,(SIZEY-2*window_size-1)/blocksize_y+1,(SIZEX-2*window_size-1)/blocksize_x+1);
-
+Spawn_stopper("3d computation collapse (3)");
+dim3 blocks2((SIZEZ-2*window_size-1)/blocksize_z+1,(SIZEY-2*window_size-1)/blocksize_y+1,(SIZEX-2*window_size-1)/blocksize_x+1);
 #ifdef L1D
-simple<<<blocks2, threads>>>(window_size, data, d_out);
+simple<<<blocks, threads>>>(window_size, data, d_out);
 #else
-simple<<<blocks2, threads>>>(window_size, data_, out_);
+simple<<<blocks, threads>>>(window_size, data_, out_);
 #endif
 Kill_stopper();
 
@@ -193,8 +185,8 @@ Kill_stopper();
 
 
 //validation
-int good=0;
 
+int good=0;
 float(*__restrict data_)[SIZEY][SIZEZ] =(float(*__restrict)[SIZEY][SIZEZ])data;
 float(*__restrict out_)[SIZEY][SIZEZ] = (float(*__restrict)[SIZEY][SIZEZ])out;
 float(*__restrict out2_)[SIZEY][SIZEZ] = (float(*__restrict)[SIZEY][SIZEZ])out2;
@@ -207,8 +199,8 @@ for (int x = window_size; x < sizex - window_size; x++)
 		{
 			if (out_[x][y][z] != 25)
 			{
-				//printf("Validation failed\n");
-				//printf("out1 %f != 25 \n", out_[x][y][z]);
+				printf("Validation failed\n");
+				printf("out1 %f != 25 \n", out_[x][y][z]);
 				good++;
 				//goto validationend;
 			}
@@ -229,10 +221,6 @@ for (int i = 0; i < meret; i++) {
 validationend:
 if(!good)
   printf("Validation passed\n");
-  else{
-	printf("Validation failed\n");
-  printf("err: %d\n",good);
-  }
 
 free(out);
 free(out2);

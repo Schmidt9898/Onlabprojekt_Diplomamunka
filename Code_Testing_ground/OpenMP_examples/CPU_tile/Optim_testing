@@ -15,7 +15,7 @@ do
             if (( $x*$y*$z == $H ))
             then
             ./build_tile -p $x $y $z
-            OMP_PROC_BIND=true numactl --cpunodebind=0 ./runtile 
+            OMP_PROC_BIND=true numactl --cpunodebind=1 ./runtile 
             #((osz=$x*$y*$z))
             #echo -p "X=$x" "Y=$y" "Z=$z ösz:$osz"
             #exit 1
