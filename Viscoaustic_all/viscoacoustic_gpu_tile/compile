@@ -1,0 +1,8 @@
+
+clang -I ../Smart_Stopper/ main.c  -o run -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -O3 -gline-tables-only -lm -Xopenmp-target  -march=sm_70
+
+
+
+
+
+
