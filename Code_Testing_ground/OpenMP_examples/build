@@ -9,37 +9,42 @@ prefile="pre"
 
 mode="none"
 dim="L3D"
-declare -a options=("-help" "-run" "-pre" "-omp" "acc" "-1d" "3d")
+declare -a options=("-help" "-run" "-pre" "omp" "acc" "1d" "3d")
 
 
 Compile_optim()
 {
-	echo $mode $dim
-	runname="runoptim"
+		echo $mode $dim
+		runname="runoptim"
 
-	if test -f $runname;then
-    rm $runname
-fi
-echo "---$runname-------" 
-if [[ "$mode" == "LOMP" ]];then
-echo "omp"
-clang mainoptim.c  -o $runname -Wall -fopenmp=libomp -O3 -fast -lm -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -gline-tables-only -D LOMP -D $dim #-fopenmp-version=51 #-D NO_TIME
-else
-echo "acc"
-pgcc -acc -Minfo=accel -ta=tesla -Wall -c99 mainoptim.c -o $runname -D LACC -D $dim
-fi
-echo "---end compiling----"
+		if test -f $runname;then
+		rm $runname
+	fi
+	echo "---$runname-------" 
+	if [[ "$mode" == "LOMP" ]];then
+		echo "omp"
+
+		#for nvidia
+		clang mainoptim.c  -o $runname -Wall -fopenmp=libomp -O3 -fast -lm -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -gline-tables-only -D LOMP -D $dim #-fopenmp-version=51 #-D NO_TIME
+
+		#for amd
+		#clang mainoptim.c  -o $runname -Wall  -O3 -fast -lm -gline-tables-only -D LOMP -D $dim -target x86_64-pc-linux-gnu -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx803
+	else
+		echo "acc"
+		pgcc -acc -Minfo=accel -ta=tesla -Wall -c99 mainoptim.c -o $runname -D LACC -D $dim
+	fi
+	echo "---end compiling----"
 }
 
 preproces()
 {
 	
 	if [[ "$mode" == "LOMP" ]];then
-	prefile="omp.pre"
-	clang mainoptim.c  -o $prefile -Wall -D LOMP -D $dim -E
+		prefile="omp.pre"
+		clang mainoptim.c  -o $prefile -Wall -D LOMP -D $dim -E
 	else
-	prefile="acc.pre"
-	pgcc -acc -Wall -c99 mainoptim.c -o $prefile -D LACC -D $dim -E 
+		prefile="acc.pre"
+		pgcc -acc -Wall -c99 mainoptim.c -o $prefile -D LACC -D $dim -E 
 	fi
 }
 
@@ -49,8 +54,8 @@ echo "Compiling script"
 
 
 if (($#==0)) ;then
-echo "No input argument."
-exit 1
+	echo "No input argument."
+	exit 1
 fi
 IFS=' ' read -r -a tomb <<< $@
 

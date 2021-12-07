@@ -18,7 +18,7 @@ double Kill_stopper();
 #define X 8
 #define Y 4
 #define Z 32
-#define TSIZE 512 
+#define TSIZE 512
 #elif LACC
 #include "openacc.h"
 #define X 8
@@ -117,6 +117,7 @@ float(*__restrict out2_)[SIZEY][SIZEZ] = (float(*__restrict)[SIZEY][SIZEZ])out2;
 
 
 //init aka zeroing
+
 #ifdef LOMP
 #pragma omp target teams
 #pragma omp distribute parallel for collapse(3)
@@ -139,6 +140,7 @@ float(*__restrict out2_)[SIZEY][SIZEZ] = (float(*__restrict)[SIZEY][SIZEZ])out2;
   }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 Spawn_stopper("3d computation collapse (3)");
 #ifdef LOMP
 #pragma omp target teams
@@ -203,9 +205,10 @@ Kill_stopper();
 //Spawn_stopper("back to ram");
 }
 //Kill_stopper();
-int good=0;
 
-for (int i = 0; i < meret; i++) {
+int good=0;
+/*
+for (size_t i = 0; i < meret; i++) {
 	if (out[i]!=out2[i]) {
     printf("Validation failed\n");
 	printf("out1 %f != out2 %f\n",out[i],out2[i]);
@@ -217,7 +220,7 @@ for (int i = 0; i < meret; i++) {
 
 if(!good)
   printf("Validation passed\n");
-
+*/
 free(out);
 free(out2);
 
