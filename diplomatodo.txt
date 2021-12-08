@@ -206,6 +206,72 @@ másik cuda fordító, const -define nélkül
 
 
 devitoproject.org
+*****
+bug report
+
+------------
+tutorials ipythons nézd át értsd meg a devitot
+
+visitor.py sorok
+
+fork elvégez pull
+
+teszt melyikre jó méret
+
+-----------------
+
+gpu meresek todo
+időpontok, mi az a tdk
+-so 4 8 12 
+visco példák maybe
+hétfő délután fábió donef
+
+
+********
+with spacing 4 there is no overflow
+érdekes a spacing től változik hogy jó e vagy nem 
+értsd úgy hogy ha 4 akor nincs gond ha 8 akkor van gond de a size_t megoldja ha 16 akkor még az sem.
+
+min max dolog amit ezek csinálnak nagyon lassú érvek satőbbi.
+
+
+
+par-nested
+
+make_  parpragma . py
+282 
+
+search for par_nested you can directly set this up there 
+TestNestedParallelism
+
+knl721
+
+----------------------------
+
+800^3 vs 50^3 nvprof nélkül
+
+időt vegyük le time változót 3-4
+
+--------
+
+1,2 más tile méret nvprof -> táblázat +idő
+
+tti example devito 
+*****************
+tti jó de csak kissebre memory limit
+clang 13 al lassabb de 800^3 re nem megy a tiling valammiért memory out of
+clang 14 még mindig rosz devitora az alap példára valamiért most jó
+
+
+***************************
+
+PPT
+
+
+
+
+
+
 
 
 	
