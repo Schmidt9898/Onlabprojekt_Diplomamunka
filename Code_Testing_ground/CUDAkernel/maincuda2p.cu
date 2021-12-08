@@ -1,11 +1,15 @@
 /*******************************************************************************************
 *                                                                                          *
-*This is an example for making tiling/blocking in OpenMP, OpenACC.                         *
+*This is an example for making tiling/blocking in CUDA.                                    *
 *The calculation purpose is to reach a lot of memory from a single kernel.                 *
 *                                                                                          *
 *Cpu ram-> gpu vram -> compute -> gpu vram- > cpu ram                                      *
 *                                                                                          *
 *******************************************************************************************/
+
+
+//nvcc maincuda.cu -arch=sm_70 -O3 -o maincuda -DL3D
+
 //stopper functions defined here, you may choose not to use them with -D NO_TIME
 void Spawn_stopper(char *name);
 double Kill_stopper();
@@ -13,53 +17,31 @@ double Kill_stopper();
 #include "stdlib.h"
 #include <stdio.h>
 #include <math.h>
-#ifdef LOMP
-#include "omp.h"
+#include <cuda.h>
 #define X 8
 #define Y 4
 #define Z 32
-#define TSIZE 512
-#elif LACC
-#include "openacc.h"
-#define X 8
-#define Y 4
-#define Z 32
-//#define TSIZE 512
-#endif
 
 
 #define SIZEX 800 //On the gpu pointer folding is not allowed with variable size
 #define SIZEY 800 //this has to be knowed in compile time
-#define SIZEZ 800 //is this bad, for every scale you have to recompile 
+#define SIZEZ 800 //is this bad, for every scale you have to recompile
 
 
 const int sizex = SIZEX; //If this is not constant, will cause a segfault in runtime with clang-12
 const int sizey = SIZEY; //and clang-14 if -D
-const int sizez = SIZEZ;// no it will not anymore SIZEXYZ was the answer 
+const int sizez = SIZEZ;// no it will not anymore SIZEXYZ was the answer
                         //BUT if this is not constatn the program will be slower
 
 struct dataobj{void *data;};
 
-int main(int argc, char **argv)
-{
-
-#ifdef LOMP
-printf("Hi this is openMP tiling test, \n");
-#elif LACC
-printf("Hi this is openACC tiling test, \n");
-#else
-#pragma message "OpenMP or OpenACC was not defined use one of -LACC or LOMP "  __FILE__
-#endif
 
 #ifdef L1D
-	printf("compiled with 1 dimensional arrays.\n");
-	#define Ddim(arr,x,y,z) arr[(z) + (y)*sizez + (x)*sizez * sizey]
-
+  #define Ddim(arr,x,y,z) arr[(z) + (y)*SIZEZ + (x)*SIZEZ * SIZEY]
 #elif L3D
-	printf("compiled with 3 dimensional arrays.\n");
-	#define Ddim(arr,x,y,z) arr ## _[x][y][z]
+  #define Ddim(arr,x,y,z) arr ## _[x][y][z]
 #else
-	#pragma message "Dimension was not defined use one of L1D or L3D " 
+  #pragma message "Dimension was not defined use one of L1D or L3D "
 #endif
 
 #define KERNEL_WINDOW(out,x,y,z) Ddim(out,x,y,z) += \
@@ -70,6 +52,66 @@ printf("Hi this is openACC tiling test, \n");
                  Ddim(data,x - 4,y,z) + Ddim(data,x - 3,y,z) + Ddim(data,x - 2,y,z) + Ddim(data,x - 1,y,z) +\
                  Ddim(data,x + 4,y,z) + Ddim(data,x + 3,y,z) + Ddim(data,x + 2,y,z) + Ddim(data,x + 1,y,z);
 
+
+
+
+__global__ void init(
+#ifdef L1D
+  float * __restrict__ data, float * __restrict__ out, float * __restrict__ out2
+#else
+  float(*__restrict__ data_)[SIZEY][SIZEZ],
+  float(*__restrict__ out_)[SIZEY][SIZEZ],
+  float(*__restrict__ out2_)[SIZEY][SIZEZ]
+#endif
+  ) {
+  int z = threadIdx.x + blockIdx.x * blockDim.x;
+  int y = threadIdx.y + blockIdx.y * blockDim.y;
+  int x = threadIdx.z + blockIdx.z * blockDim.z;
+
+  if (x < SIZEX && y < SIZEY && z < SIZEZ) {
+    Ddim(data,x,y,z) = 1.0f;
+    Ddim(out,x,y,z) = 1.0f;
+    Ddim(out2,x,y,z) = 1.0f;
+  }
+}
+
+__global__ void simple(int window_size,
+#ifdef L1D
+  float * __restrict__ data, float * __restrict__ out
+#else
+  float(*__restrict__ data_)[SIZEY][SIZEZ],
+  float(*__restrict__ out_)[SIZEY][SIZEZ]
+#endif
+  ) {
+  int z = threadIdx.x + blockIdx.x * blockDim.x*2 + window_size;
+  int y = threadIdx.y + blockIdx.y * blockDim.y + window_size;
+  int x = threadIdx.z + blockIdx.z * blockDim.z + window_size;
+
+  if (x < SIZEX-window_size && y < SIZEY-window_size && z < SIZEZ-window_size) {
+    KERNEL_WINDOW(out,x,y,z)
+    //printf("xyz %d %d %d  out = %f\n",x,y,z,Ddim(out,x,y,z));
+  }
+  z += blockDim.x;
+  
+  if (x < SIZEX-window_size && y < SIZEY-window_size && z < SIZEZ-window_size) {
+    KERNEL_WINDOW(out,x,y,z)
+    //printf("xyz %d %d %d  out = %f\n",x,y,z,Ddim(out,x,y,z));
+  }
+}
+
+int main(int argc, char **argv)
+{
+
+
+printf("Hi this is CUDA tiling test, \n");
+
+#ifdef L1D
+  printf("compiled with 1 dimensional arrays.\n");
+#elif L3D
+  printf("compiled with 3 dimensional arrays.\n");
+#else
+  #pragma message "Dimension was not defined use one of L1D or L3D "
+#endif
 
 
 const int blocksize_x = X;// if this is not constant the program will be slower
@@ -87,140 +129,111 @@ printf("memory size needed: %lu , %f Gb \n", meret * 2, meret * 4 / 1e9f * 2);
 
 
 
-//Spawn_stopper("offload and memory managment");
+Spawn_stopper("offload and memory managment");
 
 //data and offloading OpenMP
 
 //this we will use on the cpu
 float * out = (float *)malloc(meret * 4);
 float * out2 = (float *)malloc(meret * 4);
-
-#ifdef LOMP
-float * data = NULL;
-#pragma omp target data map(alloc : data[0:meret]) \
-            map(from  : out[0:meret])  \
-            map(from  : out2[0:meret])
-#elif LACC
-#pragma acc data copyout(out[0:meret]) copyout(out2[0:meret]) 
-#endif
+float * d_out, *d_out2, *data;
+cudaMalloc(&d_out, meret*4);
+cudaMalloc(&d_out2, meret*4);
+cudaMalloc(&data, meret*4);
+Kill_stopper();
 {
-//Kill_stopper();
-
-#ifdef LACC
-float* data=(float*)acc_malloc(meret*4);
-#endif
 
 // pointer folding exact size must be know at compile time
 float(*__restrict data_)[SIZEY][SIZEZ] =(float(*__restrict)[SIZEY][SIZEZ])data;
-float(*__restrict out_)[SIZEY][SIZEZ] = (float(*__restrict)[SIZEY][SIZEZ])out;
-float(*__restrict out2_)[SIZEY][SIZEZ] = (float(*__restrict)[SIZEY][SIZEZ])out2;
+float(*__restrict out_)[SIZEY][SIZEZ] = (float(*__restrict)[SIZEY][SIZEZ])d_out;
+float(*__restrict out2_)[SIZEY][SIZEZ] = (float(*__restrict)[SIZEY][SIZEZ])d_out2;
+
+dim3 threads(blocksize_z,blocksize_y,blocksize_x);
+dim3 blocks((SIZEZ-1)/blocksize_z+1,(SIZEY-1)/blocksize_y+1,(SIZEX-1)/blocksize_x+1);
 
 
-//init aka zeroing
+printf("blocks dim %d %d %d \n",(SIZEZ-1)/blocksize_z+1,(SIZEY-1)/blocksize_y+1,(SIZEX-1)/blocksize_x+1);
 
-#ifdef LOMP
-#pragma omp target teams
-#pragma omp distribute parallel for collapse(3)
-#elif LACC
-#pragma acc parallel loop collapse(3) deviceptr(data,data_)
+#ifdef L1D
+init<<<blocks, threads>>>(data, d_out, d_out2);
+#else
+init<<<blocks, threads>>>(data_, out_, out2_);
 #endif
-  for (int x = 0; x < sizex ; x++)
-  {
-    for (int y = 0; y < sizey ; y++)
-    {
-      for (int z = 0; z < sizez ; z++)
-      {
-        //kernel start
-        Ddim(data,x,y,z) = 1.0;
-        Ddim(out,x,y,z) = 0.0;
-        Ddim(out2,x,y,z) = 0.0;
-        
-      }
-    }
-  }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Spawn_stopper("blocks by threads");
+dim3 blocks2((SIZEZ-2*window_size-1)/(blocksize_z*2)+1,(SIZEY-2*window_size-1)/blocksize_y+1,(SIZEX-2*window_size-1)/blocksize_x+1);
+printf("blocks dim %d %d %d \n",(SIZEZ-2*window_size-1)/(blocksize_z*2)+1,(SIZEY-2*window_size-1)/blocksize_y+1,(SIZEX-2*window_size-1)/blocksize_x+1);
 
-Spawn_stopper("3d computation collapse (3)");
-#ifdef LOMP
-#pragma omp target teams
-#pragma omp distribute parallel for collapse(3)
-#elif LACC
-#pragma acc parallel loop collapse(3) deviceptr(data,data_)
+#ifdef L1D
+simple<<<blocks2, threads>>>(window_size, data, d_out);
+#else
+simple<<<blocks2, threads>>>(window_size, data_, out_);
 #endif
-  for (int x = window_size; x < sizex - window_size; x++)
-  {
-    for (int y = window_size; y < sizey - window_size; y++)
-    {
-      for (int z = window_size; z < sizez - window_size; z++)
-      {
-        //kernel start
-         KERNEL_WINDOW(out,x,y,z)
-      }
-    }
-  }
 Kill_stopper();
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef LOMP
-Spawn_stopper("3d tiling OpenMP");
-#pragma omp target teams distribute collapse(3) thread_limit(TSIZE)
-  for (int x = window_size; x < sizex - window_size; x += blocksize_x)
-    for (int y = window_size; y < sizey - window_size; y += blocksize_y)
-      for (int z = window_size; z < sizez - window_size; z += blocksize_z)
-      {
-  #pragma omp parallel for collapse(3)
-        for (int bx = x; bx < x + blocksize_x; bx++)
-          for (int by = y; by < y + blocksize_y; by++)
-            for (int bz = z; bz < z + blocksize_z; bz++)
-            {
-              if (bx < sizex - window_size &&
-                by < sizey - window_size &&
-                bz < sizez - window_size)
-              {
-                	KERNEL_WINDOW(out2,bx,by,bz);
-              }
-            }
-      }
-#elif LACC
-Spawn_stopper("3d tiling OpenACC");
-#pragma acc parallel loop deviceptr(data_) deviceptr(data) tile(blocksize_z,blocksize_y,blocksize_x) private(sizex,sizey,sizez) //num_workers( TSIZE )// tile(4,8,16) vector_length(512)
-for(int x=window_size;x<sizex-window_size;x++)
-  {
-      for(int y=window_size;y<sizey-window_size;y++)
-      {
-          for(int z=window_size;z<sizez-window_size;z++)
-          {
-              KERNEL_WINDOW(out2,x,y,z)
-          }
-      }
-  }
-#endif
+//Spawn_stopper("3d tiling CUDA");
 
-Kill_stopper();
+
+//Kill_stopper();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Spawn_stopper("back to ram");
+Spawn_stopper("back to ram");
 }
-//Kill_stopper();
+cudaMemcpy(out, d_out, meret*4, cudaMemcpyDeviceToHost);
+cudaMemcpy(out2, d_out2, meret*4, cudaMemcpyDeviceToHost);
+Kill_stopper();
 
+
+
+
+
+
+//validation
 int good=0;
+
+float(*__restrict data_)[SIZEY][SIZEZ] =(float(*__restrict)[SIZEY][SIZEZ])data;
+float(*__restrict out_)[SIZEY][SIZEZ] = (float(*__restrict)[SIZEY][SIZEZ])out;
+float(*__restrict out2_)[SIZEY][SIZEZ] = (float(*__restrict)[SIZEY][SIZEZ])out2;
+
+for (int x = window_size; x < sizex - window_size; x++)
+{
+	for (int y = window_size; y < sizey - window_size; y++)
+	{
+		for (int z = window_size; z < sizez - window_size; z++)
+		{
+			if (out_[x][y][z] != 25)
+			{
+				//printf("Validation failed\n");
+				//printf("out1 %f != 25 \n", out_[x][y][z]);
+				good++;
+				//goto validationend;
+			}
+		}
+	}
+}
+
 /*
-for (size_t i = 0; i < meret; i++) {
-	if (out[i]!=out2[i]) {
+for (int i = 0; i < meret; i++) {
+  if (out[i]!=out2[i]) {
     printf("Validation failed\n");
-	printf("out1 %f != out2 %f\n",out[i],out2[i]);
+  printf("out1 %f != out2 %f\n",out[i],out2[i]);
     good++;
     break;
-	}
-  
+  }
 }
-
+*/
+validationend:
 if(!good)
   printf("Validation passed\n");
-*/
+  else{
+	printf("Validation failed\n");
+  printf("err: %d\n",good);
+  }
+
 free(out);
 free(out2);
 
@@ -245,7 +258,7 @@ double Kill_stopper(){};
 #include <sys/time.h>
 #include <string.h>
 
-typedef struct Stopper Stopper();
+typedef struct Stopper;// Stopper();
 
 double Totaltime=0;
 int Sum_Stopper=0;
@@ -273,7 +286,8 @@ struct Stopper
 
 void Spawn_stopper(char* name)
 {
-      struct Stopper * stopper= malloc(sizeof(struct Stopper));
+      cudaDeviceSynchronize();
+      struct Stopper * stopper= (Stopper*)malloc(sizeof(struct Stopper));
       printf("%s ID:%d started->\n",name,Sum_Stopper);
       strcpy(stopper->name,name);
       stopper->start=op_timer_core();
@@ -283,6 +297,7 @@ void Spawn_stopper(char* name)
 }
 double Kill_stopper()
 {
+  cudaDeviceSynchronize();
   double ret=0;
   if(Stopper_root==NULL)
       return ret;
