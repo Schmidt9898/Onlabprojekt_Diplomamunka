@@ -1,0 +1,298 @@
+Hi this is openMP tiling test, 
+compiled with 1 dimensional arrays.
+block size: 4,4,64 A2
+thread size needed = 1024
+memory size needed: 1024000000 , 4.096000 Gb 
+==134273== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+Replaying kernel "__omp_offloading_28_12c915f2_main_l121" (7 of 7)... 
+Replaying kernel "__omp_offloading_28_12c915f2_main_l121" (done)
+Replaying kernel "__omp_offloading_28_12c915f2_main_l144" (7 of 7)... 
+Replaying kernel "__omp_offloading_28_12c915f2_main_l144" (done)
+3d tiling OpenMP ID:1 started->
+Replaying kernel "__omp_offloading_28_12c915f2_main_l166" (7 of 7)... 
+Replaying kernel "__omp_offloading_28_12c915f2_main_l166" (done)
+==134273== Profiling application: ./runoptim
+==134273== Profiling result:
+==134273== Metric result:
+Invocations                               Metric Name                            Metric Description         Min         Max         Avg
+Device "Tesla V100-PCIE-16GB (0)"
+    Kernel: __omp_offloading_28_12c915f2_main_l121
+          1                           global_hit_rate             Global Hit Rate in unified l1/tex       0.00%       0.00%       0.00%
+          1                            local_hit_rate                                Local Hit Rate       0.00%       0.00%       0.00%
+          1                  gld_requested_throughput              Requested Global Load Throughput  0.00000B/s  0.00000B/s  0.00000B/s
+          1                  gst_requested_throughput             Requested Global Store Throughput  834.74GB/s  834.74GB/s  834.74GB/s
+          1                            gld_throughput                        Global Load Throughput  0.00000B/s  0.00000B/s  0.00000B/s
+          1                            gst_throughput                       Global Store Throughput  834.74GB/s  834.74GB/s  834.74GB/s
+          1                      dram_read_throughput                 Device Memory Read Throughput  542.50KB/s  542.50KB/s  542.50KB/s
+          1                     dram_write_throughput                Device Memory Write Throughput  834.72GB/s  834.72GB/s  834.72GB/s
+          1                        l2_read_throughput                         L2 Throughput (Reads)  44.831MB/s  44.831MB/s  44.831MB/s
+          1                       l2_write_throughput                        L2 Throughput (Writes)  834.84GB/s  834.84GB/s  834.84GB/s
+          1                             flop_count_sp   Floating Point Operations(Single Precision)           0           0           0
+          1                             inst_executed                         Instructions Executed  1568000000  1568000000  1568000000
+          1                               inst_issued                           Instructions Issued  1568038417  1568038417  1568038417
+          1                           dram_read_bytes        Total bytes read from DRAM to L2 cache        3808        3808        3808
+          1                          dram_write_bytes     Total bytes written from L2 cache to DRAM  6143870048  6143870048  6143870048
+          1                              inst_integer                          Integer Instructions  3.2336e+10  3.2336e+10  3.2336e+10
+    Kernel: __omp_offloading_28_12c915f2_main_l144
+          1                           global_hit_rate             Global Hit Rate in unified l1/tex      43.48%      43.48%      43.48%
+          1                            local_hit_rate                                Local Hit Rate       0.00%       0.00%       0.00%
+          1                  gld_requested_throughput              Requested Global Load Throughput  1311.6GB/s  1311.6GB/s  1311.6GB/s
+          1                  gst_requested_throughput             Requested Global Store Throughput  52.464GB/s  52.464GB/s  52.464GB/s
+          1                            gld_throughput                        Global Load Throughput  1529.6GB/s  1529.6GB/s  1529.6GB/s
+          1                            gst_throughput                       Global Store Throughput  65.978GB/s  65.978GB/s  65.978GB/s
+          1                      dram_read_throughput                 Device Memory Read Throughput  530.48GB/s  530.48GB/s  530.48GB/s
+          1                     dram_write_throughput                Device Memory Write Throughput  53.059GB/s  53.059GB/s  53.059GB/s
+          1                        l2_read_throughput                         L2 Throughput (Reads)  994.14GB/s  994.14GB/s  994.14GB/s
+          1                       l2_write_throughput                        L2 Throughput (Writes)  65.998GB/s  65.998GB/s  65.998GB/s
+          1                             flop_count_sp   Floating Point Operations(Single Precision)  1.1923e+10  1.1923e+10  1.1923e+10
+          1                             inst_executed                         Instructions Executed  2809985904  2809985904  2809985904
+          1                               inst_issued                           Instructions Issued  2810047441  2810047441  2810047441
+          1                           dram_read_bytes        Total bytes read from DRAM to L2 cache  2.0093e+10  2.0093e+10  2.0093e+10
+          1                          dram_write_bytes     Total bytes written from L2 cache to DRAM  2009718272  2009718272  2009718272
+          1                              inst_integer                          Integer Instructions  4.6776e+10  4.6776e+10  4.6776e+10
+    Kernel: __omp_offloading_28_12c915f2_main_l166
+          1                           global_hit_rate             Global Hit Rate in unified l1/tex      79.01%      79.01%      79.01%
+          1                            local_hit_rate                                Local Hit Rate       0.00%       0.00%       0.00%
+          1                  gld_requested_throughput              Requested Global Load Throughput  2643.4GB/s  2643.4GB/s  2643.4GB/s
+          1                  gst_requested_throughput             Requested Global Store Throughput  105.74GB/s  105.74GB/s  105.74GB/s
+          1                            gld_throughput                        Global Load Throughput  3223.2GB/s  3223.2GB/s  3223.2GB/s
+          1                            gst_throughput                       Global Store Throughput  132.44GB/s  132.44GB/s  132.44GB/s
+          1                      dram_read_throughput                 Device Memory Read Throughput  428.30GB/s  428.30GB/s  428.30GB/s
+          1                     dram_write_throughput                Device Memory Write Throughput  106.89GB/s  106.89GB/s  106.89GB/s
+          1                        l2_read_throughput                         L2 Throughput (Reads)  735.82GB/s  735.82GB/s  735.82GB/s
+          1                       l2_write_throughput                        L2 Throughput (Writes)  132.48GB/s  132.48GB/s  132.48GB/s
+          1                             flop_count_sp   Floating Point Operations(Single Precision)  1.1923e+10  1.1923e+10  1.1923e+10
+          1                             inst_executed                         Instructions Executed  3594222720  3594222720  3594222720
+          1                               inst_issued                           Instructions Issued  3594336596  3594336596  3594336596
+          1                           dram_read_bytes        Total bytes read from DRAM to L2 cache  8049256384  8049256384  8049256384
+          1                          dram_write_bytes     Total bytes written from L2 cache to DRAM  2008787488  2008787488  2008787488
+          1                              inst_integer                          Integer Instructions  6.1866e+10  6.1866e+10  6.1866e+10
+		  
+		  
+		  
+		  -------------------------------------------------------
+		  
+		  
+Hi this is openMP tiling test, 
+compiled with 1 dimensional arrays.
+block size: 16,4,32 O2
+thread size needed = 2048
+memory size needed: 1024000000 , 4.096000 Gb 
+==134370== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+Replaying kernel "__omp_offloading_28_12c915f2_main_l121" (7 of 7)... 
+Replaying kernel "__omp_offloading_28_12c915f2_main_l121" (done)
+Replaying kernel "__omp_offloading_28_12c915f2_main_l144" (7 of 7)... 
+        1 internal events
+Replaying kernel "__omp_offloading_28_12c915f2_main_l144" (done)
+Replaying kernel "__omp_offloading_28_12c915f2_main_l166" (7 of 7)... 
+Replaying kernel "__omp_offloading_28_12c915f2_main_l166" (done)
+==134370== Profiling application: ./runoptim
+==134370== Profiling result:
+==134370== Metric result:134540 sec.
+Invocations                               Metric Name                            Metric Description         Min         Max         Avg
+Device "Tesla V100-PCIE-16GB (0)"
+    Kernel: __omp_offloading_28_12c915f2_main_l121
+          1                           global_hit_rate             Global Hit Rate in unified l1/tex       0.00%       0.00%       0.00%
+          1                            local_hit_rate                                Local Hit Rate       0.00%       0.00%       0.00%
+          1                  gld_requested_throughput              Requested Global Load Throughput  0.00000B/s  0.00000B/s  0.00000B/s
+          1                  gst_requested_throughput             Requested Global Store Throughput  833.79GB/s  833.79GB/s  833.79GB/s
+          1                            gld_throughput                        Global Load Throughput  0.00000B/s  0.00000B/s  0.00000B/s
+          1                            gst_throughput                       Global Store Throughput  833.79GB/s  833.79GB/s  833.79GB/s
+          1                      dram_read_throughput                 Device Memory Read Throughput  2.2368MB/s  2.2368MB/s  2.2368MB/s
+          1                     dram_write_throughput                Device Memory Write Throughput  833.77GB/s  833.77GB/s  833.77GB/s
+          1                        l2_read_throughput                         L2 Throughput (Reads)  46.879MB/s  46.879MB/s  46.879MB/s
+          1                       l2_write_throughput                        L2 Throughput (Writes)  833.89GB/s  833.89GB/s  833.89GB/s
+          1                             flop_count_sp   Floating Point Operations(Single Precision)           0           0           0
+          1                             inst_executed                         Instructions Executed  1568000000  1568000000  1568000000
+          1                               inst_issued                           Instructions Issued  1568039822  1568039822  1568039822
+          1                           dram_read_bytes        Total bytes read from DRAM to L2 cache       16096       16096       16096
+          1                          dram_write_bytes     Total bytes written from L2 cache to DRAM  6143881408  6143881408  6143881408
+          1                              inst_integer                          Integer Instructions  3.2336e+10  3.2336e+10  3.2336e+10
+    Kernel: __omp_offloading_28_12c915f2_main_l144
+          1                           global_hit_rate             Global Hit Rate in unified l1/tex      43.48%      43.48%      43.48%
+          1                            local_hit_rate                                Local Hit Rate       0.00%       0.00%       0.00%
+          1                  gld_requested_throughput              Requested Global Load Throughput  1311.4GB/s  1311.4GB/s  1311.4GB/s
+          1                  gst_requested_throughput             Requested Global Store Throughput  52.455GB/s  52.455GB/s  52.455GB/s
+          1                            gld_throughput                        Global Load Throughput  1529.4GB/s  1529.4GB/s  1529.4GB/s
+          1                            gst_throughput                       Global Store Throughput  65.966GB/s  65.966GB/s  65.966GB/s
+          1                      dram_read_throughput                 Device Memory Read Throughput  530.38GB/s  530.38GB/s  530.38GB/s
+          1                     dram_write_throughput                Device Memory Write Throughput  53.060GB/s  53.060GB/s  53.060GB/s
+          1                        l2_read_throughput                         L2 Throughput (Reads)  993.97GB/s  993.97GB/s  993.97GB/s
+          1                       l2_write_throughput                        L2 Throughput (Writes)  65.966GB/s  65.966GB/s  65.966GB/s
+          1                             flop_count_sp   Floating Point Operations(Single Precision)  1.1923e+10  1.1923e+10  1.1923e+10
+          1                             inst_executed                         Instructions Executed  2809985904  2809985904  2809985904
+          1                               inst_issued                           Instructions Issued  2810046613  2810046613  2810046613
+          1                           dram_read_bytes        Total bytes read from DRAM to L2 cache  2.0093e+10  2.0093e+10  2.0093e+10
+          1                          dram_write_bytes     Total bytes written from L2 cache to DRAM  2010100352  2010100352  2010100352
+          1                              inst_integer                          Integer Instructions  4.6776e+10  4.6776e+10  4.6776e+10
+    Kernel: __omp_offloading_28_12c915f2_main_l166
+          1                           global_hit_rate             Global Hit Rate in unified l1/tex      82.17%      82.17%      82.17%
+          1                            local_hit_rate                                Local Hit Rate       0.00%       0.00%       0.00%
+          1                  gld_requested_throughput              Requested Global Load Throughput  2048.0GB/s  2048.0GB/s  2048.0GB/s
+          1                  gst_requested_throughput             Requested Global Store Throughput  81.918GB/s  81.918GB/s  81.918GB/s
+          1                            gld_throughput                        Global Load Throughput  2523.7GB/s  2523.7GB/s  2523.7GB/s
+          1                            gst_throughput                       Global Store Throughput  102.60GB/s  102.60GB/s  102.60GB/s
+          1                      dram_read_throughput                 Device Memory Read Throughput  208.12GB/s  208.12GB/s  208.12GB/s
+          1                     dram_write_throughput                Device Memory Write Throughput  82.788GB/s  82.788GB/s  82.788GB/s
+          1                        l2_read_throughput                         L2 Throughput (Reads)  466.40GB/s  466.40GB/s  466.40GB/s
+          1                       l2_write_throughput                        L2 Throughput (Writes)  102.60GB/s  102.60GB/s  102.60GB/s
+          1                             flop_count_sp   Floating Point Operations(Single Precision)  1.1923e+10  1.1923e+10  1.1923e+10
+          1                             inst_executed                         Instructions Executed  3543718464  3543718464  3543718464
+          1                               inst_issued                           Instructions Issued  3543876274  3543876274  3543876274
+          1                           dram_read_bytes        Total bytes read from DRAM to L2 cache  5048564832  5048564832  5048564832
+          1                          dram_write_bytes     Total bytes written from L2 cache to DRAM  2008261152  2008261152  2008261152
+          1                              inst_integer                          Integer Instructions  6.1050e+10  6.1050e+10  6.1050e+10
+		  
+		  
+		  
+		  
+		  
+		  
+-------------------------------------------------------------------
+
+Hi this is openMP tiling test, 
+compiled with 1 dimensional arrays.
+block size: 64,4,4 B1
+thread size needed = 1024
+memory size needed: 1024000000 , 4.096000 Gb 
+3d tiling OpenMP ID:0 started->
+==134436== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+Replaying kernel "__omp_offloading_28_12c915f2_main_l168" (7 of 7)... 
+Replaying kernel "__omp_offloading_28_12c915f2_main_l168" (done)
+==134436== Profiling application: ./runoptim
+==134436== Profiling result:
+==134436== Metric result:317564 sec.
+Invocations                               Metric Name                            Metric Description         Min         Max         Avg
+Device "Tesla V100-PCIE-16GB (0)"
+    Kernel: __omp_offloading_28_12c915f2_main_l168
+          1                           global_hit_rate             Global Hit Rate in unified l1/tex      77.34%      77.34%      77.34%
+          1                            local_hit_rate                                Local Hit Rate       0.00%       0.00%       0.00%
+          1                  gld_requested_throughput              Requested Global Load Throughput  1214.3GB/s  1214.3GB/s  1214.3GB/s
+          1                  gst_requested_throughput             Requested Global Store Throughput  48.573GB/s  48.573GB/s  48.573GB/s
+          1                            gld_throughput                        Global Load Throughput  2718.7GB/s  2718.7GB/s  2718.7GB/s
+          1                            gst_throughput                       Global Store Throughput  97.146GB/s  97.146GB/s  97.146GB/s
+          1                      dram_read_throughput                 Device Memory Read Throughput  106.44GB/s  106.44GB/s  106.44GB/s
+          1                     dram_write_throughput                Device Memory Write Throughput  49.202GB/s  49.202GB/s  49.202GB/s
+          1                        l2_read_throughput                         L2 Throughput (Reads)  600.50GB/s  600.50GB/s  600.50GB/s
+          1                       l2_write_throughput                        L2 Throughput (Writes)  97.170GB/s  97.170GB/s  97.170GB/s
+          1                             flop_count_sp   Floating Point Operations(Single Precision)  1.1923e+10  1.1923e+10  1.1923e+10
+          1                             inst_executed                         Instructions Executed  3450265632  3450265632  3450265632
+          1                               inst_issued                           Instructions Issued  3450372398  3450372398  3450372398
+          1                           dram_read_bytes        Total bytes read from DRAM to L2 cache  4354604512  4354604512  4354604512
+          1                          dram_write_bytes     Total bytes written from L2 cache to DRAM  2012897344  2012897344  2012897344
+          1                              inst_integer                          Integer Instructions  5.9999e+10  5.9999e+10  5.9999e+10
+		  
+		  
+		  -------------------------------------
+		  
+Hi this is openMP tiling test, 
+compiled with 1 dimensional arrays.
+block size: 32,4,8 B2
+thread size needed = 1024
+memory size needed: 1024000000 , 4.096000 Gb 
+3d tiling OpenMP ID:0 started->
+==134476== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+Replaying kernel "__omp_offloading_28_12c915f2_main_l168" (7 of 7)... 
+Replaying kernel "__omp_offloading_28_12c915f2_main_l168" (done)
+==134476== Profiling application: ./runoptim
+==134476== Profiling result:
+==134476== Metric result:
+Invocations                               Metric Name                            Metric Description         Min         Max         Avg
+Device "Tesla V100-PCIE-16GB (0)"
+    Kernel: __omp_offloading_28_12c915f2_main_l168
+          1                           global_hit_rate             Global Hit Rate in unified l1/tex      80.02%      80.02%      80.02%
+          1                            local_hit_rate                                Local Hit Rate       0.00%       0.00%       0.00%
+          1                  gld_requested_throughput              Requested Global Load Throughput  1679.2GB/s  1679.2GB/s  1679.2GB/s
+          1                  gst_requested_throughput             Requested Global Store Throughput  67.168GB/s  67.168GB/s  67.168GB/s
+          1                            gld_throughput                        Global Load Throughput  3223.4GB/s  3223.4GB/s  3223.4GB/s
+          1                            gst_throughput                       Global Store Throughput  134.34GB/s  134.34GB/s  134.34GB/s
+          1                      dram_read_throughput                 Device Memory Read Throughput  153.53GB/s  153.53GB/s  153.53GB/s
+          1                     dram_write_throughput                Device Memory Write Throughput  67.887GB/s  67.887GB/s  67.887GB/s
+          1                        l2_read_throughput                         L2 Throughput (Reads)  644.72GB/s  644.72GB/s  644.72GB/s
+          1                       l2_write_throughput                        L2 Throughput (Writes)  134.34GB/s  134.34GB/s  134.34GB/s
+          1                             flop_count_sp   Floating Point Operations(Single Precision)  1.1923e+10  1.1923e+10  1.1923e+10
+          1                             inst_executed                         Instructions Executed  4644576288  4644576288  4644576288
+          1                               inst_issued                           Instructions Issued  4644701359  4644701359  4644701359
+          1                           dram_read_bytes        Total bytes read from DRAM to L2 cache  4542120640  4542120640  4542120640
+          1                          dram_write_bytes     Total bytes written from L2 cache to DRAM  2008431104  2008431104  2008431104
+          1                              inst_integer                          Integer Instructions  8.1135e+10  8.1135e+10  8.1135e+10
+		  
+		  
+		  
+--------------------------------------
+
+Hi this is openMP tiling test, 
+compiled with 1 dimensional arrays.
+block size: 64,4,4 B3
+thread size needed = 1024
+memory size needed: 1024000000 , 4.096000 Gb 
+3d tiling OpenMP ID:0 started->
+==134516== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+Replaying kernel "__omp_offloading_28_12c915f2_main_l168" (7 of 7)... 
+Replaying kernel "__omp_offloading_28_12c915f2_main_l168" (done)
+==134516== Profiling application: ./runoptim
+==134516== Profiling result:
+==134516== Metric result:
+Invocations                               Metric Name                            Metric Description         Min         Max         Avg
+Device "Tesla V100-PCIE-16GB (0)"
+    Kernel: __omp_offloading_28_12c915f2_main_l168
+          1                           global_hit_rate             Global Hit Rate in unified l1/tex      77.71%      77.71%      77.71%
+          1                            local_hit_rate                                Local Hit Rate       0.00%       0.00%       0.00%
+          1                  gld_requested_throughput              Requested Global Load Throughput  1081.7GB/s  1081.7GB/s  1081.7GB/s
+          1                  gst_requested_throughput             Requested Global Store Throughput  43.267GB/s  43.267GB/s  43.267GB/s
+          1                            gld_throughput                        Global Load Throughput  2421.5GB/s  2421.5GB/s  2421.5GB/s
+          1                            gst_throughput                       Global Store Throughput  86.534GB/s  86.534GB/s  86.534GB/s
+          1                      dram_read_throughput                 Device Memory Read Throughput  94.499GB/s  94.499GB/s  94.499GB/s
+          1                     dram_write_throughput                Device Memory Write Throughput  43.738GB/s  43.738GB/s  43.738GB/s
+          1                        l2_read_throughput                         L2 Throughput (Reads)  537.58GB/s  537.58GB/s  537.58GB/s
+          1                       l2_write_throughput                        L2 Throughput (Writes)  86.551GB/s  86.551GB/s  86.551GB/s
+          1                             flop_count_sp   Floating Point Operations(Single Precision)  1.1923e+10  1.1923e+10  1.1923e+10
+          1                             inst_executed                         Instructions Executed  4779438048  4779438048  4779438048
+          1                               inst_issued                           Instructions Issued  4779593713  4779593713  4779593713
+          1                           dram_read_bytes        Total bytes read from DRAM to L2 cache  4340153504  4340153504  4340153504
+          1                          dram_write_bytes     Total bytes written from L2 cache to DRAM  2008814752  2008814752  2008814752
+          1                              inst_integer                          Integer Instructions  8.3744e+10  8.3744e+10  8.3744e+10
+		  
+--------------------------------------------------
+
+Hi this is openMP tiling test, 
+compiled with 1 dimensional arrays.
+block size: 4,4,4 W4
+thread size needed = 64
+memory size needed: 1024000000 , 4.096000 Gb 
+3d tiling OpenMP ID:0 started->
+==134555== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+Replaying kernel "__omp_offloading_28_12c915f2_main_l168" (7 of 7)... 
+Replaying kernel "__omp_offloading_28_12c915f2_main_l168" (done)
+==134555== Profiling application: ./runoptim
+==134555== Profiling result:
+==134555== Metric result:
+Invocations                               Metric Name                            Metric Description         Min         Max         Avg
+Device "Tesla V100-PCIE-16GB (0)"
+    Kernel: __omp_offloading_28_12c915f2_main_l168
+          1                           global_hit_rate             Global Hit Rate in unified l1/tex      76.64%      76.64%      76.64%
+          1                            local_hit_rate                                Local Hit Rate       0.00%       0.00%       0.00%
+          1                  gld_requested_throughput              Requested Global Load Throughput  378.64GB/s  378.64GB/s  378.64GB/s
+          1                  gst_requested_throughput             Requested Global Store Throughput  15.146GB/s  15.146GB/s  15.146GB/s
+          1                            gld_throughput                        Global Load Throughput  847.95GB/s  847.95GB/s  847.95GB/s
+          1                            gst_throughput                       Global Store Throughput  30.291GB/s  30.291GB/s  30.291GB/s
+          1                      dram_read_throughput                 Device Memory Read Throughput  61.349GB/s  61.349GB/s  61.349GB/s
+          1                     dram_write_throughput                Device Memory Write Throughput  15.314GB/s  15.314GB/s  15.314GB/s
+          1                        l2_read_throughput                         L2 Throughput (Reads)  205.12GB/s  205.12GB/s  205.12GB/s
+          1                       l2_write_throughput                        L2 Throughput (Writes)  30.291GB/s  30.291GB/s  30.291GB/s
+          1                             flop_count_sp   Floating Point Operations(Single Precision)  1.1923e+10  1.1923e+10  1.1923e+10
+          1                             inst_executed                         Instructions Executed  3345590952  3345590952  3345590952
+          1                               inst_issued                           Instructions Issued  3345789285  3345789285  3345789285
+          1                           dram_read_bytes        Total bytes read from DRAM to L2 cache  8049337920  8049337920  8049337920
+          1                          dram_write_bytes     Total bytes written from L2 cache to DRAM  2009321216  2009321216  2009321216
+          1                              inst_integer                          Integer Instructions  5.7907e+10  5.7907e+10  5.7907e+10
+		  
+		  
+		  
+--------------------
+
+
+
+
+
+

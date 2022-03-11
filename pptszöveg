@@ -1,0 +1,36 @@
+
+
+Szekvenciális párhuzamos
+Energia felhasználás
+kereszt példa
+CPU vs gpu adat hierarchia
+eredmény 
+devito
+acoustic
+tti
+
+A processzorok fejlődésében az a tendencia, hogy a tranzisztor mérete csökken, 
+az órajel nő. Kissebb energia felhasználás, kevesebb hőtermelés. 
+Ez a tendencia lelassulóban van,a CPU-k órajele felsőhatárt ért el. 
+Az órajel befolyásolja, hogy mennyi műveletet tudunk elvégezni 
+egy másodpercben. 3,5-4 Ghz es Processzoraink vannak manapság.
+Ahoz hogy több számítást végezzünk el több feladatvégző egység kell
+amik egyszerre számolnak. Így jelentek meg a többszálú, többmagos processzorok.
+A trendek elvonultak a többszálusítás idányába és az 
+ossztott memóriás párhuzamosítás irányába.
+Megjelentek a GPGPU-k. CUDA és AMD HIP eszközök.
+Gpu-knak gyorsabb emória...
+
+
+Cpu felsőhatár
+
+Szekvenciális amit idők kezdete óta csinálunk
+
+Megált az órajel növekedés 15 éve
+
+foglalkozunk rendezett térhálón vannak az adatok és a számítások szomszédsági alapúak
+
+10 dia gpu-t értelmesebben
+11 ne angolul
+
+~700 GF/s

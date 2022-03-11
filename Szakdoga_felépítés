@@ -1,0 +1,51 @@
+Szakdoga felépítés:
+
+Bevezetés:
+	-Önlab
+	-Célkitűzés
+	-feladatok
+	
+5-Előzmények:
+	-Irodalomkutatás
+	-Programozás
+	-Szekvencialitás
+	-Számítási teljesítmény bevezető
+	-Párhuzamosítás fajtái
+	-Párhuzamosítás előzmények
+	
+	
+	-eszközök xeon cpu,teslav100
+	-Párhuzamosítás cpun
+		
+	-Párhuzamosítás gpun
+	
+	
+	
+6-Tervezés
+	-Technológiák omp,acc,cuda
+	
+	
+	-mérésre példákra tervezett program, célja 
+	-mérési technika
+	-mérendő eljárások control mérés , párhuzamosítás, simd , loopblocking, tiling
+	-eredmények és azok értékelései
+	-párhuzamosság a devító projektel?
+	
+	
+gpun ugyan ez:
+	-mérésre tervezett program módosítása
+	-mérendő eljárások control opm offload collapse, tiling még nincs, loopblocking with pragmas
+	-problémák, fordító hibák, overhead,
+	-eredmények kiértékelése
+	-problémák, fordító hibák, overhead,
+
+
+7-Eredmények:
+	-Devito generál
+	-gigaflops
+	-gb/s
+	-tiling
+	-1d/3d
+	-blockméretek
+	-nvprof
+	

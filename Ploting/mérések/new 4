@@ -1,0 +1,75 @@
+
+* section0<688,880,880,880> ran in 0.41 s  tiled 1
+8432
+==112125== Profiling application: python ./acoustic_example.py -so 8 -d 800 800 800 -opt ('advanced', {'linearize': True})
+==112125== Profiling result:
+==112125== Metric result:
+Invocations                               Metric Name                            Metric Description         Min         Max         Avg
+Device "Tesla V100-PCIE-16GB (0)"
+    Kernel: __omp_offloading_28_153183bc_Forward_l87
+          1                           global_hit_rate             Global Hit Rate in unified l1/tex      71.86%      71.86%      71.86%
+          1                  gld_requested_throughput              Requested Global Load Throughput  1747.5GB/s  1747.5GB/s  1747.5GB/s
+          1                  gst_requested_throughput             Requested Global Store Throughput  62.409GB/s  62.409GB/s  62.409GB/s
+          1                            gld_throughput                        Global Load Throughput  1890.1GB/s  1890.1GB/s  1890.1GB/s
+          1                            gst_throughput                       Global Store Throughput  62.409GB/s  62.409GB/s  62.409GB/s
+          1                      dram_read_throughput                 Device Memory Read Throughput  317.31GB/s  317.31GB/s  317.31GB/s
+          1                     dram_write_throughput                Device Memory Write Throughput  62.472GB/s  62.472GB/s  62.472GB/s
+          1                        l2_read_throughput                         L2 Throughput (Reads)  487.46GB/s  487.46GB/s  487.46GB/s
+          1                       l2_write_throughput                        L2 Throughput (Writes)  62.410GB/s  62.410GB/s  62.410GB/s
+          1                             flop_count_sp   Floating Point Operations(Single Precision)  2.7259e+10  2.7259e+10  2.7259e+10
+          1                             inst_executed                         Instructions Executed  9873406400  9873406400  9873406400
+          1                               inst_issued                           Instructions Issued  9874016994  9874016994  9874016994
+          1                           dram_read_bytes        Total bytes read from DRAM to L2 cache  1.3859e+10  1.3859e+10  1.3859e+10
+          1                          dram_write_bytes     Total bytes written from L2 cache to DRAM  2728616192  2728616192  2728616192
+          1                              inst_integer                          Integer Instructions  2.0284e+11  2.0284e+11  2.0284e+11
+
+++++++++++++++++++++++++++++++++++++++++++++++++
+8416
+
+==112301== Profiling application: python ./acoustic_example.py -so 8 -d 800 800 800 -opt ('advanced', {'linearize': True})
+==112301== Profiling result:
+==112301== Metric result:
+Invocations                               Metric Name                            Metric Description         Min         Max         Avg
+Device "Tesla V100-PCIE-16GB (0)"
+    Kernel: __omp_offloading_28_153183bc_Forward_l87
+          1                           global_hit_rate             Global Hit Rate in unified l1/tex      71.64%      71.64%      71.64%
+          1                  gld_requested_throughput              Requested Global Load Throughput  1394.0GB/s  1394.0GB/s  1394.0GB/s
+          1                  gst_requested_throughput             Requested Global Store Throughput  49.785GB/s  49.785GB/s  49.785GB/s
+          1                            gld_throughput                        Global Load Throughput  1616.5GB/s  1616.5GB/s  1616.5GB/s
+          1                            gst_throughput                       Global Store Throughput  49.785GB/s  49.785GB/s  49.785GB/s
+          1                      dram_read_throughput                 Device Memory Read Throughput  253.12GB/s  253.12GB/s  253.12GB/s
+          1                     dram_write_throughput                Device Memory Write Throughput  49.841GB/s  49.841GB/s  49.841GB/s
+          1                        l2_read_throughput                         L2 Throughput (Reads)  424.34GB/s  424.34GB/s  424.34GB/s
+          1                       l2_write_throughput                        L2 Throughput (Writes)  49.830GB/s  49.830GB/s  49.830GB/s
+          1                             flop_count_sp   Floating Point Operations(Single Precision)  2.7259e+10  2.7259e+10  2.7259e+10
+          1                             inst_executed                         Instructions Executed  1.2812e+10  1.2812e+10  1.2812e+10
+          1                               inst_issued                           Instructions Issued  1.2813e+10  1.2813e+10  1.2813e+10
+          1                           dram_read_bytes        Total bytes read from DRAM to L2 cache  1.3859e+10  1.3859e+10  1.3859e+10
+          1                          dram_write_bytes     Total bytes written from L2 cache to DRAM  2728913536  2728913536  2728913536
+          1                              inst_integer                          Integer Instructions  2.5161e+11  2.5161e+11  2.5161e+11
+		  
+		  
+		  *****************************
+		  
+		  
+		  8 8 16
+		  ==112475== Profiling result:
+==112475== Metric result:
+Invocations                               Metric Name                            Metric Description         Min         Max         Avg
+Device "Tesla V100-PCIE-16GB (0)"
+    Kernel: __omp_offloading_28_153183bc_Forward_l87
+          1                           global_hit_rate             Global Hit Rate in unified l1/tex      74.40%      74.40%      74.40%
+          1                  gld_requested_throughput              Requested Global Load Throughput  1672.5GB/s  1672.5GB/s  1672.5GB/s
+          1                  gst_requested_throughput             Requested Global Store Throughput  59.731GB/s  59.731GB/s  59.731GB/s
+          1                            gld_throughput                        Global Load Throughput  1940.5GB/s  1940.5GB/s  1940.5GB/s
+          1                            gst_throughput                       Global Store Throughput  59.731GB/s  59.731GB/s  59.731GB/s
+          1                      dram_read_throughput                 Device Memory Read Throughput  303.69GB/s  303.69GB/s  303.69GB/s
+          1                     dram_write_throughput                Device Memory Write Throughput  59.734GB/s  59.734GB/s  59.734GB/s
+          1                        l2_read_throughput                         L2 Throughput (Reads)  453.19GB/s  453.19GB/s  453.19GB/s
+          1                       l2_write_throughput                        L2 Throughput (Writes)  59.768GB/s  59.768GB/s  59.768GB/s
+          1                             flop_count_sp   Floating Point Operations(Single Precision)  2.7259e+10  2.7259e+10  2.7259e+10
+          1                             inst_executed                         Instructions Executed  9696335000  9696335000  9696335000
+          1                               inst_issued                           Instructions Issued  9696888579  9696888579  9696888579
+          1                           dram_read_bytes        Total bytes read from DRAM to L2 cache  1.3859e+10  1.3859e+10  1.3859e+10
+          1                          dram_write_bytes     Total bytes written from L2 cache to DRAM  2726029216  2726029216  2726029216
+          1                              inst_integer                          Integer Instructions  2.0145e+11  2.0145e+11  2.0145e+11

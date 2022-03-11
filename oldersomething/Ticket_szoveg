@@ -1,0 +1,45 @@
+Title:
+Teams distribute + nested parallel for issues
+Clang-12 reordering the kernels makes a large overhead on execution
+Clang-14 is a distributive parallel for cause segmentation fault
+
+
+block = 3d rectangle
+thread team = team of thread on the GPU, referenced as Block in Nvidia visual profiler
+Nvvp = Nvidia visual profiler
+folded pointer = pointer of a 3d array casted from a 1d array; float (* __ restrict data _) [sizey] [sizez] = (float (* __ restrict) [sizey] [sizez]) data;
+
+We want to reorder the kernels in order to improve data locality in 3 dimensions, similar to the way Tile is supposed to work.
+In default with collapse (3) the GPU runs 128 thread / thread team, each team gets a 1 * 1 * 128 3d rectangle. With this option, 
+there is relatively little data locality in the non-contiguous dimensions
+We want to run 4 * 8 * 32 3d rectangle shaped block in one thread team.
+We use (#pragma omp target teams distribute collapse (3) thread_limit (1024)) to distribute the blocks between the thread teams and
+(#pragma omp parallel for collapse (3) to distribute the between the threads in the thread team.
+
+Clang-12:
+    This makes the execution 10 times slower, compare to the flat version.
+    In Nvvp the Registers / Thread is high (88) and the Occupancy is low (31.2%) compare to the flat (32 registers).
+
+    also:
+        If the size of the 3d space is not static, the folded pointers will cause segmentation fault.
+
+Clang-14:
+    The same code caused segmentation fault at runtime if trying to reach any folded pointer.
+    In some cases it does not result in segfault, but the results are invalid.
+
+Expected behavior:
+Using this method leads to improved execution time and Occupancy.
+
+Actual behavior:
+Using this method slows down the execution and causes segmentation fault.
+
+Question:
+We noted that OpenMP launches an extra warp in compare to the specified thread limit.
+
+Files:
+Code: mainslow.c
+
+Compile with:
+"clang mainslow.c  -o mainslow -Wall -fopenmp=libomp -O3 -fast -lm -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -gline-tables-only"
+
+If you don't want timer in the code add "-D NO_TIME" parameter.

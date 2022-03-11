@@ -1,0 +1,9 @@
+;Global Hit Rate;Global Load Throughput;L2 Throughput (Reads);Instructions Executed;Execution time
+Naín;43,49%;1530,50GB/s ;994,64GB/s ;2 809 985 904;0,036287 mp
+Tiled;80,01%;3393,70GB/s ;699,09GB/s ;3 521 146 464;0,017975 mp
+Különbség;36,52%;1863,20GB/s ;-295,55GB/s ;711 160 560;49,5356%
+;;;;;
+;;;;;
+;;;;;
+;;;;;
+;;;;;
