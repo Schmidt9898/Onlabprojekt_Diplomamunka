@@ -1,0 +1,6 @@
+
+
+
+
+
+DEVITO_LOGGING=DEBUG DEVITO_JIT_BACKDOOR=0 DEVITO_PLATFORM=nvidiaX DEVITO_ARCH=clang DEVITO_LANGUAGE=openmp python ./acoustic_example.py -so 8 -d 100 100 100 -opt "('advanced', {'linearize': True})"
