@@ -1,0 +1,81 @@
+openmp simd
+realese mode
+Szerver bejelentkezés
+
+
+g++ main.cpp Timer.cpp Timer.h -std=c++11 -o run -O2 -Wall -fopenmp
+-Ofast
+
+
+omp_num_threads p
+1,2,4,8 szálon milyen gyors? pipa
+
+Kiszámolni mennyi adatot mozgat bytban 
+byte / iteráció
+43 gigabájt pipa
+
+
+
+gpu open mp target
+videó,doksi
+Tesztfeladat kitöltése
+
+Xforwarding
+nvvp- 
+C code gpu 
+timer in C
+
+
+__attribute__ ((aligned (64))) el volt gondja
+
+openmp map region |kész
+region megnézni maybe kész
+szebb timer kész
+regio megcsinálni |kész
+
+clang-11: error: cannot find libdevice for sm_35. Provide path to different CUDA installation via --cuda-path, or pass -nocudalib to build without linking with libdevice.
+megoldva
+_________
+
+
+???
+Kódról mennyit? nem sokat csak hogy vannak tömbök meg forciklus
+open mp
+a probléma
+processzor
+memória elérés
+ezért gpu 
+gpu memória
+gpu offloading
+gpu számols
+gpu idő képek
+
+
+
+feladat mára
+c++ timer fileba
+c timer fileba
+meres 1 
+meres cpu parallel
+meres cpu smid
+meres cpu parallel smid
+meres gpu c 
+
+
+
+
+
+openmp
+párhuzamosság példák
+
+gpukülön kártya
+
+
+grofok címe
+oszlopok szebb megjelölés látszon a képen hogy az egy ciklusban van
+írjírjírj
+
+
+
+
+
