@@ -31,3 +31,5 @@ Ploting/__pycache__*
 Code_Testing_ground/gputest/runk80
 Code_Testing_ground/gputest/runv100
 API Guide 2.7.pdf
+Code_Testing_ground/OpenMP_examples/runtile
+*.pre

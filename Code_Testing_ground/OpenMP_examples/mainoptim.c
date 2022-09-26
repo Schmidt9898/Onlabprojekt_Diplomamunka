@@ -207,7 +207,7 @@ Kill_stopper();
 //Kill_stopper();
 
 int good=0;
-/*
+
 for (size_t i = 0; i < meret; i++) {
 	if (out[i]!=out2[i]) {
     printf("Validation failed\n");
@@ -220,7 +220,7 @@ for (size_t i = 0; i < meret; i++) {
 
 if(!good)
   printf("Validation passed\n");
-*/
+
 free(out);
 free(out2);
 

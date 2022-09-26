@@ -1,0 +1,66 @@
+#!/bin/bash
+#!/usr/bin/bash
+
+
+accfilename="original_acc.c"
+ompfilename="original_omp.c"
+
+Compile_ACC()
+{
+	runname="runacc"
+
+	if test -f $runname;then
+	echo "Deleting $runname ." 
+    rm $runname
+	fi
+
+	echo OpenACC compiling $runname
+
+	pgcc -acc -Minfo=accel -ta=tesla -Wall -c99 $accfilename -o $runname #|| echo "pgcc not loaded, run module load nvhpc/20.9"
+
+	echo "---end compiling----"
+}
+
+Compile_OMP()
+{
+	runname="runomp"
+
+	if test -f $runname;then
+	echo "Deleting $runname ." 
+    rm $runname
+	fi
+
+	echo OpenMP compiling $runname
+
+	clang $ompfilename  -o $runname -Wall -fopenmp=libomp -O3 -fast -lm -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -gline-tables-only #|| echo "clang not loaded, run module load clang/14.0" #-fopenmp-version=51 #-D NO_TIME
+
+	echo "---end compiling----"
+}
+
+
+
+
+
+
+
+if (($#==0)) ;then
+echo "No input argument. Please add acc or omp"
+exit 1
+fi
+IFS=' ' read -r -a tomb <<< $@
+
+for ((i=0;i<$#;i++));do
+case ${tomb[$i]} in 
+		acc)
+			Compile_ACC
+			;;
+		omp)
+			Compile_OMP
+			;;	
+
+esac
+done
+
+
+
+#clang mainoptim.c  -o $runname -Wall  -O3 -fast -lm -gline-tables-only -D LOMP -D $dim -target x86_64-pc-linux-gnu -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx803

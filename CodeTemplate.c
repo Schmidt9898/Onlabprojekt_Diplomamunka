@@ -6,6 +6,16 @@ const size_t blocksize_z = 32;
 //const int blocksize_y = YERTEK;
 //const int blocksize_z = ZERTEK;
 
+int x_m=0;
+int y_m=0;
+int z_m=0;
+
+int x_M=100;
+int y_M=100;
+int z_M=100;
+
+
+
 const int Thread_limit=512;
 
 #pragma omp target teams distribute collapse(3) thread_limit(512)

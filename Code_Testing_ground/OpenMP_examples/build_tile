@@ -21,7 +21,7 @@ Compile_tile()
 echo "---Tile-------" 
 if [[ $mode == "icc" ]]; then
 echo "intel api"
-icc -I ../../Smart_Stopper $filename  -o $runname -Wall $optional -O3 -std=c11 -qopenmp -xHOST 
+icx -I ../../Smart_Stopper $filename  -o $runname -Wall $optional -O3 -std=c11 -qopenmp -xHOST 
 else
 echo "clang"
 clang -I ../../Smart_Stopper $filename  -o $runname -Wall -fopenmp=libomp -Ofast -gline-tables-only  -fopenmp-version=51 -Rpass-analysis=loop-vectorize -Rpass=loop-vectorize -Rpass-missed=loop-vectorize -march=native $optional

@@ -25,8 +25,8 @@ Compile_optim()
 		echo "omp"
 
 		#for nvidia
-		clang mainoptim.c  -o $runname -Wall -fopenmp=libomp -O3 -fast -lm -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -gline-tables-only -D LOMP -D $dim #-fopenmp-version=51 #-D NO_TIME
-
+		clang mainoptim.c  -o $runname -Wall -fopenmp=libomp -O3 -fast -lm -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -D LOMP -D $dim -lomptarget #-fopenmp-version=51 #-D NO_TIME
+#-L/home/shared/software/clang/14.6/lib -v
 		#for amd
 		#clang mainoptim.c  -o $runname -Wall  -O3 -fast -lm -gline-tables-only -D LOMP -D $dim -target x86_64-pc-linux-gnu -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx803
 	else
