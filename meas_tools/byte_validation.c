@@ -32,6 +32,8 @@ free(a.size);
 }
 */
 
+
+//TODO add -h parameter and help if empty
 int main(int argc, char ** argv) {
 
 

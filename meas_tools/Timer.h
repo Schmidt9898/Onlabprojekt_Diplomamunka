@@ -6,9 +6,9 @@
 #include <fstream>
 //#include <iostream>
 /**
-Ez a Timer oszt�ly.
+Ez a Timer osztály.
 
-Igy haszn�ld
+Igy használd
 
 {
 Timer t1("t1");
@@ -17,20 +17,14 @@ Timer t1("t1");
     }
 }
 
-Soha ne csin�lj ilyet.
+Soha ne csinálj ilyet.
 Timer t1("t1");
 Timer t2("t2");
 
 
-Mert nem tudom mi t�rt�nne �s tuti nem j� dolog.
+Mert nem tudom mi történne és tuti nem jó dolog.
 
 */
-
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 extern bool Timer_Filemode;
 extern std::string Timer_filename;
@@ -64,13 +58,4 @@ class Timer
 
     private:
 };
-
-#ifdef __cplusplus
-}
-#endif
-
-
-
-
-
 #endif // TIMER_H
