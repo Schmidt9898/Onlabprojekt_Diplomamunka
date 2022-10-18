@@ -16,6 +16,7 @@ pass
 send
 Terminalcode.txt
 *run
+*.run
 *.meres.txt
 *.png
 

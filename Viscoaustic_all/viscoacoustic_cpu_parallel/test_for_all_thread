@@ -1,8 +1,0 @@
-OMP_NUM_THREADS=1 ./run 1_thread 
-OMP_NUM_THREADS=2 ./run 2_thread 
-OMP_NUM_THREADS=4 ./run 4_thread 
-OMP_NUM_THREADS=8 ./run 8_thread 
-OMP_NUM_THREADS=16 ./run 16_thread 
-OMP_NUM_THREADS=32 ./run 32_thread 
-OMP_NUM_THREADS=40 ./run 40_thread 
-OMP_NUM_THREADS=54 ./run 54_thread
