@@ -1,10 +1,8 @@
 
 all: init Timer CTimer build_validate
 
-init: create_bin
-create_bin: bin
-	mkdir bin
-
+init: 
+	mkdir -p bin
 Timer:
 	$(CXX) -c Timer.cpp -Ofast -o ./bin/Timer.o
 CTimer:
@@ -13,4 +11,4 @@ build_validate:
 	$(CC) byte_validation.c -Ofast -o ./bin/byte_valid
 
 clean:
-	rm -r ./bin
+	rm -rf ./bin
