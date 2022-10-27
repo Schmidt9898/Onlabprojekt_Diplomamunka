@@ -10,6 +10,7 @@
 #define STOP_TIMER(S,T) gettimeofday(&end_ ## S, NULL); T->S += (double)(end_ ## S .tv_sec-start_ ## S.tv_sec)+(double)(end_ ## S .tv_usec-start_ ## S .tv_usec)/1000000;
 
 #include "stdlib.h"
+#include <stdio.h>
 #include "math.h"
 #include "sys/time.h"
 #include "omp.h"
@@ -31,7 +32,7 @@ struct profiler
   double section0;
   double section1;
   double section2;
-} ;
+};
 
 
 int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec, struct dataobj *restrict rec_coords_vec, struct dataobj *restrict src_vec, struct dataobj *restrict src_coords_vec, struct dataobj *restrict u_vec, struct dataobj *restrict vp_vec, const int x_M, const int x_m, const int y_M, const int y_m, const int z_M, const int z_m, const float dt, const float o_x, const float o_y, const float o_z, const int p_rec_M, const int p_rec_m, const int p_src_M, const int p_src_m, const int time_M, const int time_m, const int deviceid, const int devicerm, struct profiler * timers)
@@ -44,8 +45,13 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
   /* End of OpenMP setup */
 
 
+printf("1\n");
   
   float *damp = (float *) damp_vec->data;
+  float *rec = (float *) rec_vec->data;
+  float *rec_coords = (float *) rec_coords_vec->data;
+  float *src = (float *) src_vec->data;
+  float *src_coords = (float *) src_coords_vec->data;
   float *u = (float *) u_vec->data;
   float *vp = (float *) vp_vec->data;
 
@@ -78,8 +84,12 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
   float r8 = 1.0F/(dt*dt);
   float r9 = 1.0F/dt;
 
+printf("1\n");
+
+
   for (int time = time_m, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3); time <= time_M; time += 1, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3))
   {
+//printf("time\n");
     /* Begin section0 */
     START_TIMER(section0)
     #pragma omp target teams distribute parallel for collapse(3)
