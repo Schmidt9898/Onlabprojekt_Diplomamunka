@@ -87,7 +87,7 @@ printf("memory size needed: %lu , %f Gb \n", meret * 2, meret * 4 / 1e9f * 2);
 
 
 
-//Spawn_stopper("offload and memory managment");
+Spawn_stopper("offload and memory managment");
 
 //data and offloading OpenMP
 
@@ -104,7 +104,7 @@ float * data = NULL;
 #pragma acc data copyout(out[0:meret]) copyout(out2[0:meret]) 
 #endif
 {
-//Kill_stopper();
+Kill_stopper();
 
 #ifdef LACC
 float* data=(float*)acc_malloc(meret*4);
@@ -160,7 +160,7 @@ Spawn_stopper("3d computation collapse (3)");
     }
   }
 Kill_stopper();
-
+//goto end;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifdef LOMP
@@ -202,9 +202,11 @@ Kill_stopper();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Spawn_stopper("back to ram");
+end:
+
+Spawn_stopper("back to ram");
 }
-//Kill_stopper();
+Kill_stopper();
 
 int good=0;
 

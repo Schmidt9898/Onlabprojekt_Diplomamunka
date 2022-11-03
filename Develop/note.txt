@@ -1,3 +1,10 @@
 section0<643,800,800,800> ran in 21.61 s [OI=1.92, 472.35 GFlops/s, 15.24 GPts/s] 720 4
 section0<688,800,800,800> ran in 27.35 s [OI=2.77, 579.66 GFlops/s, 12.89 GPts/s] 720 8
 section0<719,800,800,800> ran in 60.65 s [OI=4.43, 443.14 GFlops/s, 6.08 GPts/s]  720 16
+
+
+
+
+
+320 compiled with this:
+clang -O3 -g -fPIC -Wall -Wno-unused-result -Wno-unused-variable -ffast-math -Xopenmp-target -march=sm_70 -shared -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda /home/schmidtl/devito/examples/seismic/acoustic/devito-jitcache-uid543800093/5273704207c69d8ad45921df9f2fae36cac3602b.c -lm -o /home/schmidtl/devito/examples/seismic/acoustic/devito-jitcache-uid543800093/5273704207c69d8ad45921df9f2fae36cac3602b.so

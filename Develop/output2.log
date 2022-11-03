@@ -1,0 +1,57 @@
+Operator `initdamp` generated in 0.81 s
+  * lowering.IET: 0.42 s (52.2 %)
+     * specializing.IET: 0.32 s (39.8 %)
+  * lowering.Clusters: 0.26 s (32.3 %)
+     * specializing.Clusters: 0.22 s (27.4 %)
+Flops reduction after symbolic optimization: [102 --> 102]
+clang-14: warning: CUDA version is newer than the latest supported version 11.5 [-Wunknown-cuda-version]
+Operator `initdamp` jit-compiled `/home/schmidtl/devito/examples/seismic/acoustic/devito-jitcache-uid543800093/30109e44e445aeef9c02e2b73978fb7827432dbc.c` in 2.03 s with `ClangCompiler`
+Warning: please export TSAN_OPTIONS='ignore_noninstrumented_modules=1' to avoid false positive reports from the OpenMP runtime!
+Operator `initdamp` ran in 0.28 s
+Global performance: [OI=0.22, 0.56 GFlops/s]
+Local performance:
+  * section0<40> ran in 0.01 s [OI=0.01, 0.01 GFlops/s]
+  * section1<<40,400,400>,<40>> ran in 0.01 s [OI=0.34, 23.95 GFlops/s]
+  * section2<40,400,400> ran in 0.01 s [OI=0.34, 50.80 GFlops/s]
+  * section3<40> ran in 0.01 s [OI=1.50, 0.01 GFlops/s]
+  * section4<400,40,400> ran in 0.01 s [OI=0.34, 34.18 GFlops/s]
+  * section5<40> ran in 0.01 s [OI=1.50, 0.01 GFlops/s]
+  * section6<400,40,400> ran in 0.01 s [OI=0.34, 51.93 GFlops/s]
+  * section7<40> ran in 0.01 s [OI=1.50, 0.01 GFlops/s]
+  * section8<400,400,40> ran in 0.01 s [OI=0.34, 34.28 GFlops/s]
+  * section9<40> ran in 0.01 s [OI=1.50, 0.01 GFlops/s]
+  * section10<400,400,40> ran in 0.01 s [OI=0.34, 53.67 GFlops/s]
+Performance[mode=advanced] arguments: {'deviceid': -1, 'devicerm': 1}
+Allocating host memory for vp(432, 432, 432) [308 MB]
+Operator `pad_vp` generated in 0.36 s
+  * lowering.IET: 0.20 s (55.9 %)
+     * specializing.IET: 0.16 s (44.8 %)
+  * lowering.Clusters: 0.10 s (28.0 %)
+Flops reduction after symbolic optimization: [0 --> 0]
+clang-14: warning: CUDA version is newer than the latest supported version 11.5 [-Wunknown-cuda-version]
+Operator `pad_vp` jit-compiled `/home/schmidtl/devito/examples/seismic/acoustic/devito-jitcache-uid543800093/8333886af7b832b22e48b6ce0e7bbfdebe8e5137.c` in 1.03 s with `ClangCompiler`
+Operator `pad_vp` ran in 0.15 s
+Performance[mode=advanced] arguments: {'deviceid': -1, 'devicerm': 1}
+Applying Forward
+Allocating host memory for src_coords(1, 3) [12 B]
+Allocating host memory for src(721, 1) [3 KB]
+Allocating host memory for rec_coords(102400, 3) [1 MB]
+Operator `Forward` generated in 2.98 s
+  * lowering.Expressions: 1.41 s (47.5 %)
+  * lowering.IET: 0.96 s (32.4 %)
+     * specializing.IET: 0.75 s (25.3 %)
+Flops reduction after symbolic optimization: [176 --> 76]
+Allocating host memory for rec(721, 102400) [282 MB]
+Allocating host memory for u(3, 432, 432, 432) [923 MB]
+clang-14: warning: CUDA version is newer than the latest supported version 11.5 [-Wunknown-cuda-version]
+Operator `Forward` jit-compiled `/home/schmidtl/devito/examples/seismic/acoustic/devito-jitcache-uid543800093/5273704207c69d8ad45921df9f2fae36cac3602b.c` in 1.29 s with `ClangCompiler`
+Operator `Forward` ran in 41.09 s
+Global performance: [OI=4.39, 83.70 GFlops/s, 1.13 GPts/s]
+Local performance:
+  * section0<719,400,400,400> ran in 33.35 s [OI=4.29, 100.76 GFlops/s, 1.39 GPts/s]
+  * section1<<719,1>,<719,1>,<719,1>,<719,1>,<719,1>,<719,1>,<719,1>,<719,1>,<719,1>> ran in 3.51 s [OI=78.75, 0.01 GFlops/s, 0.01 GPts/s]
+  * section2<<719,102400>,<719,102400>,<719,102400>,<719,102400>,<719,102400>,<719,102400>,<719,102400>,<719,102400>,<719,102400>,<719,102400>> ran in 3.54 s [OI=90.00, 22.50 GFlops/s]
+Performance[mode=advanced] arguments: {'deviceid': -1, 'devicerm': 1}
+clang -O3 -g -fPIC -Wall -Wno-unused-result -Wno-unused-variable -ffast-math -Xopenmp-target -march=sm_70 -shared -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda /home/schmidtl/devito/examples/seismic/acoustic/devito-jitcache-uid543800093/30109e44e445aeef9c02e2b73978fb7827432dbc.c -lm -o /home/schmidtl/devito/examples/seismic/acoustic/devito-jitcache-uid543800093/30109e44e445aeef9c02e2b73978fb7827432dbc.so
+clang -O3 -g -fPIC -Wall -Wno-unused-result -Wno-unused-variable -ffast-math -Xopenmp-target -march=sm_70 -shared -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda /home/schmidtl/devito/examples/seismic/acoustic/devito-jitcache-uid543800093/8333886af7b832b22e48b6ce0e7bbfdebe8e5137.c -lm -o /home/schmidtl/devito/examples/seismic/acoustic/devito-jitcache-uid543800093/8333886af7b832b22e48b6ce0e7bbfdebe8e5137.so
+clang -O3 -g -fPIC -Wall -Wno-unused-result -Wno-unused-variable -ffast-math -Xopenmp-target -march=sm_70 -shared -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda /home/schmidtl/devito/examples/seismic/acoustic/devito-jitcache-uid543800093/5273704207c69d8ad45921df9f2fae36cac3602b.c -lm -o /home/schmidtl/devito/examples/seismic/acoustic/devito-jitcache-uid543800093/5273704207c69d8ad45921df9f2fae36cac3602b.so
