@@ -1,3 +1,6 @@
 //makefiles
 //forward function
 //other omp examples
+
+
+2,8,16 space order 

@@ -2,3 +2,14 @@ Clean up folders and files
 create init workspace
 add makefiles
 add readme
+
+
+
+compile: 
+clang 14.6 centos7
+clang 14.6 centos8
+
+13.0 recompile with centos7 release
+remove 14.6bad and maybe 14.3
+
+recompile 16.0 develop

@@ -1,0 +1,15 @@
+cd Develop/
+
+version=$(cat /etc/os-release | grep VERSION= | head -1)
+
+if [ "$version" == "VERSION=\"7 (Core)\"" ]; 
+then
+module load clang/14.6 gpu/cuda/11.6
+else
+module load clang/14.6-centos8 gpu/cuda/11.6
+fi
+export MY_LD_LIBRARY_PATH=$(tr ':' '\n' <<< $LD_LIBRARY_PATH | head -3 | tail -1)
+module list
+
+
+

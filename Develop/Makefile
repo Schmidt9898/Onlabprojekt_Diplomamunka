@@ -3,14 +3,19 @@
 
 
 #flags = -Wall -fopenmp=libomp -O3 	-g -lm		-fopenmp-targets=nvptx64-nvidia-cuda	
-
-flags = -O3 -g -fPIC -Wall -Wno-unused-result -Wno-unused-variable -ffast-math -Xopenmp-target -march=sm_70 -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lm 
+#-fPIC külön fordítók
+#flags = -O3 -g -fPIC -Wall -Wno-unused-result -Wno-unused-variable -ffast-math -Xopenmp-target -march=sm_70 -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lm 
 #flags = -Wall -fopenmp=libomp -O3 -g
+
 #flags = -Wall -fopenmp -O3 -fast -lm -fopenmp-targets=nvptx64-nvidia-cuda -Xopenmp-target -march=sm_70 -lomptarget -g
-
-#flags = -O3 -g -fPIC -Wall -Wno-unused-result -Wno-unused-variable -ffast-math -Xopenmp-target -march=sm_70 -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lm
-
 # devito original clang -O3 -g -fPIC -Wall -Wno-unused-result -Wno-unused-variable -ffast-math -Xopenmp-target -march=sm_70 -shared -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lm
+
+flags = -O3 -g -fPIC -Wall -Wno-unused-result -Wno-unused-variable -ffast-math -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lm -L $(MY_LD_LIBRARY_PATH) -lomptarget
+
+#flags = -O3 -g -fPIC -Wall -Wno-unused-result -Wno-unused-variable -ffast-math -Xopenmp-target -march=sm_70 -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lm -L/home/shared/software/clang/14.6-centos8/lib/ -lomptarget
+#flags = -O3 -g -fPIC -Wall -Wno-unused-result -Wno-unused-variable -ffast-math -Xopenmp-target -march=sm_80 -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lm -L/home/shared/software/clang/14.6-centos8/lib/ -lomptarget
+
+
 
 c_files = main.c
 #c_files = test.c
@@ -24,8 +29,9 @@ init:
 	mkdir -p bin
 
 build:
-	#echo $(flags)
-	$(CC) $(flags) $(c_files) -o $(runname)
+	$(CC) -Xopenmp-target -march=sm_70 $(flags) $(c_files) -o $(runname) 
+build_os8:
+	$(CC) -Xopenmp-target -march=sm_80 $(flags) $(c_files) -o $(runname)
 
 run:
 	./bin/run

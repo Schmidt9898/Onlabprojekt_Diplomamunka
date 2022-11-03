@@ -1,7 +1,7 @@
 
 //#include "forward_only.h"
-#include "forward_320_16.c"
-//#include "forward_320_16_tilled.c"
+//#include "forward_320_16.c"
+#include "forward_320_16_tilled.c"
 
 #include <stdio.h>
 #include "stdlib.h"
@@ -22,7 +22,7 @@ dataobj create_data(unsigned long size0, unsigned long size1, unsigned long size
 	for (size_t i = 0; i < arrsize; i += elemsize)
 	{
 		float *t = (float *)&a.data[i];
-		*t = 1;
+		*t = 1;//TODO (0,1) random
 		//*t = 0.0/0.0;  //nan
 	}
 
@@ -64,8 +64,8 @@ int check_data(dataobj a)
 int main()
 {
 printf("Start\n");
-printf("Test malloc 16 byte\n");
 
+//printf("Test malloc 16 byte\n");
 //printf("Start\n");
 
 /*
@@ -164,8 +164,8 @@ Forward((struct dataobj *restrict) &damp_vec,(struct dataobj *restrict) &rec_vec
 //checking u rec
 
 
-printf(check_data(u_vec) ? "u_vec is invalid\n" : "u_vec is nan\n");
-printf(check_data(rec_vec) ? "rec_vec is invalid\n" : "u_vec is nan\n");
+printf(check_data(u_vec) ? "u_vec is valid\n" : "u_vec is nan\n");
+printf(check_data(rec_vec) ? "rec_vec is valid\n" : "u_vec is nan\n");
 
 
 
