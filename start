@@ -1,15 +1,38 @@
-cd Develop/
+#!/bin/bash
+#cd Develop/
+
+module purge
+
+CV=14.6
+
+echo $#
+if [ $# -gt 0 ]
+then
+CV=$1
+fi
 
 version=$(cat /etc/os-release | grep VERSION= | head -1)
 
 if [ "$version" == "VERSION=\"7 (Core)\"" ]; 
 then
-module load clang/14.6 gpu/cuda/11.6
+module load clang/$CV
 else
-module load clang/14.6-centos8 gpu/cuda/11.6
+module load clang/$CV-centos8
 fi
-export MY_LD_LIBRARY_PATH=$(tr ':' '\n' <<< $LD_LIBRARY_PATH | head -3 | tail -1)
+
+#export MY_LD_LIBRARY_PATH=$(tr ':' '\n' <<< $LD_LIBRARY_PATH | head -1)
+#echo $MY_LD_LIBRARY_PATH
+
+module load gpu/cuda/11.6
 module list
+
+#name=$(nvidia-smi --query-gpu=gpu_name --format=csv | head -2 | tail -1)
+#if [[ $name == *"Tesla A100"*]]
+#then
+#echo "a100"
+#fi
+#echo $name
+
 
 
 
