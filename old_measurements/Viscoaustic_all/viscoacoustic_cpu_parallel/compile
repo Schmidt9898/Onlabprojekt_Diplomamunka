@@ -1,0 +1,4 @@
+
+g++ -I ../Timer ../Timer/Timer.cpp -std=c++11 main.cpp  -o run -Wall -fopenmp -Ofast
+
+

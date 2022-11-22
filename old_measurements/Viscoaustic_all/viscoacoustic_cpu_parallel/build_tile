@@ -1,0 +1,73 @@
+#!/usr/bin/bash
+
+
+
+filename="mainsimd2.c"
+#ilename="mainloopblocking.c"
+
+runname="run"
+
+optional=""
+
+mode="clang"
+
+Compile_tile()
+{
+
+	runname="runtile"
+	if test -f $runname;then
+    rm $runname
+	fi
+
+echo "---Tile-------" 
+if [[ $mode == "icc" ]]; then
+echo "intel api"
+icc -I ../Smart_Stopper  $filename  -o $runname -Wall $optional -O3 -std=c11 -qopenmp -xHOST 
+else
+echo "clang"
+clang -I ../Smart_Stopper $filename  -o $runname -Wall  -fopenmp -fopenmp=libomp -O3 -lm -march=native $optional #-gline-tables-only  -fopenmp-version=51 -Rpass-analysis=loop-vectorize -Rpass=loop-vectorize -Rpass-missed=loop-vectorize 
+#clang++ -I ../Timer ../Timer/Timer.cpp -std=c++11 $filename  -o $runname -Wall  -fopenmp -fopenmp=libomp -O3 -lm -march=native $optional #-gline-tables-only  -fopenmp-version=51 -Rpass-analysis=loop-vectorize -Rpass=loop-vectorize -Rpass-missed=loop-vectorize 
+
+fi
+echo "---end compiling----"
+}
+
+
+echo "Compiling script"
+
+
+
+if (($#==0)) ;then
+echo "No input argument."
+#exit 1
+#else
+#optional="-D $1"
+#echo $optional
+fi
+IFS=' ' read -r -a tomb <<< $@
+
+for ((i=0;i<$#;i++));do
+case ${tomb[$i]} in 
+		icc)
+			mode="icc"
+			;;
+		clang)
+		mode="clang"
+		;;
+		tile)
+		optional="-D TILE"
+		;;
+
+esac
+done
+
+
+Compile_tile
+
+
+#echo "compile for any? gpu..." 
+#clang -I ../../Smart_Stopper mainbase.c  -o run -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -D LOMP
+
+#clang -I ../../Smart_Stopper mainbase.c  -o run_v100 -Wall -fopenmp=libomp -fopenmp-targets=nvptx64-nvidia-cuda -Ofast -gline-tables-only -lm -Xopenmp-target -march=sm_70 -D LOMP
+
+#pgcc -acc -Minfo=accel -ta=tesla -Wall -I ../../Smart_Stopper -c99 mainbase.c -o runacc -D LACC
