@@ -4,3 +4,5 @@
 
 
 2,8,16 space order 
+
+create measurement script pls

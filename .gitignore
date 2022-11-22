@@ -35,3 +35,9 @@ API Guide 2.7.pdf
 Code_Testing_ground/OpenMP_examples/runtile
 *.pre
 Cuda_openmp_examples_old/Oneapi/hh.txt
+py_venv/
+Cuda_openmp_examples_old/OpenMP_examples/bin/
+Cuda_openmp_examples_old/OpenMP_examples/runoptim
+*.out
+Develop/temp_script_file.txt
+Develop/vgcore.2082509

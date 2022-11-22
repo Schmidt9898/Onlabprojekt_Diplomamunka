@@ -1,9 +1,4 @@
 
-//#include "./src/forward_only.h"
-#include "./src/forward_tilled.h"
-//#include "./src/forward_320_16.c"
-//#include "./src/forward_320_16_tilled.c"
-
 #include <stdio.h>
 #include "stdlib.h"
 
@@ -66,80 +61,8 @@ int main()
 {
 printf("Start\n");
 
-//printf("Test malloc 16 byte\n");
-//printf("Start\n");
-
-/*
-
-dataobj damp_vec       = create_data(10,10,10,1,sizeof(float));
-dataobj rec_vec        = create_data(10,10,1,1,sizeof(float));
-dataobj rec_coords_vec = create_data(10,3,1,1,sizeof(float));
-dataobj src_vec        = create_data(10,1,1,1,sizeof(float));
-dataobj src_coords_vec = create_data(1,3,1,1,sizeof(float));
-dataobj u_vec          = create_data(3,10,10,10,sizeof(float));
-dataobj vp_vec         = create_data(10,10,10,1,sizeof(float));
-*/
-
-/*
-
-dataobj damp_vec       = create_data(802,802,802,1,sizeof(float));
-dataobj rec_vec        = create_data(721,518400,1,1,sizeof(float));
-dataobj rec_coords_vec = create_data(518400,3,1,1,sizeof(float));
-dataobj src_vec        = create_data(721,1,1,1,sizeof(float));
-dataobj src_coords_vec = create_data(1,3,1,1,sizeof(float));
-dataobj u_vec          = create_data(3,832,832,832,sizeof(float));
-dataobj vp_vec         = create_data(832,832,832,1,sizeof(float));
-
-int x_M            	= 799;
-int x_m            	= 0;
-int y_M            	= 799;
-int y_m            	= 0;
-int z_m            	= 0;
-int z_M            	= 799;
-float dt        	= 1.737000;
-float o_x       	= -600.000000;
-float o_y       	= -600.000000;
-float o_z       	= -600.000000;
-int p_rec_M        	= 518399;
-int p_rec_m        	= 0;
-int p_src_M        	= 0;
-int p_src_m        	= 0;
-int time_M         	= 10;
-int time_m         	= 1;
-int deviceid       	= -1;
-int devicerm       	= 1;
-
-*/
-
-
-dataobj damp_vec = create_data( 402,402,402,1,sizeof(float));
-dataobj rec_vec = create_data( 721,102400,1,1,sizeof(float));
-dataobj rec_coords_vec = create_data( 102400,3,1,1,sizeof(float));
-dataobj src_vec = create_data( 721,1,1,1,sizeof(float));
-dataobj src_coords_vec = create_data( 1,3,1,1,sizeof(float));
-dataobj u_vec = create_data( 3,432,432,432,sizeof(float));
-dataobj vp_vec = create_data( 432,432,432,1,sizeof(float));
-int x_M = 399;
-int x_m = 0;
-int y_M = 399;
-int y_m = 0;
-int z_M = 399;
-int z_m = 0;
-float dt = 1.737000;
-float o_x = -600.000000;
-float o_y = -600.000000;
-float o_z = -600.000000;
-int p_rec_M = 102399;
-int p_rec_m = 0;
-int p_src_M = 0;
-int p_src_m = 0;
-int time_M = 719;
-int time_m = 1;
-int deviceid = -1;
-int devicerm = 1;
-
-
-/* 2 800
+#ifdef SO2
+// 2 800
 dataobj damp_vec = create_data( 882,882,882,1,sizeof(float));
 dataobj rec_vec = create_data( 585,640000,1,1,sizeof(float));
 dataobj rec_coords_vec = create_data( 640000,3,1,1,sizeof(float));
@@ -161,14 +84,14 @@ int p_rec_M = 639999;
 int p_rec_m = 0;
 int p_src_M = 0;
 int p_src_m = 0;
-int time_M = 583;
 int time_m = 1;
+//int time_M = 583;
 int deviceid = -1;
 int devicerm = 1;
 
-*/
+#elif defined SO8
 
-/* 8 800
+// 8 800
 dataobj damp_vec = create_data( 882,882,882,1,sizeof(float));
 dataobj rec_vec = create_data( 690,640000,1,1,sizeof(float));
 dataobj rec_coords_vec = create_data( 640000,3,1,1,sizeof(float));
@@ -190,13 +113,13 @@ int p_rec_M = 639999;
 int p_rec_m = 0;
 int p_src_M = 0;
 int p_src_m = 0;
-int time_M = 688;
+//int time_M = 688;
 int time_m = 1;
 int deviceid = -1;
 int devicerm = 1;
-*/
 
-/*
+#elif defined SO16
+// 16 800
 dataobj damp_vec = create_data( 882,882,882,1,sizeof(float));
 dataobj rec_vec = create_data( 721,640000,1,1,sizeof(float));
 dataobj rec_coords_vec = create_data( 640000,3,1,1,sizeof(float));
@@ -218,12 +141,14 @@ int p_rec_M = 639999;
 int p_rec_m = 0;
 int p_src_M = 0;
 int p_src_m = 0;
-int time_M = 719;
+//int time_M = 719;
 int time_m = 1;
 int deviceid = -1;
 int devicerm = 1;
 
-*/
+#endif
+
+int time_M = 10;
 
 printf("total memory: %fGB\n",(float)total_memory_needed / 1e9f );
 fflush(stdout);
@@ -249,12 +174,8 @@ Forward((struct dataobj *restrict) &damp_vec,(struct dataobj *restrict) &rec_vec
 //checking u rec
 
 
-printf(check_data(u_vec) ? "u_vec is valid\n" : "u_vec is nan\n");
-printf(check_data(rec_vec) ? "rec_vec is valid\n" : "u_vec is nan\n");
-
-
-
-
+//printf(check_data(u_vec) ? "u_vec is valid\n" : "u_vec is nan\n");
+//printf(check_data(rec_vec) ? "rec_vec is valid\n" : "u_vec is nan\n");
 
 	return 0;
 }
