@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --nodelist=renyi
 #SBATCH --ntasks=1
-#SBATCH --job-name=forward_800
-#SBATCH --output=800_forward_measurement.%j.out
+#SBATCH --job-name=tile_800
+#SBATCH --output=tile_forward_measurement.%j.out
 
 #SBATCH --time=10:00:00
 
@@ -29,6 +29,6 @@ pwd
 
 nvidia-smi
 
-python3 ./performance_test.py
+python3 ./performance_test_for_tile.py
 
 echo "done"

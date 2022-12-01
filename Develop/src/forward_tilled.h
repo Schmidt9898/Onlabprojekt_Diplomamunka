@@ -91,7 +91,7 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
     /* Begin section0 */
     START_TIMER(section0)
     #pragma omp target teams distribute parallel for collapse(3)
-	//#pragma omp tile sizes(2,1,4)
+	#pragma omp tile sizes(8,1,2)
     for (int x = x_m; x <= x_M; x += 1)
     {
       for (int y = y_m; y <= y_M; y += 1)

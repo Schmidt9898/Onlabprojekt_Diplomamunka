@@ -1,6 +1,6 @@
 
-//#include "./src/forward_only.h"
-#include "./src/forward_tilled.h"
+#include "./src/forward_only.h"
+//#include "./src/forward_tilled.h"
 //#include "./src/forward_320_16.c"
 //#include "./src/forward_320_16_tilled.c"
 
@@ -133,7 +133,7 @@ int p_rec_M = 102399;
 int p_rec_m = 0;
 int p_src_M = 0;
 int p_src_m = 0;
-int time_M = 719;
+int time_M = 10;
 int time_m = 1;
 int deviceid = -1;
 int devicerm = 1;
