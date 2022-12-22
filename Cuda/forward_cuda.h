@@ -57,6 +57,12 @@ printf("1\n");
   float *u = (float *) u_vec->data;
   float *vp = (float *) vp_vec->data;
 
+	printf("u pointer cpu: %p\n",u);
+	printf("damp pointer cpu: %p\n",damp);
+	printf("vp pointer cpu: %p\n",vp);
+
+
+
   #pragma omp target enter data map(to: rec[0:rec_vec->size[0]*rec_vec->size[1]])
   #pragma omp target enter data map(to: u[0:u_vec->size[0]*u_vec->size[1]*u_vec->size[2]*u_vec->size[3]])
   #pragma omp target enter data map(to: damp[0:damp_vec->size[0]*damp_vec->size[1]*damp_vec->size[2]])
@@ -64,6 +70,29 @@ printf("1\n");
   #pragma omp target enter data map(to: src[0:src_vec->size[0]*src_vec->size[1]])
   #pragma omp target enter data map(to: src_coords[0:src_coords_vec->size[0]*src_coords_vec->size[1]])
   #pragma omp target enter data map(to: vp[0:vp_vec->size[0]*vp_vec->size[1]*vp_vec->size[2]])
+
+unsigned long ptr = 4;
+
+//#pragma omp target enter data map(to: ptr)
+//omp_target_associate_ptr (target,target,sizeof(float))
+#pragma omp target data map(tofrom: ptr) map(tofrom: u)
+{
+	printf("ptr pointer gpu before : %lu\n",ptr);
+	printf("u pointer gpu: %p\n",u);
+	ptr++ ;//=(unsigned long)u; 
+	printf("ptr long gpu: %lu\n",ptr);
+#pragma omp target update to(ptr)
+}
+#pragma omp target
+{
+	printf("true pointer gpu: %p\n",u);
+}
+
+printf("ptr pointer gpu?: %p\n",(float * )ptr);
+	//printf("damp pointer gpu?: %p\n",damp);
+	//printf("vp pointer gpu?: %p\n",vp);
+
+
 
   const long x_fsz0 = u_vec->size[1];
   const long y_fsz0 = u_vec->size[2];
@@ -94,7 +123,9 @@ printf("1\n");
 //printf("time\n");
     /* Begin section0 */
     START_TIMER(section0)
-	kernel_section0();
+	//kernel_section0();
+
+	kernel_section0(x_M,x_m,y_M,y_m,z_M,z_m,dt,t0,t1,t2,vp,u,damp,x_stride0,y_stride0,z_stride0,y_stride1,z_stride1,p_rec_stride0,d_stride0,p_src_stride0);
     STOP_TIMER(section0,timers)
     /* End section0 */
 

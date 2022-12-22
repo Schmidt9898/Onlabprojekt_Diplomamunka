@@ -15,7 +15,7 @@
 #ifdef __cplusplus
 extern "C"
 #endif
-void kernel_section0();
-//void kernel_section0( const int x_M, const int x_m, const int y_M, const int y_m, const int z_M, const int z_m, const float dt,int t0,int t1,int t2,float *vp,float *u,float *damp,const long x_stride0,const long y_stride0,const long z_stride0,const long y_stride1,const long z_stride1,const long p_rec_stride0,const long d_stride0,const long p_src_stride0);
+//void kernel_section0();
+void kernel_section0( const int x_M, const int x_m, const int y_M, const int y_m, const int z_M, const int z_m, const float dt,int t0,int t1,int t2,float *vp,float *u,float *damp,const long x_stride0,const long y_stride0,const long z_stride0,const long y_stride1,const long z_stride1,const long p_rec_stride0,const long d_stride0,const long p_src_stride0);
 
 

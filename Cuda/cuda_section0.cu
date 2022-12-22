@@ -63,15 +63,19 @@ __global__ void cuda_section0(const int x_M, const int x_m, const int y_M, const
 
 }
 
+__global__ void cuda_test(){
+	printf("section0 gpu\n");
+}
+/*
 extern "C" void kernel_section0()
 {
 	printf("asdasd\n");
+	cuda_test<<<2,2>>>();
 	cudaDeviceSynchronize();
 }
+*/
 
-/*
-
-void kernel_section0( const int x_M, const int x_m, const int y_M, const int y_m, const int z_M, const int z_m, const float dt,int t0,int t1,int t2,float *vp,float *u,float *damp,const long x_stride0,const long y_stride0,const long z_stride0,const long y_stride1,const long z_stride1,const long p_rec_stride0,const long d_stride0,const long p_src_stride0)
+extern "C" void kernel_section0( const int x_M, const int x_m, const int y_M, const int y_m, const int z_M, const int z_m, const float dt,int t0,int t1,int t2,float *vp,float *u,float *damp,const long x_stride0,const long y_stride0,const long z_stride0,const long y_stride1,const long z_stride1,const long p_rec_stride0,const long d_stride0,const long p_src_stride0)
 {
 
   float r8 = 1.0F/(dt*dt);
@@ -94,10 +98,14 @@ void kernel_section0( const int x_M, const int x_m, const int y_M, const int y_m
 	dim3 threads(blocksize_z,blocksize_y,blocksize_x);
 	dim3 blocks((SIZEZ-1)/blocksize_z+1,(SIZEY-1)/blocksize_y+1,(SIZEX-1)/blocksize_x+1);
 	printf("blocks dim %d %d %d \n",(SIZEZ-1)/blocksize_z+1,(SIZEY-1)/blocksize_y+1,(SIZEX-1)/blocksize_x+1);
+	
+	printf("u pointer gpu: %p\n",u);
+	printf("damp pointer gpu: %p\n",damp);
+	printf("vp pointer gpu: %p\n",vp);
+	
 	//cuda_section0<<<blocks,threads>>>(x_M,x_m,y_M,y_m,z_M,z_m,t0,t1,t2,vp,u,damp);
 	cudaDeviceSynchronize();
 }
-*/
 /*
 
 int main()

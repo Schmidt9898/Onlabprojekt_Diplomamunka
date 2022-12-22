@@ -22,7 +22,7 @@ init:
 build:
 	$(CC) -fPIC ./bin/lib -Xopenmp-target -march=sm_70 $(flags) $(c_files) -o $(runname) 
 build_sm8:
-	$(CC) -fPIC ./bin/lib -Xopenmp-target -march=sm_80 $(flags) $(c_files) -o $(runname) -v -lstdc++ -L/home/shared/software/cuda/11.6/lib64 -lcudart
+	$(CC) -fPIC ./bin/lib -Xopenmp-target -march=sm_80 $(flags) $(c_files) -o $(runname) -lstdc++ -L/home/shared/software/cuda/11.6/lib64 -lcudart
 
 
 cuda:
