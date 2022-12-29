@@ -49,27 +49,49 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
 
 printf("1\n");
   
-	float *damp = (float *) damp_vec->data;
-	float *rec = (float *) rec_vec->data;
-	float *rec_coords = (float *) rec_coords_vec->data;
-	float *src = (float *) src_vec->data;
-	float *src_coords = (float *) src_coords_vec->data;
-	float *u = (float *) u_vec->data;
-	float *vp = (float *) vp_vec->data;
+  float *damp = (float *) damp_vec->data;
+  float *rec = (float *) rec_vec->data;
+  float *rec_coords = (float *) rec_coords_vec->data;
+  float *src = (float *) src_vec->data;
+  float *src_coords = (float *) src_coords_vec->data;
+  float *u = (float *) u_vec->data;
+  float *vp = (float *) vp_vec->data;
 
 	printf("u pointer cpu: %p\n",u);
 	printf("damp pointer cpu: %p\n",damp);
 	printf("vp pointer cpu: %p\n",vp);
 
 
-  cuda_enter_data(&damp,damp_vec->data, damp_vec->size[0]*damp_vec->size[1]*damp_vec->size[2]);
-  cuda_enter_data(&rec,rec_vec->data,rec_vec->size[0]*rec_vec->size[1]);
-  cuda_enter_data(&u,u_vec->data,u_vec->size[0]*u_vec->size[1]*u_vec->size[2]*u_vec->size[3]);
-  cuda_enter_data(&damp,damp_vec->data,damp_vec->size[0]*damp_vec->size[1]*damp_vec->size[2]);
-  cuda_enter_data(&rec_coords,rec_coords_vec->data,rec_coords_vec->size[0]*rec_coords_vec->size[1]);
-  cuda_enter_data(&src,src_vec->data,src_vec->size[0]*src_vec->size[1]);
-  cuda_enter_data(&src_coords,src_coords_vec->data,src_coords_vec->size[0]*src_coords_vec->size[1]);
-  cuda_enter_data(&vp,vp_vec->data,vp_vec->size[0]*vp_vec->size[1]*vp_vec->size[2]);
+
+  #pragma omp target enter data map(to: rec[0:rec_vec->size[0]*rec_vec->size[1]])
+  #pragma omp target enter data map(to: u[0:u_vec->size[0]*u_vec->size[1]*u_vec->size[2]*u_vec->size[3]])
+  #pragma omp target enter data map(to: damp[0:damp_vec->size[0]*damp_vec->size[1]*damp_vec->size[2]])
+  #pragma omp target enter data map(to: rec_coords[0:rec_coords_vec->size[0]*rec_coords_vec->size[1]])
+  #pragma omp target enter data map(to: src[0:src_vec->size[0]*src_vec->size[1]])
+  #pragma omp target enter data map(to: src_coords[0:src_coords_vec->size[0]*src_coords_vec->size[1]])
+  #pragma omp target enter data map(to: vp[0:vp_vec->size[0]*vp_vec->size[1]*vp_vec->size[2]])
+
+unsigned long ptr = 4;
+
+//#pragma omp target enter data map(to: ptr)
+//omp_target_associate_ptr (target,target,sizeof(float))
+#pragma omp target data map(tofrom: ptr) map(tofrom: u)
+{
+	printf("ptr pointer gpu before : %lu\n",ptr);
+	printf("u pointer gpu: %p\n",u);
+	ptr++ ;//=(unsigned long)u; 
+	printf("ptr long gpu: %lu\n",ptr);
+#pragma omp target update to(ptr)
+}
+#pragma omp target
+{
+	printf("true pointer gpu: %p\n",u);
+}
+
+printf("ptr pointer gpu?: %p\n",(float * )ptr);
+	//printf("damp pointer gpu?: %p\n",damp);
+	//printf("vp pointer gpu?: %p\n",vp);
+
 
 
   const long x_fsz0 = u_vec->size[1];
@@ -116,15 +138,15 @@ printf("1\n");
     /* End section2 */
   }
 
-  cuda_update_data_from(rec,rec_vec->data,rec_vec->size[0]*rec_vec->size[1]);
-  cuda_exit_data(rec);
-  cuda_update_data_from(u,u_vec->data,u_vec->size[0]*u_vec->size[1]*u_vec->size[2]*u_vec->size[3]);
-  cuda_exit_data(u);
-  cuda_exit_data(damp);
-  cuda_exit_data(rec_coords);
-  cuda_exit_data(src);
-  cuda_exit_data(src_coords);
-  cuda_exit_data(vp);
+  #pragma omp target update from(rec[0:rec_vec->size[0]*rec_vec->size[1]])
+  #pragma omp target exit data map(release: rec[0:rec_vec->size[0]*rec_vec->size[1]]) if(devicerm)
+  #pragma omp target update from(u[0:u_vec->size[0]*u_vec->size[1]*u_vec->size[2]*u_vec->size[3]])
+  #pragma omp target exit data map(release: u[0:u_vec->size[0]*u_vec->size[1]*u_vec->size[2]*u_vec->size[3]]) if(devicerm)
+  #pragma omp target exit data map(delete: damp[0:damp_vec->size[0]*damp_vec->size[1]*damp_vec->size[2]]) if(devicerm && damp_vec->size[0] != 0 && damp_vec->size[1] != 0 && damp_vec->size[2] != 0)
+  #pragma omp target exit data map(delete: rec_coords[0:rec_coords_vec->size[0]*rec_coords_vec->size[1]]) if(devicerm && rec_coords_vec->size[0] != 0 && rec_coords_vec->size[1] != 0)
+  #pragma omp target exit data map(delete: src[0:src_vec->size[0]*src_vec->size[1]]) if(devicerm && src_vec->size[0] != 0 && src_vec->size[1] != 0)
+  #pragma omp target exit data map(delete: src_coords[0:src_coords_vec->size[0]*src_coords_vec->size[1]]) if(devicerm && src_coords_vec->size[0] != 0 && src_coords_vec->size[1] != 0)
+  #pragma omp target exit data map(delete: vp[0:vp_vec->size[0]*vp_vec->size[1]*vp_vec->size[2]]) if(devicerm && vp_vec->size[0] != 0 && vp_vec->size[1] != 0 && vp_vec->size[2] != 0)
 
   return 0;
 }

@@ -97,15 +97,32 @@ extern "C" void kernel_section0( const int x_M, const int x_m, const int y_M, co
 
 	dim3 threads(blocksize_z,blocksize_y,blocksize_x);
 	dim3 blocks((SIZEZ-1)/blocksize_z+1,(SIZEY-1)/blocksize_y+1,(SIZEX-1)/blocksize_x+1);
-	printf("blocks dim %d %d %d \n",(SIZEZ-1)/blocksize_z+1,(SIZEY-1)/blocksize_y+1,(SIZEX-1)/blocksize_x+1);
+	//printf("blocks dim %d %d %d \n",(SIZEZ-1)/blocksize_z+1,(SIZEY-1)/blocksize_y+1,(SIZEX-1)/blocksize_x+1);
 	
-	printf("u pointer gpu: %p\n",u);
-	printf("damp pointer gpu: %p\n",damp);
-	printf("vp pointer gpu: %p\n",vp);
+	//printf("u pointer gpu: %p\n",u);
+	//printf("damp pointer gpu: %p\n",damp);
+	//printf("vp pointer gpu: %p\n",vp);
 	
-	//cuda_section0<<<blocks,threads>>>(x_M,x_m,y_M,y_m,z_M,z_m,t0,t1,t2,vp,u,damp);
+	cuda_section0<<<blocks,threads>>>(x_M,x_m,y_M,y_m,z_M,z_m,t0,t1,t2,vp,u,damp);
 	cudaDeviceSynchronize();
 }
+
+
+extern "C" void cuda_enter_data(float** device_ptr,float* data,size_t size)
+{
+	cudaMalloc(device_ptr, size*sizeof(float));
+	cudaMemcpy(device_ptr, data,size*sizeof(float), cudaMemcpyHostToDevice);
+}
+extern "C" void cuda_exit_data(float* device_ptr){
+	cudaFree(device_ptr);
+}
+extern "C" void cuda_update_data_from(float* device_ptr,float* data,size_t size){
+	cudaMemcpy(device_ptr, data,size*sizeof(float), cudaMemcpyDeviceToHost);
+	cudaFree(device_ptr);
+}
+
+
+
 /*
 
 int main()
