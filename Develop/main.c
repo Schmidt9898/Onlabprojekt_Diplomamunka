@@ -247,7 +247,8 @@ Forward((struct dataobj *restrict) &damp_vec,(struct dataobj *restrict) &rec_vec
 
 //checking u rec
 
-
+printf("u_vec[0] = %f\n",((float*)u_vec.data)[100000]);
+printf("rec_vec[0] = %f\n",((float*)rec_vec.data)[100000]);
 printf(check_data(u_vec) ? "u_vec is valid\n" : "u_vec is nan\n");
 printf(check_data(rec_vec) ? "rec_vec is valid\n" : "u_vec is nan\n");
 

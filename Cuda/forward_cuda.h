@@ -57,6 +57,8 @@ printf("1\n");
 	float *u = (float *) u_vec->data;
 	float *vp = (float *) vp_vec->data;
 
+
+	printf("Before GPU\n");
 	printf("u pointer cpu: %p\n",u);
 	printf("damp pointer cpu: %p\n",damp);
 	printf("vp pointer cpu: %p\n",vp);
@@ -93,6 +95,9 @@ printf("1\n");
   float r8 = 1.0F/(dt*dt);
   float r9 = 1.0F/dt;
 
+
+	kernel_vars(dt,x_stride0,y_stride0,z_stride0,y_stride1,z_stride1,p_rec_stride0,d_stride0,p_src_stride0);
+
 printf("1\n");
 
 
@@ -101,10 +106,10 @@ printf("1\n");
 //printf("time\n");
     /* Begin section0 */
     START_TIMER(section0)
-	//kernel_section0();
 
-	kernel_section0(x_M,x_m,y_M,y_m,z_M,z_m,dt,t0,t1,t2,vp,u,damp,x_stride0,y_stride0,z_stride0,y_stride1,z_stride1,p_rec_stride0,d_stride0,p_src_stride0);
-    STOP_TIMER(section0,timers)
+	kernel_section0(x_M,x_m,y_M,y_m,z_M,z_m,t0,t1,t2,vp,u,damp);
+    
+	STOP_TIMER(section0,timers)
     /* End section0 */
 
     /* Begin section1 */
@@ -116,15 +121,16 @@ printf("1\n");
     /* End section2 */
   }
 
+
   cuda_update_data_from(rec,rec_vec->data,rec_vec->size[0]*rec_vec->size[1]);
-  cuda_exit_data(rec);
-  cuda_update_data_from(u,u_vec->data,u_vec->size[0]*u_vec->size[1]*u_vec->size[2]*u_vec->size[3]);
-  cuda_exit_data(u);
+  //cuda_update_data_from(u,u_vec->data,u_vec->size[0]*u_vec->size[1]*u_vec->size[2]*u_vec->size[3]);
   cuda_exit_data(damp);
   cuda_exit_data(rec_coords);
   cuda_exit_data(src);
   cuda_exit_data(src_coords);
   cuda_exit_data(vp);
+
+	cudaDeviceSynchronize();
 
   return 0;
 }

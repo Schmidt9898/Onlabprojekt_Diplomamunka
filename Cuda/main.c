@@ -20,7 +20,7 @@ dataobj create_data(unsigned long size0, unsigned long size1, unsigned long size
 	for (size_t i = 0; i < arrsize; i += elemsize)
 	{
 		float *t = (float *)&a.data[i];
-		*t = 1;//TODO (0,1) random
+		*t = 5;//TODO (0,1) random
 		//*t = 0.0/0.0;  //nan
 	}
 
@@ -46,6 +46,7 @@ int check_data(dataobj a)
 	for (size_t i = 0; i < arrsize; i += sizeof(float))
 	{
 		float *t = (float *)&a.data[i];
+		//printf("%f,",*t);
 		if(*t != *t)
 			return 0;
 	}
@@ -65,8 +66,38 @@ printf("Start\n");
 
 //printf("Test malloc 16 byte\n");
 //printf("Start\n");
+//test with this pls
+
+dataobj damp_vec = create_data( 882,882,882,1,sizeof(float));
+dataobj rec_vec = create_data( 721,640000,1,1,sizeof(float));
+dataobj rec_coords_vec = create_data( 640000,3,1,1,sizeof(float));
+dataobj src_vec = create_data( 721,1,1,1,sizeof(float));
+dataobj src_coords_vec = create_data( 1,3,1,1,sizeof(float));
+dataobj u_vec = create_data( 3,912,912,912,sizeof(float));
+dataobj vp_vec = create_data( 912,912,912,1,sizeof(float));
+int x_M = 879;
+int x_m = 0;
+int y_M = 879;
+int y_m = 0;
+int z_M = 879;
+int z_m = 0;
+float dt = 1.737000;
+float o_x = -600.000000;
+float o_y = -600.000000;
+float o_z = -600.000000;
+int p_rec_M = 639999;
+int p_rec_m = 0;
+int p_src_M = 0;
+int p_src_m = 0;
+int time_M = 1;
+int time_m = 1;
+int deviceid = -1;
+int devicerm = 1;
 
 
+
+
+/*
 
 dataobj damp_vec       = create_data(10,10,10,1,sizeof(float));
 dataobj rec_vec        = create_data(10,10,1,1,sizeof(float));
@@ -89,11 +120,49 @@ int p_rec_M = 639999;
 int p_rec_m = 0;
 int p_src_M = 0;
 int p_src_m = 0;
-int time_M = 10;
+int time_M = 1; //TODO make it 10
 int time_m = 1;
 int deviceid = -1;
 int devicerm = 1;
+*/
 
+
+printf("total memory: %fGB\n",(float)total_memory_needed / 1e9f );
+fflush(stdout);
+
+printf("Create profiler\n");
+struct profiler timers={0,0,0};
+
+
+
+
+printf("Forward\n");
+
+
+Forward((struct dataobj *restrict) &damp_vec,(struct dataobj *restrict) &rec_vec,(struct dataobj *restrict) &rec_coords_vec,(struct dataobj *restrict) &src_vec,(struct dataobj *restrict) &src_coords_vec,(struct dataobj *restrict) &u_vec,(struct dataobj *restrict) &vp_vec,x_M,x_m,y_M,y_m,z_M,z_m,dt,o_x,o_y,o_z,p_rec_M,p_rec_m,p_src_M,p_src_m,time_M,time_m,deviceid,devicerm,&timers);
+
+
+//printf("Forward\n");
+
+	printf("section 0 %f s\n",timers.section0);
+	printf("section 1 %f s\n",timers.section1);
+	printf("section 2 %f s\n",timers.section2);
+
+//checking u rec
+
+//printf("u_vec[354] = %f\n",((float*)u_vec.data)[354]);
+
+printf(check_data(u_vec) ? "u_vec is valid\n" : "u_vec is nan or not changed\n");
+
+//printf(check_data(rec_vec) ? "rec_vec is valid\n" : "u_vec is nan or not changed\n");
+
+printf("u_vec[354] = %f\n",((float*)u_vec.data)[354]);
+
+
+
+
+	return 0;
+}
 /*
 
 dataobj damp_vec       = create_data(802,802,802,1,sizeof(float));
@@ -239,37 +308,3 @@ int deviceid = -1;
 int devicerm = 1;
 
 */
-
-printf("total memory: %fGB\n",(float)total_memory_needed / 1e9f );
-fflush(stdout);
-
-printf("Create profiler\n");
-struct profiler timers={0,0,0};
-
-
-
-
-printf("Forward\n");
-
-
-Forward((struct dataobj *restrict) &damp_vec,(struct dataobj *restrict) &rec_vec,(struct dataobj *restrict) &rec_coords_vec,(struct dataobj *restrict) &src_vec,(struct dataobj *restrict) &src_coords_vec,(struct dataobj *restrict) &u_vec,(struct dataobj *restrict) &vp_vec,x_M,x_m,y_M,y_m,z_M,z_m,dt,o_x,o_y,o_z,p_rec_M,p_rec_m,p_src_M,p_src_m,time_M,time_m,deviceid,devicerm,&timers);
-
-
-//printf("Forward\n");
-
-	printf("section 0 %f s\n",timers.section0);
-	printf("section 1 %f s\n",timers.section1);
-	printf("section 2 %f s\n",timers.section2);
-
-//checking u rec
-
-
-printf(check_data(u_vec) ? "u_vec is valid\n" : "u_vec is nan\n");
-printf(check_data(rec_vec) ? "rec_vec is valid\n" : "u_vec is nan\n");
-
-
-
-
-
-	return 0;
-}
