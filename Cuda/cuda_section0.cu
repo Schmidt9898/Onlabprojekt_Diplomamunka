@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <cuda.h>
 #include <cuda_runtime.h>
@@ -30,15 +31,15 @@ inline void gpuAssert(cudaError_t code, const char *file, int line, bool abort=t
 
 
 
-#define SIZEX 800 //On the gpu pointer folding is not allowed with variable size
-#define SIZEY 800 //this has to be knowed in compile time
-#define SIZEZ 800 //is this bad, for every scale you have to recompile
-
-
+#ifndef blocksize_x
 #define blocksize_x 8
+#endif
+#ifndef blocksize_y
 #define blocksize_y 4
+#endif
+#ifndef blocksize_z
 #define blocksize_z 32
-
+#endif
 
 #define Ddim(arr,x,y,z) arr[(z) + (y)*SIZEZ + (x)*SIZEZ * SIZEY]
 
@@ -102,19 +103,19 @@ __global__ void print(const int x_M, const int x_m, const int y_M, const int y_m
 */
 
 __global__ void print0(float *test){
-	printf("kernel: test %f\n",test[354]);
+	printf("kernel: test %f\n",test[1530428310]);
 }
 
 __global__ void print1(const int x_M, const int x_m, const int y_M, const int y_m, const int z_M, const int z_m,int t0,int t1,int t2,float *vp,float *u,float *damp){
 	//printf("section0 gpu\n");
-
-  int z = threadIdx.x + blockIdx.x * blocksize_z + z_m;
-  int y = threadIdx.y + blockIdx.y * blocksize_y + y_m;
-  int x = threadIdx.z + blockIdx.z * blocksize_x + x_m; 
+	
+	int z = threadIdx.x + blockIdx.x * blocksize_z + z_m;
+	int y = threadIdx.y + blockIdx.y * blocksize_y + y_m;
+	int x = threadIdx.z + blockIdx.z * blocksize_x + x_m; 
 	if (x <= x_M && y <= y_M && z <= z_M){
-		printf("idx: %d ,u_%f\n",
-		(x + 16, y + 16, z + 16),
-    	uL0(t2, x + 16, y + 16, z + 16)
+		printf("idx: %lu ,u_%f, trick %f\n",
+		((t2)*x_stride0 + (x + 16)*y_stride0 + (y + 16)*z_stride0 + (z + 16)),
+    	uL0(t2, x + 16, y + 16, z + 16),u[1530428310]
 	);
 	}
 
@@ -159,7 +160,6 @@ extern "C" void kernel_section0( const int x_M, const int x_m, const int y_M, co
 
 	dim3 threads(blocksize_z,blocksize_y,blocksize_x);
 	dim3 blocks((x_M-x_m-1)/blocksize_z+1,(y_M-y_m-1)/blocksize_y+1,(z_M-z_m-1)/blocksize_x+1);
-	//printf("blocks dim %d %d %d \n",(SIZEZ-1)/blocksize_z+1,(SIZEY-1)/blocksize_y+1,(SIZEX-1)/blocksize_x+1);
 	
 	//printf("u pointer gpu: %p\n",u);
 	//printf("damp pointer gpu: %p\n",damp);
@@ -168,7 +168,7 @@ extern "C" void kernel_section0( const int x_M, const int x_m, const int y_M, co
 	cuda_section0<<<blocks,threads>>>(x_M,x_m,y_M,y_m,z_M,z_m,t0,t1,t2,vp,u,damp);
 	
 	//print1<<<blocks,threads>>>(x_M,x_m,y_M,y_m,z_M,z_m,t0,t1,t2,vp,u,damp);
-	print0<<<1,1>>>(u);
+	//print0<<<1,1>>>(u);
 	
 	
 	cudaDeviceSynchronize();
@@ -192,10 +192,10 @@ extern "C" void cuda_exit_data(float* device_ptr){
 	cudaCheck(cudaFree(device_ptr));
 }
 extern "C" void cuda_update_data_from(float* device_ptr,float* data,size_t size){
-	print0<<<1,1>>>(device_ptr);
+	//print0<<<1,1>>>(device_ptr);
 	cudaCheck(cudaMemcpy(data,device_ptr,size*sizeof(float), cudaMemcpyDeviceToHost));
 	cudaCheck(cudaFree(device_ptr));
-	printf("cpu %f,\n",(data)[354]);
+	//printf("cpu %f,\n",(data)[1518766805]);
 }
 
 

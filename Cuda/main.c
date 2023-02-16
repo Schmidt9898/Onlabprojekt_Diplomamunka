@@ -89,7 +89,7 @@ int p_rec_M = 639999;
 int p_rec_m = 0;
 int p_src_M = 0;
 int p_src_m = 0;
-int time_M = 1;
+int time_M = 10;
 int time_m = 1;
 int deviceid = -1;
 int devicerm = 1;
@@ -156,7 +156,7 @@ printf(check_data(u_vec) ? "u_vec is valid\n" : "u_vec is nan or not changed\n")
 
 //printf(check_data(rec_vec) ? "rec_vec is valid\n" : "u_vec is nan or not changed\n");
 
-printf("u_vec[354] = %f\n",((float*)u_vec.data)[354]);
+printf("u_vec[1530428310] = %f\n",((float*)u_vec.data)[1530428310]);
 
 
 

@@ -123,7 +123,7 @@ printf("1\n");
 
 
   cuda_update_data_from(rec,rec_vec->data,rec_vec->size[0]*rec_vec->size[1]);
-  //cuda_update_data_from(u,u_vec->data,u_vec->size[0]*u_vec->size[1]*u_vec->size[2]*u_vec->size[3]);
+  cuda_update_data_from(u,u_vec->data,u_vec->size[0]*u_vec->size[1]*u_vec->size[2]*u_vec->size[3]);
   cuda_exit_data(damp);
   cuda_exit_data(rec_coords);
   cuda_exit_data(src);
