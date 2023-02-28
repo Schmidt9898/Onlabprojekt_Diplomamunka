@@ -67,7 +67,7 @@ printf("Start\n");
 //printf("Test malloc 16 byte\n");
 //printf("Start\n");
 //test with this pls
-
+//16 800
 dataobj damp_vec = create_data( 882,882,882,1,sizeof(float));
 dataobj rec_vec = create_data( 721,640000,1,1,sizeof(float));
 dataobj rec_coords_vec = create_data( 640000,3,1,1,sizeof(float));

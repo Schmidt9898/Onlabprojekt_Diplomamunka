@@ -1,0 +1,11 @@
+#pragma omp target teams distribute collapse(3) thread_limit(256)
+	for(int Bx = x_m; Bx <= x_M; Bx += BLOCKSIZE_X)
+		for (int By = y_m; By <= y_M; By += BLOCKSIZE_Y)
+			for (int Bz = z_m; Bz <= z_M; Bz += BLOCKSIZE_Z)
+			{
+			//#pragma omp tile sizes(8,1,2)
+			#pragma omp parallel for collapse(3)
+			for (int x = Bx; x < Bx + BLOCKSIZE_X; x++)
+				for (int y = By; y < By + BLOCKSIZE_Y; y++)
+					for (int z = Bz; z < Bz + BLOCKSIZE_Z; z++)
+					{

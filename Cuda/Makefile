@@ -7,13 +7,16 @@ flags = -O3 -fPIC -Wall -Wno-unused-result -Wno-unused-variable -ffast-math -fop
 
 c_files = main.c
 
-#sm_VAL = sm_80
-sm_VAL = sm_70
+sm_VAL = sm_80
+#sm_VAL = sm_70
 
 
 runname = ./bin/run
 #$(CXX)
 #$(CC)
+
+#--use_fast_math
+
 
 all: init build
 
@@ -24,7 +27,7 @@ build: cuda
 	$(CC) -fPIC ./bin/lib -Xopenmp-target -march=$(sm_VAL) $(flags) $(c_files) -o $(runname) -lstdc++ -L/home/shared/software/cuda/11.6/lib64 -lcudart -g
 
 cuda:
-	nvcc --ptxas-options=-v --gpu-architecture=$(sm_VAL) --compiler-options '-fPIC' -o ./bin/lib -c cuda_section0.cu  -g -G #-O3
+	nvcc --ptxas-options=-v --gpu-architecture=$(sm_VAL) --compiler-options '-fPIC' -o ./bin/lib -c cuda_section0.cu -O3 --use_fast_math #-g -G 
 
 test_build:
 	nvcc --ptxas-options=-v --gpu-architecture=$(sm_VAL) --compiler-options '-fPIC' -o ./bin/lib -c cuda_temp.cu  -O3 #-g -G 

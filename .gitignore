@@ -42,3 +42,4 @@ Cuda_openmp_examples_old/OpenMP_examples/runoptim
 Develop/temp_script_file.txt
 Develop/vgcore.2082509
 Cuda/bin/
+*.prof

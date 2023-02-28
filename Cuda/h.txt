@@ -1,0 +1,1000 @@
+    2  ssh renyi
+    3  clear
+    4  squeue 
+    5  exit
+    6  squeue 
+    7  nvisia-smi
+    8  nvidia-smi
+    9  clear
+   10  cd Onlabprojekt/
+   11  source start 15.3
+   12  cd Develop/
+   13  python performance_test_for_tile.py 
+   14  source ../py_venv/bin/activate
+   15  python performance_test_for_tile.py 
+   16  clear
+   17  python performance_test_for_tile.py 
+   18  clear
+   19  python performance_test_for_tile.py 
+   20  clear
+   21  squeue 
+   22  nvidia-smi
+   23  clearexit
+   24  exit
+   25  squeue 
+   26  clear
+   27  ssh neumann
+   28  exit
+   29  clear
+   30  cd Develop/
+   31  python performance_test_for_tile.py 
+   32  clear
+   33  python performance_test_for_tile.py 
+   34  clear
+   35  squeue 
+   36  salloc -pgpu --nodelist=renyi
+   37  salloc -pgpu --nodelist=neumann
+   38  cd Onlabprojekt/
+   39  source start 15.3
+   40  cd Develop/
+   41  python
+   42  cd ..
+   43  source py_venv/bin/activate
+   44  cd Develop/
+   45  clear
+   46  ls
+   47  python performance_test_for_tile.py 
+   48  clear
+   49  make 8run 
+   50  nvidia-smi
+   51  make 8run 
+   52  python performance_test_for_tile.py 
+   53  exit
+   54  salloc -pgpu --nodelist=renyi
+   55  exit
+   56  squeue 
+   57  nvidia-smi
+   58  squeue 
+   59  nvidia-smi
+   60  squeue 
+   61  nvidia-smi
+   62  squeue 
+   63  exit
+   64  squeue 
+   65  clear
+   66  ssh renyi
+   67  clear
+   68  sbatch -pgpu --nodelist=renyi ./Slurm_job.sh 
+   69  cd Develop/
+   70  sbatch -pgpu --nodelist=renyi ./Slurm_job.sh 
+   71  squeue 
+   72  clear
+   73  squeue 
+   74  ssh renyi
+   75  scancel 17249
+   76  sbatch -pgpu --nodelist=renyi ./Slurm_job.sh 
+   77  scancel 17250
+   78  sbatch -pgpu --nodelist=renyi ./Slurm_job.sh 
+   79  squeue 
+   80  cd Onlabprojekt/
+   81  source start 15.3
+   82  cd Develop/
+   83  clear
+   84  make 8run
+   85  clear
+   86  make 8run
+   87  squeue 
+   88  make 8run
+   89  clear
+   90  squeue 
+   91  scancel 17313
+   92  clear
+   93  ssh renyi
+   94  squeue 
+   95  exit
+   96  git status
+   97  git add -u
+   98  clear
+   99  squeue 
+  100  cd Develop/
+  101  sbatch -pgpu --nodelist=neumann ./Slurm_job.sh --exclusive
+  102  squeue 
+  103  clear
+  104  squeue 
+  105  git status
+  106  git add performance_test_for_tile.py
+  107  git status
+  108  git commit -m "some measurement"
+  109  git push
+  110  clear
+  111  squeue 
+  112  clear
+  113  squeue 
+  114  salloc -pgpu --nodelist=renyi
+  115  exit
+  116  squeue 
+  117  scancel 17312
+  118  clear
+  119  squeue 
+  120  cd ..
+  121  ls -r
+  122  find test_performance
+  123  clear
+  124  ls
+  125  find -r  test_performance
+  126  gepr
+  127  gepr "DEVITO_LOGGING=DEBUG DEVITO_JIT_BACKDOOR=0 DEVITO_PLATFORM=nvidiaX"
+  128  grep "DEVITO_LOGGING=DEBUG DEVITO_JIT_BACKDOOR=0 DEVITO_PLATFORM=nvidiaX"
+  129  grep -r "DEVITO_LOGGING=DEBUG DEVITO_JIT_BACKDOOR=0 DEVITO_PLATFORM=nvidiaX"" ./
+  130  grep -r "DEVITO_LOGGING=DEBUG DEVITO_JIT_BACKDOOR=0 DEVITO_PLATFORM=nvidiaX"" ./
+  131  clear
+  132  grep -r "DEVITO_LOGGING=DEBUG DEVITO_JIT_BACKDOOR=0 DEVITO_PLATFORM=nvidiaX"" .
+  133  grep -r "DEVITO_LOGGING=DEBUG DEVITO_JIT_BACKDOOR=0 DEVITO_PLATFORM=nvidiaX" ./
+  134  ls
+  135  pwd
+  136  grep -r "DEVITO_LANGUAGE=openacc" ./
+  137  grep -r "openmp" ./devito
+  138  clear
+  139  grep -r "DEVITO_LANGUAGE" ./devito
+  140  grep -r "DEVITO_LANGUAGE=openacc" ./devito
+  141  grep -r openacc ./devito
+  142  grep -r "DEVITO_LANGUAGE=openacc" ./devito
+  143  grep -r "DEVITO_LANGUAGE=" ./devito
+  144  clear
+  145  mkdir Cuda
+  146  cd Cuda
+  147  clear
+  148  code main.c
+  149  ls
+  150  clear
+  151  source ../start 15.3
+  152  clear
+  153  cl
+  154  nvcc main.c -o run
+  155  nvcc
+  156  clear
+  157  nvcc main.cu -o run
+  158  ./run 
+  159  nvcc main.cu -o run -arch=sm_70
+  160  ./run 
+  161  nvcc main.cu -o run 
+  162  nvvp ./run 
+  163  nvcc main.cu -o run
+  164  ./run 
+  165  nvcc main.cu -o run
+  166  ./run 
+  167  rm run 
+  168  nvcc main.cu -o run
+  169  rm run 
+  170  nvcc main.cu -o run
+  171  ./run 
+  172  __CUDA_ARCH__
+  173  clear
+  174  squeue 
+  175  clear
+  176  salloc -pgpu --nodelist=renyi
+  177  ssh renyi
+  178  clear
+  179  cd Onlabprojekt/
+  180  source start 15.3
+  181  clear
+  182  cd Cuda
+  183  nvcc main.cu -o run 
+  184  ./run
+  185  nvcc main.cu -o run 
+  186  ./run
+  187  nvcc main.cu -o run 
+  188  ./run
+  189  clear
+  190  rm run
+  191  clear
+  192  make build_sm8
+  193  make init
+  194  make build_sm8
+  195  make run
+  196  clear
+  197  code forward_cuda.cu
+  198  nvcc forward_cuda.cu -o Fcudalib
+  199  clear
+  200  make cuda
+  201  ./bin/Fcudalib 
+  202  clear
+  203  nvcc forward_cuda.cu -o ./bin/Fcudalib -c
+  204  ./bin/Fcudalib 
+  205  nvcc forward_cuda.cu -o ./bin/Fcudalib -c
+  206  make 8run 
+  207  clear
+  208  make 8run 
+  209  clang 
+  210  clear
+  211  clang test.cu -o run
+  212  clang test.cu -o run LD_LIBRARY_PATH
+  213  clang test.cu -o run -L $LD_LIBRARY_PATH
+  214  $LD_LIBRARY_PATH
+  215  clear
+  216  clang test.cu -o run -L $LD_LIBRARY_PATH
+  217  nvcc --compiler-options '-fPIC' -o dll.so --shared forward_cuda.cu
+  218  ls
+  219  nvcc --compiler-options '-fPIC' -o ./bin/dll.so --shared forward_cuda.cu
+  220  ls
+  221  make 8run 
+  222  clear
+  223  nvcc --compiler-options '-fPIC' -o ./bin/dll.so --shared forward_cuda.cu
+  224  clear
+  225  make cuda
+  226  clear
+  227  make cuda
+  228  make 8run 
+  229  make cuda
+  230  make 8run 
+  231  make cuda
+  232  make 8run 
+  233  clear
+  234  make 8run 
+  235  xxd ./bin/dll.so 
+  236  cleaer
+  237   ExifTool
+  238  exiftool
+  239  make cuda
+  240  make 8run 
+  241  make cuda
+  242  make 8run 
+  243  make cuda
+  244  make 8run 
+  245  clear
+  246  make cuda
+  247  clear
+  248  file 
+  249  file ./bin/dll.so 
+  250  nvcc --ptxas-options=-v --compiler-options '-fPIC' --shared cuda_section0.cu
+  251  ls
+  252  rm a.out 
+  253  clear
+  254  squeue 
+  255  cd Onlabprojekt/
+  256  source start 15.3
+  257  clear
+  258  cd Cuda
+  259  clear
+  260  ls
+  261  clear
+  262  make cuda
+  263  clang --compiler-options '-fPIC' -o ./bin/dll.so --shared cuda_section0.c
+  264  clang -fPIC -o ./bin/dll.so --shared cuda_section0.c
+  265  make build
+  266  nm
+  267  nm ./bin/dll.so 
+  268  nm -gC ./bin/dll.so 
+  269  clear
+  270  nm -gC ./bin/dll.so 
+  271  make build
+  272  make run
+  273  cd bin/
+  274  ./run 
+  275  cd ..
+  276  $LD_LIBRARY_PATH
+  277  LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+  278  $LD_LIBRARY_PATH
+  279  pwd
+  280  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/schmidtl/Onlabprojekt/Cuda/bin
+  281  make run
+  282  clear
+  283  make build
+  284  make run
+  285  clear
+  286  make brun
+  287  make cuda
+  288  make build
+  289  make cuda
+  290  nm -gC ./bin/libdll.so 
+  291  nm -g ./bin/libdll.so 
+  292  clear
+  293  nm -g ./bin/libdll.so 
+  294  clear
+  295  nm -C ./bin/libdll.so 
+  296  clear
+  297  nm -gC ./bin/libdll.so 
+  298  clear
+  299  make cuda
+  300  make build
+  301  make cuda
+  302  make build
+  303  clear
+  304  make cuda
+  305  make build
+  306  clang -fPIC -o ./bin/libdll.so --shared cuda_section0.c
+  307  make build
+  308  make run
+  309  make cuda
+  310  make run
+  311  make cuda
+  312  nm -gC ./bin/libdll.so 
+  313  make cuda
+  314  make build
+  315  clear
+  316  nvcc
+  317  nvc
+  318  module make cuda
+  319  make cuda
+  320  make build
+  321  make build
+  322  clear
+  323  nvcc --ptxas-options=-v --gpu-architecture=sm_70 -o ./bin/libdll.so -c  cuda_section0.cu
+  324  make cuda
+  325  const int x_M, const int x_m, const int y_M, const int y_m, const int z_M, const int z_m, const float dt,int t0,int t1,int t2,float *vp,float *u,float *damp,const long x_stride0,const long y_stride0,const long z_stride0,const long y_stride1,const long z_stride1,const long p_rec_stride0,const long d_stride0,const long p_src_stride0
+  326  nvcc --ptxas-options=-v --gpu-architecture=sm_70 -o ./bin/libdll.so -c  cuda_section0.cu
+  327  make build
+  328  clear
+  329  const int x_M, const int x_m, const int y_M, const int y_m, const int z_M, const int z_m, const float dt,int t0,int t1,int t2,float *vp,float *u,float *damp,const long x_stride0,const long y_stride0,const long z_stride0,const long y_stride1,const long z_stride1,const long p_rec_stride0,const long d_stride0,const long p_src_stride0
+  330  nvcc --ptxas-options=-v --gpu-architecture=sm_70 -o ./bin/libdll.so -c  cuda_section0.cu
+  331  nvcc --ptxas-options=-v --gpu-architecture=sm_70 -o ./run -c  cuda_section0.cu
+  332  ./run
+  333  nvcc --ptxas-options=-v --gpu-architecture=sm_70 -o ./run  cuda_section0.cu
+  334  make run
+  335  kernel_section0( const int x_M, const int x_m, const int y_M, const int y_m, const int z_M, const int z_m, const float dt,int t0,int t1,int t2,float *vp,float *u,float *damp,const long x_stride0,const long y_stride0,const long z_stride0,const long y_stride1,const long z_stride1,const long p_rec_stride0,const long d_stride0,const long p_src_stride0)
+  336  nvcc --ptxas-options=-v --gpu-architecture=sm_70 -o ./run  cuda_section0.cu
+  337  ./run
+  338  exit
+  339  ssh erdos
+  340  exit
+  341  squeue 
+  342  clear
+  343  salloc -pgpu --nodelist=erdos
+  344  module avail
+  345  cd /home/shared/software/modules
+  346  ls
+  347  cd gpu/
+  348  clear
+  349  cd cuda/
+  350  clear
+  351  code 11.6 
+  352  clear
+  353  cd Onlabprojekt/
+  354  source start 15.3
+  355  cd Cuda
+  356  clear
+  357  make cuda
+  358  void kernel_section0( const int x_M, const int x_m, const int y_M, const int y_m, const int z_M, const int z_m, const float dt,int t0,int t1,int t2,float *vp,float *u,float *damp,const long x_stride0,const long y_stride0,const long z_stride0,const long y_stride1,const long z_stride1,const long p_rec_stride0,const long d_stride0,const long p_src_stride0)
+  359  clear
+  360  make cuda
+  361  nvcc --ptxas-options=-v --gpu-architecture=sm_70 -o ./bin/libdll.so -c  cuda_section0.cu
+  362  ./run 
+  363  make cuda
+  364  clear
+  365  make cuda
+  366  make build_sm8 
+  367  cclear
+  368  clear
+  369  make build_sm8 
+  370  make cuda
+  371  make build_sm8 
+  372  clear
+  373  make cuda
+  374  make build
+  375  make cuda
+  376  make build
+  377  make cuda
+  378  make build
+  379  clear
+  380  make cuda
+  381  make build_sm8 
+  382  cear
+  383  clear
+  384  make cuda
+  385  make build_sm8 
+  386  make cuda
+  387  make build_sm8 
+  388  make cuda
+  389  make build_sm8 
+  390  make cuda
+  391  make build_sm8 
+  392  clear
+  393  ln
+  394  ln --help
+  395  clear
+  396  ./bin/lib
+  397  make cuda
+  398  make build_sm8 
+  399  make cuda
+  400  make build_sm8 
+  401  make cuda
+  402  make build_sm8 
+  403  make cuda
+  404  make build_sm8 
+  405  clear
+  406  make build_sm8 
+  407  $LD_LIBRARY_PATH
+  408  make build_sm8 
+  409  $LD_LIBRARY_PATH
+  410  clear
+  411  make build_sm8 
+  412  clear
+  413  make build_sm8 
+  414  clear
+  415  make build_sm8 
+  416  make run
+  417  make build_sm8 
+  418  make run
+  419  ./bin/run 
+  420  make build_sm8 
+  421  make cuda
+  422  make build_sm8 
+  423  clear
+  424  make cuda
+  425  make build_sm8 
+  426  clear
+  427  make cuda
+  428  make build_sm8 
+  429  make cuda
+  430  make build_sm8 
+  431  make run
+  432  ./bin/run
+  433  clear
+  434  make cuda
+  435  make build_sm8 
+  436  mmake clean
+  437  make clean
+  438  clear
+  439  make cuda
+  440  make build_sm8 
+  441  make cuda
+  442  make init
+  443  make cuda
+  444  make build_sm8 
+  445  make run
+  446  make 8run
+  447  ./bin/run
+  448  clear
+  449  git status
+  450  git add -u
+  451  git add .
+  452  git status
+  453  git add -u
+  454  git status
+  455  git commit -m "cuda parts"
+  456  git push
+  457  clear
+  458  cclear
+  459  clear
+  460  make build_sm8 
+  461  clear
+  462  make cuda
+  463  clear
+  464  make cuda
+  465  make build_sm8 
+  466  make run
+  467  ./bin/run 
+  468  clear
+  469  ./bin/run 
+  470  make cuda
+  471  make build_sm8 
+  472  ./bin/run 
+  473  clear
+  474  make cuda
+  475  make build_sm8 
+  476  ./bin/run 
+  477  make cuda
+  478  make build_sm8 
+  479  ./bin/run 
+  480  make cuad
+  481  make cuda
+  482  make build_sm8 
+  483  ./bin/run 
+  484  make cuda
+  485  make build_sm8 
+  486  ./bin/run clear
+  487  clear
+  488  make cuda
+  489  make build_sm8 
+  490  ./bin/run clear
+  491  clear
+  492  make cuda
+  493  make build_sm8 
+  494  ./bin/run clear
+  495  ./bin/run
+  496  make build_sm8 
+  497  ./bin/run
+  498  make build_sm8 
+  499  clear
+  500  make build_sm8 
+  501  ./bin/run
+  502  make build_sm8 
+  503  ./bin/run
+  504  clear
+  505  make build_sm8 
+  506  ./bin/run
+  507  clear
+  508  make build_sm8 
+  509  ./bin/run
+  510  make build_sm8 
+  511  ./bin/run
+  512  make build_sm8 
+  513  ./bin/run
+  514  make build_sm8 
+  515  ./bin/run
+  516  make build_sm8 
+  517  ./bin/run
+  518  make build_sm8 
+  519  ./bin/run
+  520  make build_sm8 
+  521  ./bin/run
+  522  make build_sm8 
+  523  ./bin/run
+  524  make build_sm8 
+  525  ./bin/run
+  526  make build_sm8 
+  527  ./bin/run
+  528  make build_sm8 
+  529  ./bin/run
+  530  make build_sm8 
+  531  clear
+  532  make build_sm8 
+  533  ./bin/run
+  534  make build_sm8 
+  535  ./bin/run
+  536  clear
+  537  make build_sm8 
+  538  ./bin/run
+  539  make build_sm8 
+  540  ./bin/run
+  541  make build_sm8 
+  542  ./bin/run
+  543  make build_sm8 
+  544  ./bin/run
+  545  make build_sm8 
+  546  ./bin/run
+  547  make build_sm8 
+  548  ./bin/run
+  549  clear
+  550  make build_sm8 
+  551  ./bin/run
+  552  clear
+  553  make build_sm8 
+  554  ./bin/run
+  555  make build_sm8 
+  556  ./bin/run
+  557  clear
+  558  make build_sm8 
+  559  ./bin/run
+  560  make build_sm8 
+  561  ./bin/run
+  562  make build_sm8 
+  563  ./bin/run
+  564  make build_sm8 
+  565  ./bin/run
+  566  clear
+  567  ./bin/run
+  568  clear
+  569  make build_sm8 
+  570  ./bin/run
+  571  make build_sm8 
+  572  ./bin/run
+  573  clear
+  574  ./bin/run
+  575  make build_sm8 
+  576  ./bin/run
+  577  make build_sm8 
+  578  ./bin/run
+  579  make build_sm8 
+  580  ./bin/run
+  581  make build_sm8 
+  582  ./bin/run
+  583  make build_sm8 
+  584  ./bin/run
+  585  make build_sm8 
+  586  ./bin/run
+  587  make build_sm8 
+  588  ./bin/run
+  589  make build_sm8 
+  590  ./bin/run
+  591  clear
+  592  git status
+  593  git add -u
+  594  git commit -m "OMP cant wont give you the device pointer map"
+  595  git push
+  596  exit
+  597  ssh renyi
+  598  exit
+  599  squeue 
+  600  clear
+  601  salloc -pgpu --nodelist=renyi
+  602  git push
+  603  cd Onlabprojekt/
+  604  source start 15.3
+  605  clear
+  606  cd Cuda
+  607  clear
+  608  make clean
+  609  make init
+  610  make cuda
+  611  clear
+  612  make build_sm8 
+  613  make run
+  614  ./bin/run 
+  615  make build_sm8 
+  616  ./bin/run 
+  617  make build_sm8 
+  618  ./bin/run 
+  619  make build_sm8 
+  620  ./bin/run 
+  621  make cuda
+  622  ./bin/run 
+  623  make build_sm8 
+  624  ./bin/run 
+  625  make build_sm8 
+  626  ./bin/run 
+  627  clear
+  628  git status
+  629  git add -u
+  630  git add forward_cuda_fault.h 
+  631  git status
+  632  git commit -m "cuda is compiles and runs, but it does not mean its working"
+  633  git push
+  634  clear
+  635  exit
+  636  ssh renyi
+  637  exit
+  638  squeue 
+  639  clear
+  640  squeue 
+  641  salloc -pgpu --nodelist=renyi
+  642  clear
+  643  git push
+  644  clear
+  645  git status
+  646  clear
+  647  git status
+  648  exit
+  649  squeue 
+  650  clear
+  651  cd Onlabprojekt/
+  652  source start 15.3
+  653  clear
+  654  cd Cuda
+  655  clear
+  656  make clean
+  657  clear
+  658  ls
+  659  clear
+  660  make init
+  661  make cuda
+  662  make build_sm8 
+  663  make run
+  664  clear
+  665  make build_sm8 
+  666  make run
+  667  make build_sm8 make cuda
+  668  make cuda
+  669  make build_sm8 
+  670  make run
+  671  make cuda
+  672  make build_sm8 
+  673  make run
+  674  clear
+  675  make cuda
+  676  make build_sm8 
+  677  make run
+  678  make cuda
+  679  make build_sm8 
+  680  make run
+  681  clear
+  682  make cuda
+  683  make build_sm8 
+  684  make run
+  685  make cuda
+  686  make build_sm8 
+  687  clear
+  688  make cuda
+  689  make build_sm8 
+  690  make run
+  691  clear
+  692  make cuda
+  693  make build_sm8 
+  694  make run
+  695  clear
+  696  make cuda
+  697  make build_sm8 
+  698  clear
+  699  cuda-memcheck ./bin/run 
+  700  make cuda
+  701  make build_sm8 
+  702  cuda-memcheck ./bin/run 
+  703  clear
+  704  make cuda
+  705  make build_sm8 
+  706  make run
+  707  cuda-memcheck ./bin/run 
+  708  clear
+  709  make clean
+  710  make inti
+  711  make int
+  712  make init
+  713  make cuda
+  714  make build_sm8 
+  715  make run
+  716  cuda-memcheck ./bin/run 
+  717  make clean
+  718  make init
+  719  make cuda
+  720  make build_sm8 
+  721  cuda-gdb ./bin/run 
+  722  clear
+  723  make cuda
+  724  make build_sm8 
+  725  cuda-gdb ./bin/run 
+  726  make cuda
+  727  make build_sm8 
+  728  make run
+  729  cuda-gdb ./bin/run 
+  730  make cuda
+  731  make build_sm8 
+  732  cuda-gdb ./bin/run 
+  733  cuda-memcheck ./bin/run 
+  734  cuda-gdb ./bin/run 
+  735  make run
+  736  exit
+  737  ssh renyi
+  738  exit
+  739  squeue 
+  740  salloc -pgpu --nodelist=renyi
+  741  exit
+  742  ssh renyi 
+  743  cd Onlabprojekt/
+  744  source start 15.3
+  745  cd Develop/
+  746  clear
+  747  ls
+  748  make 8run
+  749  clear
+  750  ls
+  751  cd Onlabprojekt/
+  752  clear
+  753  source start 16.3
+  754  source start 15.3
+  755  clear
+  756  module list
+  757  cd Cuda
+  758  clear
+  759  ls
+  760  make clean
+  761  make init
+  762  clear
+  763  history
+  764  history >> h.txt
+  765  clear
+  766  (cuda-gdb) info cuda threads
+  767  cuda-gdb info cuda threads
+  768  clear
+  769  cuda-gdb help
+  770  clear
+  771  make init
+  772  make cuda
+  773  clear
+  774  make build_sm8 
+  775  clear
+  776  cuda-gdb ./bin/run 
+  777  clear
+  778  make cuda
+  779  make build_sm8 
+  780  ./bin/run 
+  781  clear
+  782  make build_sm8 
+  783  ./bin/run 
+  784  clear
+  785  make build_sm8 
+  786  make cuda
+  787  make build_sm8 
+  788  ./bin/run 
+  789  clear
+  790  make cuda
+  791  make build_sm8 
+  792  ./bin/run 
+  793  clear
+  794  make cuda
+  795  ./bin/run 
+  796  make build_sm8 
+  797  make build
+  798  ./bin/run 
+  799  make build
+  800  ./bin/run 
+  801  make build
+  802  ./bin/run 
+  803  make build
+  804  cuda-memcheck ./bin/run 
+  805  clear
+  806  make build
+  807  cuda-memcheck ./bin/run 
+  808  make build
+  809  cuda-memcheck ./bin/run 
+  810  make build
+  811  cuda-memcheck ./bin/run 
+  812  make build
+  813  cuda-memcheck ./bin/run 
+  814  clear
+  815  make build
+  816  cuda-memcheck ./bin/run 
+  817  make build
+  818  cuda-memcheck ./bin/run 
+  819  make build
+  820  cuda-memcheck ./bin/run 
+  821  make build
+  822  cuda-memcheck ./bin/run 
+  823  make build
+  824  cuda-memcheck ./bin/run 
+  825  make build
+  826  cuda-memcheck ./bin/run 
+  827  make build
+  828  cuda-memcheck ./bin/run 
+  829  make build
+  830  cuda-memcheck ./bin/run 
+  831  make build
+  832  cuda-memcheck ./bin/run 
+  833  make build
+  834  cuda-memcheck ./bin/run 
+  835  make build
+  836  cuda-memcheck ./bin/run 
+  837  make build
+  838  cuda-memcheck ./bin/run 
+  839  clear
+  840  make build
+  841  cuda-memcheck ./bin/run 
+  842  make build
+  843  cuda-memcheck ./bin/run 
+  844  make build
+  845  cuda-memcheck ./bin/run 
+  846  make build
+  847  cuda-memcheck ./bin/run 
+  848  clear
+  849  make build
+  850  cuda-memcheck ./bin/run 
+  851  ./bin/run 
+  852  cuda-memcheck ./bin/run 
+  853  make build
+  854  ./bin/run 
+  855  clear
+  856  cuda-gdb ./bin/run
+  857  clear
+  858  cuda-gdb ./bin/run
+  859  clear
+  860  cuda-gdb ./bin/run
+  861  breakpoints
+  862  breakpoint all
+  863  exit
+  864  ssh renyi
+  865  exit
+  866  clear
+  867  squeue 
+  868  salloc -pgpu --nodelist=renyi
+  869  clear
+  870  ps
+  871  htop
+  872  exit
+  873  squeue 
+  874  nvidia-smi
+  875  cd Cuda
+  876  squeue 
+  877  salloc -pgpu --nodelist=renyi
+  878  ssh renyi
+  879  clear
+  880  cd Onlabprojekt/
+  881  source start 15.3
+  882  cd Cuda
+  883  clear
+  884  make clean
+  885  make init
+  886  make build
+  887  clear
+  888  ./bin/run
+  889  clear
+  890  make build
+  891  ./bin/run
+  892  make build
+  893  ./bin/run
+  894  cuda-memcheck ./bin/run 
+  895  clear
+  896  cudamemcheck ./bin/run 
+  897  cuda-memcheck ./bin/run 
+  898  make build
+  899  cuda-memcheck ./bin/run 
+  900  make build
+  901  ./bin/run 
+  902  clear
+  903  ./bin/run 
+  904  make build
+  905  ./bin/run 
+  906  clear
+  907  make build
+  908  ./bin/run 
+  909  make build
+  910  ./bin/run 
+  911  cuda-memcheck ./bin/run 
+  912  clear
+  913  make build
+  914  cuda-memcheck ./bin/run 
+  915  make build
+  916  cuda-memcheck ./bin/run 
+  917  clear
+  918  make build
+  919  cuda-memcheck ./bin/run 
+  920  clear
+  921  ./bin/run 
+  922  clear
+  923  ./bin/run 
+  924  clear
+  925  ./bin/run 
+  926  make build
+  927  ./bin/run 
+  928  nvidia-smi
+  929  __CUDA_ARCH__
+  930  CUDA_VISIBLE_DEVICE = 1
+  931   CUDA_VISIBLE_DEVICES=1
+  932  ./bin/run 
+  933  make build
+  934  ./bin/run 
+  935  cleawr
+  936  clear
+  937  make build
+  938  ./bin/run 
+  939  make build
+  940  ./bin/run 
+  941  make build
+  942  ./bin/run 
+  943  make build
+  944  ./bin/run 
+  945  make build
+  946  cuda-memcheck ./bin/run 
+  947  make build
+  948  cuda-memcheck ./bin/run 
+  949  make build
+  950  cuda-memcheck ./bin/run 
+  951  clear
+  952  make build
+  953  clear
+  954  cgdb -d cuda-gdb ./bin/run 
+  955  clear
+  956  make build
+  957  ./bin/run 
+  958  nvidia-smi
+  959  squeue 
+  960  salloc -pgpu --nodelist=renyi --gres=gpu:1
+  961  export CUDA_VISIBLE_DEVICES=1
+  962  make build
+  963  ./bin/run 
+  964  make build
+  965  ./bin/run 
+  966  exit
+  967  clear
+  968  nvidia-smi
+  969  exit
+  970  cd Onlabprojekt/
+  971  source start 15.3
+  972  clear
+  973  cd Cuda
+  974  clear
+  975  ls
+  976  make clean
+  977  make init
+  978  make build
+  979  make run
+  980  make build
+  981  clear
+  982  make build
+  983  clear
+  984  make build
+  985  make run
+  986  ./bin/run 
+  987  cuda-memcheck ./bin/run
+  988* 
+  989  clear
+  990  cd Onlabprojekt/
+  991  source start 15.3
+  992  cd Cuda
+  993  clear
+  994  make clena
+  995  make clean
+  996  make init
+  997  make build
+  998  make run
+  999  make build
+ 1000  make run
+ 1001  history >> h.txt

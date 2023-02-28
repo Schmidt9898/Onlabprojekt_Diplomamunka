@@ -1,3 +1,7 @@
+#define blocksize_x 2
+#define blocksize_y 4
+#define blocksize_z 2
+
 
 #include <stdio.h>
 #include <cuda.h>
@@ -141,16 +145,16 @@ extern "C" void kernel_vars(const float dt,const long x_stride0_,const long y_st
 	//TODO errors
 	float r8_ = 1.0F/(dt*dt);
 	float r9_ = 1.0F/dt;
-	cudaCheck(cudaMemcpyToSymbol(r8,&r8_, sizeof(float)));
-	cudaCheck(cudaMemcpyToSymbol(r9,&r9_, sizeof(float)));
-	cudaCheck(cudaMemcpyToSymbol( x_stride0, &x_stride0_, sizeof(long) ));
-	cudaCheck(cudaMemcpyToSymbol( y_stride0, &y_stride0_, sizeof(long) ));
-	cudaCheck(cudaMemcpyToSymbol( z_stride0, &z_stride0_, sizeof(long) ));
-	cudaCheck(cudaMemcpyToSymbol( y_stride1, &y_stride1_, sizeof(long) ));
-	cudaCheck(cudaMemcpyToSymbol( z_stride1, &z_stride1_, sizeof(long) ));
-	cudaCheck(cudaMemcpyToSymbol( p_rec_stride0, &p_rec_stride0_, sizeof(long) ));
-	cudaCheck(cudaMemcpyToSymbol( d_stride0, &d_stride0_, sizeof(long) ));
-	cudaCheck(cudaMemcpyToSymbol( p_src_stride0, &p_src_stride0_, sizeof(long) ));
+	cudaMemcpyToSymbol(r8,&r8_, sizeof(float));
+	cudaMemcpyToSymbol(r9,&r9_, sizeof(float));
+	cudaMemcpyToSymbol( x_stride0, &x_stride0_, sizeof(long) );
+	cudaMemcpyToSymbol( y_stride0, &y_stride0_, sizeof(long) );
+	cudaMemcpyToSymbol( z_stride0, &z_stride0_, sizeof(long) );
+	cudaMemcpyToSymbol( y_stride1, &y_stride1_, sizeof(long) );
+	cudaMemcpyToSymbol( z_stride1, &z_stride1_, sizeof(long) );
+	cudaMemcpyToSymbol( p_rec_stride0, &p_rec_stride0_, sizeof(long) );
+	cudaMemcpyToSymbol( d_stride0, &d_stride0_, sizeof(long) );
+	cudaMemcpyToSymbol( p_src_stride0, &p_src_stride0_, sizeof(long) );
 }
 
 
