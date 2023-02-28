@@ -5,7 +5,7 @@ import sys
 
 #reurns the current gpu temperature if error raised returns -1
 def get_gpu_temperature(): 
-	return -1
+	#return -1
 	temp_str = os.popen("nvidia-smi -q -d TEMPERATURE | grep \"GPU Current\" | tail -1").read() # This command is costly (takes a long time) but important
 	temp = -1
 	try:

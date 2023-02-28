@@ -82,7 +82,9 @@ time_M = 10;
 printf("total memory: %fGB\n",(float)total_memory_needed / 1e9f );
 fflush(stdout);
 
-printf("Create profiler\n");
+#ifdef MOREINFO 
+	printf("Create profiler\n");
+#endif
 struct profiler timers={0,0,0};
 
 
@@ -100,11 +102,15 @@ Forward((struct dataobj *restrict) &damp_vec,(struct dataobj *restrict) &rec_vec
 	printf("section 1 %f s\n",timers.section1);
 	printf("section 2 %f s\n",timers.section2);
 
+
+#ifdef MOREINFO 
 //checking u rec
 //printf("u_vec[354] = %f\n",((float*)u_vec.data)[354]);
-//printf(check_data(u_vec) ? "u_vec is valid\n" : "u_vec is nan or not changed\n");
-//printf(check_data(rec_vec) ? "rec_vec is valid\n" : "u_vec is nan or not changed\n");
-//printf("u_vec[1530428310] = %f\n",((float*)u_vec.data)[1530428310]);
+printf(check_data(u_vec) ? "u_vec is valid\n" : "u_vec is nan or not changed\n");
+printf(check_data(rec_vec) ? "rec_vec is valid\n" : "u_vec is nan or not changed\n");
+printf("u_vec[1530428310] = %f\n",((float*)u_vec.data)[1530428310]);
+#endif
+
 
 	return 0;
 }

@@ -49,7 +49,8 @@ measurement_summary = measurement_name + "_summary.log"
 
 #so,thread_limit,iteration,x,y,z,execution time, begin temperature,end temperature
 
-os.popen("module list >> {}".format(measurement_summary)).read()
+os.popen("module list > {}".format(measurement_summary)).read()
+os.popen("date >> {}".format(measurement_summary)).read()
 
 
 f = open(measurement_csv, "w")
@@ -62,7 +63,7 @@ os.popen("make init").read()
 
 for so in space_orders:
 	
-	begin_temp = get_gpu_temperature()
+	#begin_temp = get_gpu_temperature()
 	for idx in sizes:
 		
 		x,y,z,thread_limit = idx
@@ -102,10 +103,11 @@ for so in space_orders:
 				break
 		print("----------------------------------")
 		#quit()
-		break
+		#break
 
 
 
+os.popen("date >> {}".format(measurement_summary)).read()
 print("----------finished?------------")
 
 

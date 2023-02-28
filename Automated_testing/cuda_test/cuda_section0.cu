@@ -176,7 +176,7 @@ extern "C" void kernel_section0( const int x_M, const int x_m, const int y_M, co
 	//print0<<<1,1>>>(u);
 	
 	
-	cudaDeviceSynchronize();
+	//cudaDeviceSynchronize();
 }
 
 
