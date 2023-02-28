@@ -26,7 +26,10 @@ dataobj create_data(unsigned long size0, unsigned long size1, unsigned long size
 
 	//this is long for f sake
 	a.size = malloc(sizeof(unsigned long) * 4); // new int[4];
+
+#ifdef MOREINFO 
 	printf("Creting %ld\n",size0*size1*size2*size3);
+#endif
 	a.size[0] = size0;
 	a.size[1] = size1;
 	a.size[2] = size2;
@@ -71,6 +74,10 @@ printf("Start\n");
 
 time_M = 10;
 
+	printf("x = %d,y = %d,z = %d,t = %d\n",blocksize_x,blocksize_y,blocksize_z,-1);
+#ifdef MOREINFO 
+#endif
+
 
 printf("total memory: %fGB\n",(float)total_memory_needed / 1e9f );
 fflush(stdout);
@@ -81,7 +88,7 @@ struct profiler timers={0,0,0};
 
 
 
-printf("Forward\n");
+//printf("Forward\n");
 
 
 Forward((struct dataobj *restrict) &damp_vec,(struct dataobj *restrict) &rec_vec,(struct dataobj *restrict) &rec_coords_vec,(struct dataobj *restrict) &src_vec,(struct dataobj *restrict) &src_coords_vec,(struct dataobj *restrict) &u_vec,(struct dataobj *restrict) &vp_vec,x_M,x_m,y_M,y_m,z_M,z_m,dt,o_x,o_y,o_z,p_rec_M,p_rec_m,p_src_M,p_src_m,time_M,time_m,deviceid,devicerm,&timers);
@@ -94,160 +101,10 @@ Forward((struct dataobj *restrict) &damp_vec,(struct dataobj *restrict) &rec_vec
 	printf("section 2 %f s\n",timers.section2);
 
 //checking u rec
-
 //printf("u_vec[354] = %f\n",((float*)u_vec.data)[354]);
-
-printf(check_data(u_vec) ? "u_vec is valid\n" : "u_vec is nan or not changed\n");
-
+//printf(check_data(u_vec) ? "u_vec is valid\n" : "u_vec is nan or not changed\n");
 //printf(check_data(rec_vec) ? "rec_vec is valid\n" : "u_vec is nan or not changed\n");
-
-printf("u_vec[1530428310] = %f\n",((float*)u_vec.data)[1530428310]);
-
+//printf("u_vec[1530428310] = %f\n",((float*)u_vec.data)[1530428310]);
 
 	return 0;
 }
-/*
-
-dataobj damp_vec       = create_data(802,802,802,1,sizeof(float));
-dataobj rec_vec        = create_data(721,518400,1,1,sizeof(float));
-dataobj rec_coords_vec = create_data(518400,3,1,1,sizeof(float));
-dataobj src_vec        = create_data(721,1,1,1,sizeof(float));
-dataobj src_coords_vec = create_data(1,3,1,1,sizeof(float));
-dataobj u_vec          = create_data(3,832,832,832,sizeof(float));
-dataobj vp_vec         = create_data(832,832,832,1,sizeof(float));
-
-int x_M            	= 799;
-int x_m            	= 0;
-int y_M            	= 799;
-int y_m            	= 0;
-int z_m            	= 0;
-int z_M            	= 799;
-float dt        	= 1.737000;
-float o_x       	= -600.000000;
-float o_y       	= -600.000000;
-float o_z       	= -600.000000;
-int p_rec_M        	= 518399;
-int p_rec_m        	= 0;
-int p_src_M        	= 0;
-int p_src_m        	= 0;
-int time_M         	= 10;
-int time_m         	= 1;
-int deviceid       	= -1;
-int devicerm       	= 1;
-
-*/
-
-//test with this pls
-/*
-dataobj damp_vec = create_data( 882,882,882,1,sizeof(float));
-dataobj rec_vec = create_data( 721,640000,1,1,sizeof(float));
-dataobj rec_coords_vec = create_data( 640000,3,1,1,sizeof(float));
-dataobj src_vec = create_data( 721,1,1,1,sizeof(float));
-dataobj src_coords_vec = create_data( 1,3,1,1,sizeof(float));
-dataobj u_vec = create_data( 3,912,912,912,sizeof(float));
-dataobj vp_vec = create_data( 912,912,912,1,sizeof(float));
-int x_M = 879;
-int x_m = 0;
-int y_M = 879;
-int y_m = 0;
-int z_M = 879;
-int z_m = 0;
-float dt = 1.737000;
-float o_x = -600.000000;
-float o_y = -600.000000;
-float o_z = -600.000000;
-int p_rec_M = 639999;
-int p_rec_m = 0;
-int p_src_M = 0;
-int p_src_m = 0;
-int time_M = 10;
-int time_m = 1;
-int deviceid = -1;
-int devicerm = 1;
-*/
-
-/* 2 800
-dataobj damp_vec = create_data( 882,882,882,1,sizeof(float));
-dataobj rec_vec = create_data( 585,640000,1,1,sizeof(float));
-dataobj rec_coords_vec = create_data( 640000,3,1,1,sizeof(float));
-dataobj src_vec = create_data( 585,1,1,1,sizeof(float));
-dataobj src_coords_vec = create_data( 1,3,1,1,sizeof(float));
-dataobj u_vec = create_data( 3,884,884,884,sizeof(float));
-dataobj vp_vec = create_data( 884,884,884,1,sizeof(float));
-int x_M = 879;
-int x_m = 0;
-int y_M = 879;
-int y_m = 0;
-int z_M = 879;
-int z_m = 0;
-float dt = 2.143000;
-float o_x = -600.000000;
-float o_y = -600.000000;
-float o_z = -600.000000;
-int p_rec_M = 639999;
-int p_rec_m = 0;
-int p_src_M = 0;
-int p_src_m = 0;
-int time_M = 583;
-int time_m = 1;
-int deviceid = -1;
-int devicerm = 1;
-
-*/
-
-/* 8 800
-dataobj damp_vec = create_data( 882,882,882,1,sizeof(float));
-dataobj rec_vec = create_data( 690,640000,1,1,sizeof(float));
-dataobj rec_coords_vec = create_data( 640000,3,1,1,sizeof(float));
-dataobj src_vec = create_data( 690,1,1,1,sizeof(float));
-dataobj src_coords_vec = create_data( 1,3,1,1,sizeof(float));
-dataobj u_vec = create_data( 3,896,896,896,sizeof(float));
-dataobj vp_vec = create_data( 896,896,896,1,sizeof(float));
-int x_M = 879;
-int x_m = 0;
-int y_M = 879;
-int y_m = 0;
-int z_M = 879;
-int z_m = 0;
-float dt = 1.816000;
-float o_x = -600.000000;
-float o_y = -600.000000;
-float o_z = -600.000000;
-int p_rec_M = 639999;
-int p_rec_m = 0;
-int p_src_M = 0;
-int p_src_m = 0;
-int time_M = 688;
-int time_m = 1;
-int deviceid = -1;
-int devicerm = 1;
-*/
-
-/*
-dataobj damp_vec = create_data( 882,882,882,1,sizeof(float));
-dataobj rec_vec = create_data( 721,640000,1,1,sizeof(float));
-dataobj rec_coords_vec = create_data( 640000,3,1,1,sizeof(float));
-dataobj src_vec = create_data( 721,1,1,1,sizeof(float));
-dataobj src_coords_vec = create_data( 1,3,1,1,sizeof(float));
-dataobj u_vec = create_data( 3,912,912,912,sizeof(float));
-dataobj vp_vec = create_data( 912,912,912,1,sizeof(float));
-int x_M = 879;
-int x_m = 0;
-int y_M = 879;
-int y_m = 0;
-int z_M = 879;
-int z_m = 0;
-float dt = 1.737000;
-float o_x = -600.000000;
-float o_y = -600.000000;
-float o_z = -600.000000;
-int p_rec_M = 639999;
-int p_rec_m = 0;
-int p_src_M = 0;
-int p_src_m = 0;
-int time_M = 719;
-int time_m = 1;
-int deviceid = -1;
-int devicerm = 1;
-
-*/

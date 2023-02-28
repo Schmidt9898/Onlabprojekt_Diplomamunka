@@ -2,12 +2,12 @@
 .PHONY: all build test_build brun clean
 
 
-CFLAGS := -O3 -fPIC -Wall -Wno-unused-result -Wno-unused-variable -ffast-math -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lm -L $(CLANG_HOME)/lib -lomptarget -fopenmp-version=51 $(CFLAGS)
+CFLAGS := -O3 -fPIC -Wno-unused-result -Wno-unused-variable -ffast-math -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lm -L $(CLANG_HOME)/lib -lomptarget -fopenmp-version=51 $(CFLAGS) #-Wall
 
-GFLAGS_ = --ptxas-options=-v --gpu-architecture=$(sm_VAL) --compiler-options '-fPIC' -O3 --use_fast_math $(GFLAGS) #-g -G 
+GFLAGS_ = --gpu-architecture=$(sm_VAL) --compiler-options '-fPIC' -O3 --use_fast_math $(GFLAGS) #-g -G --ptxas-options=-v
 
 
-#EXTRA := EXTRA 
+#EXTRA := -DMOREINFO 
 
 CC := ${CC}
 

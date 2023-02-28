@@ -7,8 +7,8 @@ flags = -O3 -fPIC -Wall -Wno-unused-result -Wno-unused-variable -ffast-math -fop
 
 c_files = main.c
 
-sm_VAL = sm_80
-#sm_VAL = sm_70
+#sm_VAL = sm_80
+sm_VAL = sm_70
 
 
 runname = ./bin/run

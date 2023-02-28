@@ -101,7 +101,7 @@ for so in space_orders:
 				print("60 C  reached.")
 				break
 		print("----------------------------------")
-		quit()
+		#quit()
 		break
 
 

@@ -46,8 +46,6 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
   }
   /* End of OpenMP setup */
 
-
-printf("1\n");
   
 	float *damp = (float *) damp_vec->data;
 	float *rec = (float *) rec_vec->data;
@@ -57,11 +55,12 @@ printf("1\n");
 	float *u = (float *) u_vec->data;
 	float *vp = (float *) vp_vec->data;
 
-
+#ifdef MOREINFO 
 	printf("Before GPU\n");
 	printf("u pointer cpu: %p\n",u);
 	printf("damp pointer cpu: %p\n",damp);
 	printf("vp pointer cpu: %p\n",vp);
+#endif
 
 
   cuda_enter_data(&damp,damp_vec->data, damp_vec->size[0]*damp_vec->size[1]*damp_vec->size[2]);
@@ -98,8 +97,7 @@ printf("1\n");
 
 	kernel_vars(dt,x_stride0,y_stride0,z_stride0,y_stride1,z_stride1,p_rec_stride0,d_stride0,p_src_stride0);
 
-printf("1\n");
-
+	kernel_section0(x_M,x_m,y_M,y_m,z_M,z_m,1,0,2,vp,u,damp);
 
   for (int time = time_m, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3); time <= time_M; time += 1, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3))
   {
