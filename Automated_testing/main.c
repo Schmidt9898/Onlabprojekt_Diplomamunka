@@ -1,5 +1,5 @@
 
-#include "forward_cuda.h"
+#include "forward.h"
 
 #include <stdio.h>
 #include "stdlib.h"
@@ -39,7 +39,6 @@ dataobj create_data(unsigned long size0, unsigned long size1, unsigned long size
 }
 void delete_dataobj(dataobj a)
 {
-//Write_byte_to_file(filename_macro,(char*)a.data,a.size[0]*a.size[1]*a.size[2]*a.size[3]*sizeof(float));
 	free(a.data);
 	free(a.size);
 }
@@ -67,14 +66,15 @@ int main()
 {
 printf("Start\n");
 
-#include "../dimension_src/declare_800_2.h"
-#include "../dimension_src/declare_800_4.h"
-#include "../dimension_src/declare_800_8.h"
-#include "../dimension_src/declare_800_16.h"
+#include "dimension_src/declare_800_2.h"
+#include "dimension_src/declare_800_4.h"
+#include "dimension_src/declare_800_8.h"
+#include "dimension_src/declare_800_16.h"
 
 time_M = 10;
-
+#ifdef blocksize_x
 	printf("x = %d,y = %d,z = %d,t = %d\n",blocksize_x,blocksize_y,blocksize_z,-1);
+#endif
 #ifdef MOREINFO 
 #endif
 

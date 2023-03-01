@@ -12,7 +12,7 @@ GFLAGS_ = --gpu-architecture=$(sm_VAL) --compiler-options '-fPIC' -O3 --use_fast
 CC := ${CC}
 
 
-c_files = main.c
+c_files = ../main.c
 cuda_files = cuda_section0.cu
 
 sm_VAL = ${SM_VAL}
@@ -33,10 +33,10 @@ init:
 	mkdir -p bin
 
 build: cuda
-	$(CC) -fPIC ./bin/lib -Xopenmp-target -march=$(sm_VAL) $(CFLAGS) $(c_files) -o $(runname) -lstdc++ -L/home/shared/software/cuda/11.6/lib64 -lcudart $(EXTRA)
+	$(CC) -fPIC ./bin/lib -Xopenmp-target -march=$(sm_VAL) $(CFLAGS) $(c_files) -o $(runname) -lstdc++ -L/home/shared/software/cuda/11.6/lib64 -lcudart $(EXTRA) -I ./ -I ../
 
 cuda:
-	nvcc $(GFLAGS_) -o ./bin/lib -c $(cuda_files) $(EXTRA)
+	nvcc $(GFLAGS_) -o ./bin/lib -c $(cuda_files) $(EXTRA) -I ./ -I ../
 
 build_for_test: init build
 

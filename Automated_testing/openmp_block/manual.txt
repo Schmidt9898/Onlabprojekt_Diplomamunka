@@ -1,0 +1,4 @@
+
+írd át a sm_ architecture -t hogy jó gpu-t használjon
+
+sbatch -pgpu --nodelist=neumann ./Slurm_job.sh

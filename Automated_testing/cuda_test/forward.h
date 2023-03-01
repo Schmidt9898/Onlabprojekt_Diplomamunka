@@ -99,15 +99,14 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
 
 	kernel_section0(x_M,x_m,y_M,y_m,z_M,z_m,1,0,2,vp,u,damp);
 
+    START_TIMER(section0)
   for (int time = time_m, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3); time <= time_M; time += 1, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3))
   {
 //printf("time\n");
     /* Begin section0 */
-    START_TIMER(section0)
 
 	kernel_section0(x_M,x_m,y_M,y_m,z_M,z_m,t0,t1,t2,vp,u,damp);
     
-	STOP_TIMER(section0,timers)
     /* End section0 */
 
     /* Begin section1 */
@@ -118,6 +117,7 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
 
     /* End section2 */
   }
+	STOP_TIMER(section0,timers)
 
 
   cuda_update_data_from(rec,rec_vec->data,rec_vec->size[0]*rec_vec->size[1]);
@@ -127,8 +127,8 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
   cuda_exit_data(src);
   cuda_exit_data(src_coords);
   cuda_exit_data(vp);
-
 	cudaDeviceSynchronize();
+
 
   return 0;
 }

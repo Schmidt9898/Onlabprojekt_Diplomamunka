@@ -2,3 +2,5 @@
 írd át a sm_ architecture -t hogy jó gpu-t használjon
 
 sbatch -pgpu --nodelist=neumann ./Slurm_job.sh
+
+make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO ' build

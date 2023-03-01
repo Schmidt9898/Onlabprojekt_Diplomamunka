@@ -43,3 +43,7 @@ Develop/temp_script_file.txt
 Develop/vgcore.2082509
 Cuda/bin/
 *.prof
+Automated_testing/__pycache__/SLtools.cpython-36.pyc
+Automated_testing/cuda_test/bin/lib
+*.log
+Automated_testing/cuda_test/tsf.txt
