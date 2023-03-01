@@ -33,8 +33,7 @@ for t in block_threads:
 					sizes.append((x,y,z,t))
 					#print(x,y,z,"=",x*y*z,t)
 
-
-#flags = "-O3 -g -fPIC -Wall -Wno-unused-result -Wno-unused-variable -ffast-math -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lm"
+#flags = "-O3 -g -fPIC -Wall -Wno-unused-result -Wno-unused-variable -ffast-math -fopenmp -fopenmp-version=51 -fopenmp-targets=nvptx64-nvidia-cuda -lm"
 
 
 
@@ -44,19 +43,17 @@ area = 800 #[336,560,720]
 space_orders = [2,4,8,16]
 
 
-case_number = len(sizes)*len(space_orders) + len(space_orders)
+case_number = len(sizes)*len(space_orders) + len(space_orders) 
 
 print("case_numbers",case_number)
 
 case_count = 1 
 
-measurement_name = str(area)+"_OpenMP_block"
+measurement_name = str(area)+"_OpenMP_tilled"
 measurement_csv = measurement_name + "_results.csv"
 measurement_summary = measurement_name + "_summary.log"
 
-
 #so,thread_limit,iteration,x,y,z,execution time, begin temperature,end temperature
-
 
 os.popen("module list >> {}".format(measurement_summary)).read()
 os.popen("date >> {}".format(measurement_summary)).read()
@@ -99,7 +96,7 @@ for so in space_orders:
 		begin_temp = get_gpu_temperature()
 		print("temperature",begin_temp)
 		#FORTILLED
-		extra = "-DFORBLOCKED -DF{}_{} -Dblocksize_x={} -Dblocksize_y={} -Dblocksize_z={} -DTHREADLIMIT={}".format(area,so,x,y,z,t)
+		extra = "-DFORTILLED -DF{}_{} -Dblocksize_x={} -Dblocksize_y={} -Dblocksize_z={} -DTHREADLIMIT={}".format(area,so,x,y,z,t)
 
 		#print(extra)
 		build_main(extra)
@@ -134,6 +131,8 @@ for so in space_orders:
 
 os.popen("date >> {}".format(measurement_summary)).read()
 print("----------finished?------------")
+
+
 
 
 

@@ -49,7 +49,7 @@ measurement_summary = measurement_name + "_summary.log"
 
 #so,thread_limit,iteration,x,y,z,execution time, begin temperature,end temperature
 
-os.popen("module list > {}".format(measurement_summary)).read()
+os.popen("module list >> {}".format(measurement_summary)).read()
 os.popen("date >> {}".format(measurement_summary)).read()
 
 

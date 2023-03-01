@@ -1,34 +1,38 @@
 #!/bin/bash
-#SBATCH --nodelist=renyi
 #SBATCH --ntasks=1
-#SBATCH --job-name=tile_800
-#SBATCH --output=tile_forward_measurement.%j.out
+#SBATCH --gres=gpu:0
+#SBATCH --job-name=OMPBLOCK
+#SBATCH --output=openmp_800_blocked_measurement.%j.out
 
-#SBATCH --time=10:00:00
-
-
+#SBATCH --time=11:00:00
 
 #module purge
-
-echo "helo from slurm"
+echo "Cuda_800_measurement"
 echo "init modules"
+
+date
+
 source /usr/share/Modules/init/bash
 
-
-cd /home/schmidtl/Onlabprojekt/Develop/
-source ../start 15.3
+source /home/schmidtl/Onlabprojekt/start 15.3
 
 source /home/schmidtl/Onlabprojekt/py_venv/bin/activate
 which python3
 
-export CUDA_VISIBLE_DEVICES=1
+
+cd /home/schmidtl/Onlabprojekt/Automated_testing/openmp_block
 
 
+export CUDA_VISIBLE_DEVICES=0
 
 pwd
 
 nvidia-smi
 
-python3 ./performance_test_for_tile.py
+export SM_VAL='sm_70'
+
+python3 ./execute_block_test.py
+
+date
 
 echo "done"

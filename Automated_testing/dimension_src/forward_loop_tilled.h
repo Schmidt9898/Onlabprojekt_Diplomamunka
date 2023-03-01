@@ -1,14 +1,12 @@
 #ifdef FORTILLED
-#pragma omp target teams distribute collapse(3) thread_limit(THREADLIMIT)
-	for(int Bx = x_m; Bx <= x_M; Bx += blocksize_x)
-		for (int By = y_m; By <= y_M; By += blocksize_y)
-			for (int Bz = z_m; Bz <= z_M; Bz += blocksize_z)
-			{
-			#pragma omp parallel for collapse(3)
-			#pragma omp tile sizes(4,1,1)
-			for (int x = Bx; x < Bx + blocksize_x; x++)
-				for (int y = By; y < By + blocksize_y; y++)
-					for (int z = Bz; z < Bz + blocksize_z; z++)
-					{
-						if (x <= x_M && y <= y_M && z <= z_M){
+    #pragma omp target teams distribute parallel for collapse(3)
+	#pragma omp tile sizes(blocksize_x,blocksize_y,blocksize_z)
+    for (int x = x_m; x <= x_M; x += 1)
+    {
+      for (int y = y_m; y <= y_M; y += 1)
+      {
+        for (int z = z_m; z <= z_M; z += 1)
+        {
 #endif
+
+
