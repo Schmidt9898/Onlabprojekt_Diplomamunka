@@ -83,6 +83,32 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
   float r8 = 1.0F/(dt*dt);
   float r9 = 1.0F/dt;
 
+// This code part is for to make sure the measured parts are not the first
+// and the gpu is alredy running when stopper starts
+
+
+/*
+{
+unsigned int t0 = 1;
+unsigned int t1 = 0;
+unsigned int t2 = 2;
+
+#include "dimension_src/forward_loop.h"
+#include "dimension_src/forward_loop_blocked.h"
+#include "dimension_src/forward_loop_tilled.h"
+
+#include "../dimension_src/func_800_2.h"
+#include "../dimension_src/func_800_4.h"
+#include "../dimension_src/func_800_8.h"
+#include "../dimension_src/func_800_16.h"
+
+}}}
+
+
+}
+*/
+
+
 
   for (int time = time_m, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3); time <= time_M; time += 1, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3))
   {

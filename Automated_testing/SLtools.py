@@ -3,9 +3,15 @@ import re
 import time
 import sys
 
+
+flag_quick = False
+
+
 #reurns the current gpu temperature if error raised returns -1
 def get_gpu_temperature(): 
-	#return -1
+	global flag_quick
+	if flag_quick:
+		return -1
 	temp_str = os.popen("nvidia-smi -q -d TEMPERATURE | grep \"GPU Current\" | tail -1").read() # This command is costly (takes a long time) but important
 	temp = -1
 	try:
@@ -35,6 +41,9 @@ def build_main(extra : str):
 	#os.remove("./cuda_temp.cu")
 
 def test_run(n=1):
+	global flag_quick
+	if flag_quick:
+		return -1
 	time = 0.0
 	temp_file_name = "tsf.txt"
 	for i in range(n):

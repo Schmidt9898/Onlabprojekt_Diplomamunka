@@ -24,6 +24,9 @@ init:
 build:
 	$(CC) $(flags) $(c_files) $(EXTRA) -o $(runname) -I ./ -I ../
 
+prep:
+	$(CC) $(flags) $(c_files) $(EXTRA) -E -o prep.c -I ./ -I ../
+
 build_for_test: init build
 
 run:
@@ -39,3 +42,4 @@ print:
 	@echo $(sm_VAL)
 	@echo $(runname)
 	@echo $(EXTRA)
+

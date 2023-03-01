@@ -61,7 +61,7 @@ def get_forward_time():
 
 def build_main(so,thread_limit=-1,x=-1,y=-1,z=-1):
 	#print(os.environ['CC']+"" )
-	parameters = " -DL_THREAD_LIMIT=%d -DBLOCKSIZE_X=%d -DBLOCKSIZE_Y=%d -DBLOCKSIZE_Z=%d " % (thread_limit,x,y,z)
+	parameters = " -DTHREADLIMIT=%d -DBLOCKSIZE_X=%d -DBLOCKSIZE_Y=%d -DBLOCKSIZE_Z=%d " % (thread_limit,x,y,z)
 	if thread_limit == -1:
 		parameters = "" 
 	command = os.environ['CC'] + " -Xopenmp-target -march=sm_70 " + flags + " -L "+os.environ['CLANG_HOME']+"/lib -lomptarget"+" ./temp_main.c -o ./temp_run -DSO"+str(so)+parameters
