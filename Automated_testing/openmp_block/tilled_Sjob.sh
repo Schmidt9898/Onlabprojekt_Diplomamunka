@@ -1,13 +1,13 @@
 #!/bin/bash
 #SBATCH --ntasks=1
 #SBATCH --gres=gpu:0
-#SBATCH --job-name=OMPBLOCK
-#SBATCH --output=openmp_800_blocked_measurement.%j.out
+#SBATCH --job-name=OMPTILLED
+#SBATCH --output=openmp_800_tilled_measurement.%j.out
 
 #SBATCH --time=11:00:00
 
 #module purge
-echo "Cuda_800_measurement"
+echo "openmp_800_tilled_measurement"
 echo "init modules"
 
 date
@@ -31,7 +31,7 @@ nvidia-smi
 
 export SM_VAL='sm_70'
 
-python3 ./execute_block_test.py
+python3 ./execute_tilled_test.py
 
 date
 
