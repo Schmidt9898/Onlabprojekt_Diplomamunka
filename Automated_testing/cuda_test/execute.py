@@ -18,32 +18,28 @@ from SLtools import *
 #2,4,8,16,32,64
 #128,256,512,1024
 
-block_threads = [-1] # for cuda thread limit is defined by x*y*z
-block_parts = [2,4,8,16,32,64]
-sizes=[]
-for t in block_threads:
-	for x in block_parts:
-		for y in block_parts:
-			for z in block_parts:
-				if x*y*z <= 1024:
-					sizes.append((x,y,z,x*y*z))
-					#print(x,y,z,"=",x*y*z,t)
-print(len(sizes))
+cases = import_cases(path = "./cases.csv",type = "cuda")
 
 
-start_time = time.time()
-#sizes = [(4, 8, 32, 256)]
-area = 800 #[336,560,720]
-space_orders = [2,4,8,16]
+
+case_number = len(cases)
+case_count = get_case_number(path = "./case_number.cache")
+
+#set_case_number(5)
 
 
-case_number = len(sizes)*len(space_orders)
-case_count = 1 
+print("Cases: " , case_number)
+print("Start case id: " , case_count)
+
+
+
+
+quit()
 
 #temp_file_name = "temp_script_file.txt"
 
 
-measurement_name = str(area)+"_CUDA"
+measurement_name = "800_CUDA"
 measurement_csv = measurement_name + "_results.csv"
 measurement_summary = measurement_name + "_summary.log"
 
@@ -60,6 +56,7 @@ f.close()
 os.popen("make clean").read()
 os.popen("make init").read()
 
+start_time = time.time()
 
 for so in space_orders:
 	

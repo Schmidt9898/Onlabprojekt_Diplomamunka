@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --ntasks=1
-#SBATCH --gres=gpu:0
+#SBATCH --gres=gpu:1
 #SBATCH --job-name=cuda_800
 #SBATCH --output=cuda_800_measurement.%j.out
 
@@ -25,13 +25,13 @@ cd /home/schmidtl/Onlabprojekt/Automated_testing/cuda_test
 
 
 
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=1
 
 pwd
 
 nvidia-smi
 
-export SM_VAL='sm_70'
+export SM_VAL='sm_80'
 
 python3 ./execute.py
 

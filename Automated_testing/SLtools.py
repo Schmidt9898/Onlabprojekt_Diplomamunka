@@ -51,3 +51,80 @@ def test_run(n=1):
 		time += float(get_forward_time(temp_file_name))
 	#os.remove("./bin/run")
 	return str(time/n)
+
+
+def create_test_cases(type):
+	cases=[]
+	areas = [800]
+	space_orders = [2,4,8,16]
+	if type == "cuda":
+		block_threads = [-1] # for cuda thread limit is defined by x*y*z
+		block_parts = [2,4,8,16,32,64]
+
+	if type == "openmp":
+		#this case we need the default cases
+		block_threads = [128,256,512,1024]
+		block_parts = [2,4,8,16,32,64]
+	for area in areas:
+		for so in space_orders:
+			# here we need extra cases for the control cases or we do that separatly, yeah lets do that
+			for t in block_threads:
+				for x in block_parts:
+					for y in block_parts:
+						for z in block_parts:
+							if x*y*z <= 1024:
+								cases.append((area,so,x,y,z,t))
+								#print(x,y,z,"=",x*y*z,t)
+	return cases 
+
+def export_cases(cases,path = "./cases.csv"):
+	f = open(path,'w')
+	for case in cases:
+		#print(case)
+		area,so,x,y,z,t = case
+		f.write("{},{},{},{},{},{}\n".format(area,so,x,y,z,t))
+	f.flush()
+	f.close()
+
+
+def import_cases(path = "./cases.csv",type = "openmp"):
+	if not os.path.exists(path):
+		cases = create_test_cases(type)
+		export_cases(cases,path)
+		return cases ##early exit
+	f = open(path,'r')
+	lines = f.readlines()
+	f.close()
+	cases = []
+	for line in lines:
+		line = line.strip()
+		params = line.split(',')
+		case = (int(params[0]),int(params[1]),int(params[2]),int(params[3]),int(params[4]),int(params[5]))
+		cases.append(case)
+	return cases
+
+import os
+
+def get_case_number(path = "./case_number.cache"):
+	value = 0
+	line = ""
+	if os.path.exists(path): 
+		f = open(path,'r')
+		line = f.readline()
+		f.close()
+		line=line.strip()
+	if line != "":
+		return int(line)
+	return value
+
+def set_case_number(n,path = "./case_number.cache"):
+	f = open(path,'w')
+	f.write(str(n))
+	f.flush()
+	f.close()
+
+
+
+
+
+
