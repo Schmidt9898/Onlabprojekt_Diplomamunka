@@ -21,6 +21,19 @@ def get_gpu_temperature():
 	return temp
 
 
+def wait_for_gpu_60celsius():
+	while True:
+		temp_t = get_gpu_temperature()
+		if temp_t>60:
+			#for sec in range(5):
+			#print("Temperature:",temp_t," C",end="\r")
+			time.sleep(5)
+			#print("60 sec cooling complete.")
+		else:
+			print("60 C  reached.")
+			break
+
+
 #reads section 0 durationtime from filename file, in case of error returns -1
 def get_forward_time(filename : str):
 	time = -1.0
@@ -65,6 +78,10 @@ def create_test_cases(type):
 		#this case we need the default cases
 		block_threads = [128,256,512,1024]
 		block_parts = [2,4,8,16,32,64]
+	if type == "omp_tile":
+		#this case we need the default cases
+		block_threads = [128,256,512,1024]
+		block_parts = [1,2,4,8,16,32,64]
 	for area in areas:
 		for so in space_orders:
 			# here we need extra cases for the control cases or we do that separatly, yeah lets do that
