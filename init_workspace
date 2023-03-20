@@ -1,9 +1,11 @@
 
-#module load gcc/9.2.0
+export SM_VAL='sm_80'
+source start 15.3
+source py_venv/bin/activate
 
-alias lacika="Na Mivan már"
+cd meas_tools
+make build_validate
+export alias validate="$(pwd)/bin/byte_valid"
+cd ..
 
-export alias validate="$(pwd)/Validation_tools/validate"
-export alias _validobj="$(pwd)/Validation_tools/valid.dataobj"
-
-validate
+#validate

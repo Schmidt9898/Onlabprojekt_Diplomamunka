@@ -125,6 +125,7 @@ extern "C" void kernel_section0( const int x_M, const int x_m, const int y_M, co
 {
 
 	dim3 threads(blocksize_z,blocksize_y,blocksize_x);
+	//dim3 blocks((z_M-z_m-1)/blocksize_z+1,(y_M-y_m-1)/blocksize_y+1,(x_M-x_m-1)/blocksize_x+1);
 	dim3 blocks((x_M-x_m-1)/blocksize_z+1,(y_M-y_m-1)/blocksize_y+1,(z_M-z_m-1)/blocksize_x+1);
 	
 	//printf("u pointer gpu: %p\n",u);

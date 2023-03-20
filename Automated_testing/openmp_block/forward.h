@@ -83,11 +83,8 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
   float r8 = 1.0F/(dt*dt);
   float r9 = 1.0F/dt;
 
-// This code part is for to make sure the measured parts are not the first
-// and the gpu is alredy running when stopper starts
 
-
-  for (int time = time_m, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3); time <= time_M + 1; time += 1, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3))
+  for (int time = time_m, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3); time <= time_M; time += 1, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3))
   {
 //printf("time\n");
     /* Begin section0 */
@@ -107,6 +104,9 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
     }
     STOP_TIMER(section0,timers)
 
+
+// This code part is for to make sure the measured parts are not the first
+// and the gpu is alredy running when stopper starts
 	if(time == time_m)
 		timers->section0 = 0;
     /* End section0 */

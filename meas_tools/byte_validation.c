@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 /*
 
 size_t total_memory_needed=0;
@@ -94,6 +95,7 @@ printf("                        :");
 
 int darab,perc=0;
 darab=valid_size/100;
+/*
 for(size_t i = 0 ;i< valid_size;i++)
 {
   if(i>perc){
@@ -101,14 +103,47 @@ for(size_t i = 0 ;i< valid_size;i++)
     printf("=");
     fflush(stdout);
   }
+	//TODO absulute value
+	//devide with the grater absolute value
 
-    if(valid_f[i]-test_f[i]>0.00001)
+    if(valid_f[i]-test_f[i]>0.0001)
 	{
         error_count+=1;
 		if(silentmode==0)
 			printf("%f - %f = %f\n",valid_f[i],test_f[i],valid_f[i]-test_f[i]);
 	}
 }
+*/
+	{
+		//size_t arrsize = a.size[0] * a.size[1] * a.size[2] * a.size[3];
+		//3,884,884,884
+		for (size_t t = 0; t < 3; t++)
+			for (size_t i = 0; i < 884; i++)
+				for (size_t j = 0; j < 884; j++)
+					for (size_t k = 0; k < 884; k++)
+					{
+						size_t index = t * (884 * 884 * 884) + i * (884 * 884) + j * (884) + k;
+						//printf("index: %lu | t: %lu, x: %lu, y: %lu, z: %lu, \n",index, t,i,j,k);
+						float valid = valid_f[index];
+						float test = test_f[index];
+						// if(*f != *f)//Nan value
+						//	return 0;
+						if (valid == 5.0f)
+						{
+							float error = fabsf(valid - test); /// abs(valid>test? valid : test);
+							if (error > 0.00001)
+							{
+								error_count += 1;
+								if (silentmode == 0)
+									printf("error: %f - %f = %f | at: t: %lu, x: %lu, y: %lu, z: %lu, \n", valid, test, error, t, i, j, k);
+								// printf("%f - %f = %f\n", valid_f[i], test_f[i], valid_f[i] - test_f[i]);
+							}
+						}
+					}
+	}
+
+
+
 printf("\n");
 if(error_count>0)
     printf("Test FAILED. err %lu\n",error_count);

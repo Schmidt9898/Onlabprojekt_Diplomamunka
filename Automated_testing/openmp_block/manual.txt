@@ -11,3 +11,18 @@ make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -g ' prep
 
 sbatch -pgpu --nodelist=neumann --exclusive ./blocked_Sjob.sh
 sbatch -pgpu --nodelist=neumann ./tilled_Sjob.sh
+
+
+
+
+
+cuda blocked: 
+	353932528
+cuda tile: 
+	353932528
+
+openmp:
+	356255728
+	349286128 t=1
+
+	2323200

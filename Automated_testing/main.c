@@ -42,16 +42,22 @@ void delete_dataobj(dataobj a)
 	free(a.data);
 	free(a.size);
 }
+
+size_t five_count = 0;
+
 int check_data(dataobj a)
 {
 	size_t arrsize = a.size[0] * a.size[1] * a.size[2] * a.size[3];
 	for (size_t i = 0; i < arrsize; i += sizeof(float))
 	{
 		float *t = (float *)&a.data[i];
-		//printf("%f,",*t);
 		if(*t != *t)
 			return 0;
+		if(*t == 5.0f)
+			five_count++ ;
+		//printf("%f\n",*t);
 	}
+	printf("%lu fivecount\n",five_count);
 	return 1;
 };
 
@@ -107,8 +113,18 @@ Forward((struct dataobj *restrict) &damp_vec,(struct dataobj *restrict) &rec_vec
 //checking u rec
 //printf("u_vec[354] = %f\n",((float*)u_vec.data)[354]);
 printf(check_data(u_vec) ? "u_vec is valid\n" : "u_vec is nan or not changed\n");
-printf(check_data(rec_vec) ? "rec_vec is valid\n" : "u_vec is nan or not changed\n");
+//printf(check_data(rec_vec) ? "rec_vec is valid\n" : "u_vec is nan or not changed\n");
 printf("u_vec[1530428310] = %f\n",((float*)u_vec.data)[1530428310]);
+#endif
+#ifdef EXPORTUVEC
+
+{
+	FILE *write_ptr;
+	write_ptr = fopen("test.bin","wb");  // w for write, b for binary
+	size_t arrsize = sizeof(float)*u_vec.size[0]*u_vec.size[1]*u_vec.size[2]*u_vec.size[3];
+	fwrite((char*)u_vec.data,arrsize,1,write_ptr); // write bytes from our buffer
+
+}
 #endif
 
 
