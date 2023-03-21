@@ -29,7 +29,7 @@ print("Start case id: " , case_count)
 #temp_file_name = "temp_script_file.txt"
 
 #creating names for files
-measurement_name = "800_CUDA"
+measurement_name = "800_CUDA_TILE"
 measurement_csv = measurement_name + "_results.csv"
 measurement_summary = measurement_name + "_summary.log"
 
@@ -63,7 +63,7 @@ for i in range(case_count,len(cases)):
 	print("Case: %d/%d" % (case_count,case_number))
 	begin_temp = get_gpu_temperature()
 	print("temp:",begin_temp,"C")
-	extra = "-DF{}_{} //-Dblocksize_x={} -Dblocksize_y={} -Dblocksize_z={} -Dtilesize_x={} -Dtilesize_y={} -Dtilesize_z={} -Dteamsize_x={} -Dteamsize_y={} -Dteamsize_z={} -DTHREADLIMIT={}".format(area,so,bx,by,bz,tx,ty,tz,x,y,z,thread_limit)
+	extra = "-DF{}_{} -Dblocksize_x={} -Dblocksize_y={} -Dblocksize_z={} -Dtilesize_x={} -Dtilesize_y={} -Dtilesize_z={} -Dteamsize_x={} -Dteamsize_y={} -Dteamsize_z={} -DTHREADLIMIT={}".format(area,so,bx,by,bz,tx,ty,tz,x,y,z,thread_limit)
 	#print(extra)
 	build_main(extra)
 	forward_time = 	test_run()
