@@ -74,6 +74,24 @@ def create_test_cases(type):
 		block_threads = [-1] # for cuda thread limit is defined by x*y*z
 		block_parts = [2,4,8,16,32,64]
 
+	if type == "cuda_tile":
+		block_parts = [2,4,8,16,32,64,128]
+		tile_parts = [1,2,4,8]
+		for area in areas:
+			for so in space_orders:
+				for bx in block_parts:
+					for by in block_parts:
+						for bz in block_parts:
+							for tx in tile_parts:
+								for ty in tile_parts:
+									for tz in tile_parts:
+										Ax,Ay,Az = (bx*tx,by*ty,bz*tz)
+										size = Ax*Ay*Az
+										if size <= 1024:
+											cases.append((area,so,bx,by,bz,tx,ty,tz,Ax,Ay,Az,size))
+		return cases
+	
+
 	if type == "openmp":
 		#this case we need the default cases
 		block_threads = [128,256,512,1024]
@@ -98,8 +116,12 @@ def export_cases(cases,path = "./cases.csv"):
 	f = open(path,'w')
 	for case in cases:
 		#print(case)
-		area,so,x,y,z,t = case
-		f.write("{},{},{},{},{},{}\n".format(area,so,x,y,z,t))
+		case = list(case)
+		line = ""
+		for p in case:
+			line+=str(p)+","
+		line = line[0:-1]
+		f.write(line+"\n")
 	f.flush()
 	f.close()
 
@@ -116,7 +138,9 @@ def import_cases(path = "./cases.csv",type = "openmp"):
 	for line in lines:
 		line = line.strip()
 		params = line.split(',')
-		case = (int(params[0]),int(params[1]),int(params[2]),int(params[3]),int(params[4]),int(params[5]))
+		case = [int(p) for p in params]
+		case = tuple(case)
+		#case = (int(params[0]),int(params[1]),int(params[2]),int(params[3]),int(params[4]),int(params[5]))
 		cases.append(case)
 	return cases
 

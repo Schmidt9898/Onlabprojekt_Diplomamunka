@@ -44,6 +44,12 @@ Develop/vgcore.2082509
 Cuda/bin/
 *.prof
 Automated_testing/__pycache__/SLtools.cpython-36.pyc
-Automated_testing/cuda_test/bin/lib
+Automated_testing/cuda_test/bin/
+Automated_testing/cuda_tile/bin/
 *.log
 Automated_testing/cuda_test/tsf.txt
+*case_number.cache
+*cases.csv
+*.bin
+*tsf.txt
+meas_tools/bin/

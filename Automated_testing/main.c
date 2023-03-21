@@ -77,7 +77,7 @@ printf("Start\n");
 #include "dimension_src/declare_800_8.h"
 #include "dimension_src/declare_800_16.h"
 
-time_M = 10;
+time_M = 11;
 #ifdef blocksize_x
 	printf("x = %d,y = %d,z = %d,t = %d\n",blocksize_x,blocksize_y,blocksize_z,-1);
 #endif

@@ -1,5 +1,7 @@
 
+
 export SM_VAL='sm_80'
+#export SM_VAL='sm_70'
 source start 15.3
 source py_venv/bin/activate
 
