@@ -75,19 +75,25 @@ def create_test_cases(type):
 		block_parts = [2,4,8,16,32,64]
 
 	if type == "cuda_tile":
-		block_parts = [2,4,8,16,32,64,128]
-		tile_parts = [1,2,4,8]
+		block_parts = [2,4,8,16,32,64]
+		tile_parts = [1,2,4]
 		for area in areas:
 			for so in space_orders:
 				for bx in block_parts:
 					for by in block_parts:
 						for bz in block_parts:
+							if bx == by and by == bz:
+								continue
 							for tx in tile_parts:
 								for ty in tile_parts:
 									for tz in tile_parts:
 										Ax,Ay,Az = (bx*tx,by*ty,bz*tz)
 										size = Ax*Ay*Az
-										if size <= 1024:
+										if Ax == Ay and Ay == Az:
+											continue
+										if tx == ty and ty == tz:
+											continue
+										if size <= 512 and size >= 128:
 											cases.append((area,so,bx,by,bz,tx,ty,tz,Ax,Ay,Az,size))
 		return cases
 	
