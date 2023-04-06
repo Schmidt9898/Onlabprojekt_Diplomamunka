@@ -1,0 +1,29 @@
+
+írd át a sm_ architecture -t hogy jó gpu-t használjon
+
+sbatch -pgpu --nodelist=neumann ./Slurm_job.sh
+
+make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -g ' build
+make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -g ' prep
+
+make EXTRA='-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=1024 -Dblocksize_x=64 -Dblocksize_y=64 -Dblocksize_z=64 -Dtilesize_x=4 -Dtilesize_y=2 -Dtilesize_z=4  -g ' build
+
+
+
+sbatch -pgpu --nodelist=neumann --exclusive ./blocked_Sjob.sh
+sbatch -pgpu --nodelist=neumann ./tilled_Sjob.sh
+
+
+
+
+
+cuda blocked: 
+	353932528
+cuda tile: 
+	353932528
+
+openmp:
+	356255728
+	349286128 t=1
+
+	2323200

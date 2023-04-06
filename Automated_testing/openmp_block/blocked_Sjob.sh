@@ -29,7 +29,7 @@ pwd
 
 nvidia-smi
 
-export SM_VAL='sm_70'
+export SM_VAL='sm_80'
 
 python3 ./execute_block_test.py
 

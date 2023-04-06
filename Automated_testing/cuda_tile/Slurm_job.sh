@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --ntasks=1
-#SBATCH --gres=gpu:1
-#SBATCH --job-name=cuda_800
+#SBATCH --gres=gpu:0
+#SBATCH --job-name=cuda_Til
 #SBATCH --output=cuda_800_measurement.%j.out
 
 #SBATCH --time=11:00:00
@@ -25,7 +25,7 @@ cd /home/schmidtl/Onlabprojekt/Automated_testing/cuda_tile
 
 
 
-export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=0
 
 pwd
 

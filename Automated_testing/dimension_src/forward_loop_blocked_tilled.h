@@ -5,7 +5,7 @@
 			for (int Bz = z_m; Bz <= z_M; Bz += blocksize_z)
 			{
 			#pragma omp parallel for collapse(3)
-			#pragma omp tile sizes(4,1,1)
+			#pragma omp tile sizes(tilesize_x,tilesize_y,tilesize_z)
 			for (int x = Bx; x < Bx + blocksize_x; x++)
 				for (int y = By; y < By + blocksize_y; y++)
 					for (int z = Bz; z < Bz + blocksize_z; z++)
