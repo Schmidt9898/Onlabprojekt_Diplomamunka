@@ -70,6 +70,7 @@ def create_test_cases(type):
 	cases=[]
 	areas = [800]
 	space_orders = [2,4,8,16]
+	block_threads = [-1] 
 	if type == "cuda":
 		block_threads = [-1] # for cuda thread limit is defined by x*y*z
 		block_parts = [2,4,8,16,32,64]
@@ -97,6 +98,61 @@ def create_test_cases(type):
 											cases.append((area,so,bx,by,bz,tx,ty,tz,Ax,Ay,Az,size))
 		return cases
 	
+	if type == "omp_blocked_tile":
+		count_num = 0
+		block_parts = [2,4,8,16,32,64]
+		tile_parts = [1,2,4,8]
+		block_threads = [128,256,512,1024]
+		for area in areas:
+			for so in space_orders:
+
+				
+				for bx in block_parts:
+					for by in block_parts:
+						for bz in block_parts:
+							
+							if bx == by and by == bz:
+							#	continue
+								pass
+							
+							for tx in tile_parts:
+								for ty in tile_parts:
+									for tz in tile_parts:
+										if 1 == tx and 1 == ty and 1 == tz: # cant be smaler than the tile
+											continue
+
+
+										if bx < tx or by < ty or bz < tz: # cant be smaler than the tile
+											continue
+											pass
+
+										for t in block_threads:
+
+											block_size = bx*by*bz
+
+											size = t*tx*ty*tz
+											if size > 1024:
+												continue
+
+											if size != block_size:
+												#print("wrong")
+												continue
+												pass
+											#if Ax == Ay and Ay == Az:
+											#	continue
+											#if tx == ty and ty == tz:
+											#	continue
+
+											#if size <= 512 and size >= 128:
+											#print((area,so,bx,by,bz,tx,ty,tz,size))
+											#cases.append((area,so,bx,by,bz,tx,ty,tz,size))
+											count_num+=1
+											if count_num % 10 == 0:
+												cases.append((area,so,bx,by,bz,tx,ty,tz,size))
+
+		#print("len",len(cases))
+		#quit()
+		return cases
 
 	if type == "openmp":
 		#this case we need the default cases
@@ -116,6 +172,7 @@ def create_test_cases(type):
 							if x*y*z <= 1024:
 								cases.append((area,so,x,y,z,t))
 								#print(x,y,z,"=",x*y*z,t)
+
 	return cases 
 
 def export_cases(cases,path = "./cases.csv"):
