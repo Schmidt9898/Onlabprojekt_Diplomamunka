@@ -3,7 +3,8 @@
 
 
 
-flags = -Xopenmp-target -march=$(sm_VAL) -O3 -fPIC -Wno-unused-result -Wno-unused-variable -ffast-math -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lm -L $(CLANG_HOME)/lib -lomptarget -fopenmp-version=51 # -g -Wall
+flags = -Xopenmp-target -march=$(sm_VAL) -Ofast -ffast-math -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lomptarget # -g -Wall
+#flags = -Xopenmp-target -march=$(sm_VAL) -O3 -fPIC -Wno-unused-result -Wno-unused-variable -ffast-math -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lm -L $(CLANG_HOME)/lib -lomptarget -fopenmp-version=51 # -g -Wall
 
 
 sm_VAL = ${SM_VAL}

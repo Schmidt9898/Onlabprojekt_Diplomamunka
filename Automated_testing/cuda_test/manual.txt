@@ -12,3 +12,18 @@ error: 0.009720 - 0.000378 = 0.009343 | at: t: 0, x: 2, y: 38, z: 780,
 
 
 -0.018665
+
+
+
+nvprof -m flop_count_sp gld_troughput
+
+
+Invocations                               Metric Name                            Metric Description         Min         Max         Avg
+Device "Tesla V100S-PCIE-32GB (0)"
+    Kernel: cuda_section0(int, int, int, int, int, int, int, int, int, float*, float*, float*)
+         11                             flop_count_sp   Floating Point Operations(Single Precision)  4.7703e+10  4.7703e+10  4.7703e+10
+==1044124== Metric result:
+Invocations                               Metric Name                            Metric Description         Min         Max         Avg
+Device "Tesla V100S-PCIE-32GB (0)"
+    Kernel: __omp_offloading_30_342ccec_Forward_l2
+         11                             flop_count_sp   Floating Point Operations(Single Precision)  4.9066e+10  4.9066e+10  4.9066e+10

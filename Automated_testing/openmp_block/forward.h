@@ -84,8 +84,17 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
   float r9 = 1.0F/dt;
 
 
+
+
+
   for (int time = time_m, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3); time <= time_M; time += 1, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3))
   {
+#define x_M 879
+#define x_m 0
+#define y_M 879
+#define y_m 0
+#define z_M 879
+#define z_m 0
 //printf("time\n");
     /* Begin section0 */
     START_TIMER(section0)
@@ -98,11 +107,22 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
 #include "../dimension_src/func_800_4.h"
 #include "../dimension_src/func_800_8.h"
 #include "../dimension_src/func_800_16.h"
+
+
+
+
 		
 		}
       }
     }
     STOP_TIMER(section0,timers)
+
+#undef x_M
+#undef x_m
+#undef y_M
+#undef y_m
+#undef z_M
+#undef z_m
 
 
 // This code part is for to make sure the measured parts are not the first
