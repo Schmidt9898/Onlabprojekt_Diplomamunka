@@ -55,3 +55,4 @@ Automated_testing/cuda_test/tsf.txt
 meas_tools/bin/
 
 *.csv
+Automated_testing/cuda_test_decomposed/bin/*
