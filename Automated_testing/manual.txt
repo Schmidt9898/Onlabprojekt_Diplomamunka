@@ -4,6 +4,7 @@ sbatch -pgpu --nodelist=neumann --exclusive ./cuda_test/Slurm_job.sh
 sbatch -pgpu --nodelist=neumann --exclusive ./cuda_tile/Slurm_job.sh
 sbatch -pgpu --nodelist=neumann --exclusive ./openmp_block/blocked_Sjob.sh
 sbatch -pgpu --nodelist=neumann --exclusive ./openmp_block/tilled_Sjob.sh
+sbatch -pgpu --nodelist=neumann --exclusive ./openmp_blocktile/blocked_tille_Sjob.sh
 
 
 

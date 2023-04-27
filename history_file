@@ -1,0 +1,996 @@
+    1  clear
+    2  squeue 
+    3  sbatch -pgpu --nodelist=neumann --exclusive ./tilled_Sjob.sh 
+    4  clear
+    5  clear & squeue 
+    6  scancel 32248
+    7  clear & squeue 
+    8  scancel 32249
+    9  squeue 
+   10  clear
+   11  cd ..
+   12  pwd
+   13  code manual.txt
+   14  ls
+   15  clear
+   16  git status
+   17  git add manual.txt
+   18  clear
+   19  git commit -m "3 script are done" -m "i want to die"
+   20  git push
+   21  clear
+   22  cd cuda_tile/
+   23  code reguly.cu
+   24  saquery 
+   25  squeue 
+   26  cd ..
+   27  clear
+   28  ls
+   29  code manual.txt 
+   30  sbatch -pgpu --nodelist=neumann --exclusive ./cuda_test/Slurm_job.sh
+   31  sbatch -pgpu --nodelist=neumann --exclusive ./openmp_block/blocked_Sjob.sh
+   32  sbatch -pgpu --nodelist=neumann --exclusive ./openmp_block/tilled_Sjob.sh
+   33  squeue 
+   34  clear
+   35  squeue 
+   36  cd Onlabprojekt/
+   37  source start 15.3
+   38  source py_venv/bin/activate
+   39  cd Automated_testing/cuda_test/
+   40  export SM_VAL='sm_80'
+   41  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO ' build
+   42  make run
+   43  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO ' build
+   44  make run
+   45  cd ..
+   46  cd openmp_block/
+   47  cudaDeviceSynchronize();
+   48  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -g ' prep
+   49  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -g ' build
+   50  make run
+   51  clear
+   52  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -g ' build
+   53  make run
+   54  squeue 
+   55  nvidia-smi
+   56  clear
+   57  nvidia-smi
+   58  exit
+   59  ssh renyi
+   60  exit
+   61  clear
+   62  squeue 
+   63  salloc -pgpu --nodelist=renyi
+   64  squeue 
+   65  source /home/schmidtl/Onlabprojekt/py_venv/bin/activate
+   66  clear
+   67  cd Automated_testing/
+   68  sbatch -pgpu --nodelist=renyi ./cuda_test/Slurm_job.sh
+   69  squeue 
+   70  clear
+   71  git status
+   72  cd Onlabprojekt/
+   73  source py_venv/bin/activate
+   74  source start 15.3
+   75  clear
+   76  cd Automated_testing/
+   77  cd openmp_block/
+   78  clear
+   79  python execute_block_test.py 
+   80  export SM_VAL='sm_70'
+   81  python execute_block_test.py 
+   82  clear
+   83  python execute_block_test.py 
+   84  clear
+   85  python execute_block_test.py 
+   86  clear
+   87  exit
+   88  ssh neumann
+   89  exit
+   90  squeue 
+   91  clear
+   92  source py_venv/bin/activate
+   93  cd Automated_testing/
+   94  clear
+   95  py
+   96  python
+   97  clear
+   98  squeue 
+   99  clear
+  100  cd cuda_t
+  101  cd cuda_test/
+  102  clear
+  103  python execute.py 
+  104  clear
+  105  python execute.py 
+  106  clear
+  107  python execute.py 
+  108  clear
+  109  python execute.py 
+  110  clear
+  111  python execute.py 
+  112  clear
+  113  python execute.py 
+  114  git status
+  115  git add -u
+  116  git status
+  117  clear
+  118  git commit -m "valami, fáradt vagyok"
+  119  clear
+  120  git push
+  121  clear
+  122  python execute.py 
+  123  clear
+  124  python execute.py 
+  125  clear
+  126  python execute.py 
+  127  clear
+  128  python execute.py 
+  129  clear
+  130  cd ..
+  131  clear
+  132  cd openmp_block/
+  133  python execute_block_test.py 
+  134  clear
+  135  python execute_block_test.py 
+  136  clear
+  137  python execute_block_test.py 
+  138  clear
+  139  python execute_block_test.py 
+  140  clear
+  141  history | grep sba
+  142  clear
+  143  squeue 
+  144  salloc -pgpu --nodelist=neumann
+  145  clear
+  146  exit
+  147  source /home/schmidtl/Onlabprojekt/py_venv/bin/activate
+  148  git push
+  149  exit
+  150  clear
+  151  cd Onlabprojekt/
+  152  source py_venv/bin/activate
+  153  source start 15.3 
+  154  clear
+  155  cd Automated_testing/
+  156  clear
+  157  cd openmp_block/
+  158  clear
+  159  python execute_tilled_test.py 
+  160  export SM_VAL='sm_70'
+  161  python execute_tilled_test.py 
+  162  clear
+  163  python execute_tilled_test.py 
+  164  clear
+  165  make clean
+  166  clear
+  167  cd ..
+  168  clear
+  169  ls
+  170  ls -l
+  171  cd cuda_test/
+  172  clear
+  173  ls
+  174  make clean
+  175  git status
+  176  git add -u
+  177  git status
+  178  clear
+  179  git status
+  180  git status -u
+  181  git commit -m "measurements ready"
+  182  clear
+  183  exit
+  184  ssh neumann 
+  185  exit
+  186  source /home/schmidtl/Onlabprojekt/py_venv/bin/activate
+  187  clear
+  188  squeue 
+  189  salloc -pgpu --nodelist=neumann
+  190  clear
+  191  cd Onlabprojekt/
+  192  source start 15.3
+  193  source py_venv/bin/activate
+  194  cd Automated_testing/cuda_tile/
+  195  clear
+  196  make init
+  197  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO ' build
+  198  export SM_VAL='sm_70'
+  199  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO ' build
+  200  exit
+  201  cd On
+  202  ssh neumann 
+  203  exit
+  204  squeue 
+  205  cd Automated_testing/
+  206  clear
+  207  cd dimension_src/
+  208  clear
+  209  make
+  210  clear
+  211  cd ..
+  212  squeue 
+  213  salloc -pgpu --nodelist=neumann
+  214  clear
+  215  squeue 
+  216  salloc -pgpu --nodelist=renyi
+  217  clear
+  218  squeue 
+  219  ssh renyi
+  220  clear
+  221  cd Onlabprojekt/
+  222  source py_venv/
+  223  source py_venv/bin/activate
+  224  source start 15.3
+  225  cd Automated_testing/
+  226  clear
+  227  cd cuda_tile/
+  228  clear
+  229  make clean
+  230  clear
+  231  make init
+  232  make build
+  233  export SM_VAL='sm_80'
+  234  clear
+  235  make build
+  236  make EXTRA='-DF800_2 -DTHREADLIMIT -DMOREINFO ' build
+  237  make EXTRA='-DF800_2 -DTHREADLIMIT -DMOREINFO -WALL ' build
+  238  make EXTRA='-DF800_2 -DTHREADLIMIT -DMOREINFO -Wall ' build
+  239  make EXTRA='-DF800_2 -DTHREADLIMIT -DMOREINFO -wall ' build
+  240  make EXTRA='-DF800_2 -DTHREADLIMIT -DMOREINFO --Wall ' build
+  241  make EXTRA='-DF800_2 -DTHREADLIMIT -DMOREINFO ' build
+  242  make EXTRA='-DF800_2 -DTHREADLIMIT -DMOREINFO -E ' build
+  243  make EXTRA='-DF800_2 -DTHREADLIMIT -DMOREINFO ' build
+  244  clear
+  245  make EXTRA='-DF800_2 -DTHREADLIMIT -DMOREINFO ' build
+  246  make run
+  247  clear
+  248  make EXTRA='-DF800_2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC ' build
+  249  clear
+  250  make EXTRA='-DF800_2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC ' build
+  251  make run
+  252  stat test.bin 
+  253  py
+  254  clear
+  255  make EXTRA='-DF800_2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC ' build
+  256  make run
+  257  stat test.bin 
+  258  cd ..
+  259  clear
+  260  cd openmp_block/
+  261  clear
+  262  make clean
+  263  make init
+  264  make EXTRA='-DF800_2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC ' build
+  265  make EXTRA='-DF800_2 -DFORNAIV -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC ' build
+  266  make run
+  267  clear
+  268  stat test.bin 
+  269  clear
+  270  cd ..
+  271  cd meas_tools/
+  272  CC
+  273  $CC
+  274  make build_validate 
+  275  mkdir bin
+  276  make build_validate 
+  277  ./bin/byte_valid ../Automated_testing/openmp_block/test.bin ../Automated_testing/cuda_tile/test.bin 
+  278  make build_validate 
+  279  ./bin/byte_valid ../Automated_testing/openmp_block/test.bin ../Automated_testing/cuda_tile/test.bin 
+  280  ./bin/byte_valid ../Automated_testing/openmp_block/test.bin ../Automated_testing/cuda_tile/test.bin  get
+  281  cd Onlabprojekt/
+  282  source py_venv/bin/activate
+  283  source start 15.3
+  284  cd Automated_testing/
+  285  clear
+  286  cd cuda_test/
+  287  clear
+  288  make clean
+  289  make init
+  290  export SM_VAL='sm_80'
+  291  make EXTRA='-DF800_2 -DFORNAIV -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC ' build
+  292  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO ' build
+  293  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC ' build
+  294  make run
+  295  cd ..
+  296  cd meas_tools/
+  297  make build_validate 
+  298  ./bin/byte_valid ../Automated_testing/openmp_block/test.bin ../Automated_testing/cuda_test/test.bin 
+  299  ./bin/byte_valid ../Automated_testing/cuda_tile/test.bin ../Automated_testing/cuda_test/test.bin 
+  300  ./bin/byte_valid ../Automated_testing/openmp_block/test.bin ../Automated_testing/cuda_test/test.bin get
+  301  clear
+  302  cd ..
+  303  cd Automated_testing/openmp_block/
+  304  make clean
+  305  make EXTRA='-DF800_2 -DFORBLOCKED -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC ' build
+  306  make EXTRA='-DF800_2 -DFORBLOCKED -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC ' build
+  307  make run
+  308  ../../meas_tools /bin/byte_valid ../Automated_testing/openmp_block/test.bin  ../Automated_testing/cuda_test/test.bin 
+  309  ../../meas_tools/bin/byte_valid ../Automated_testing/openmp_block/test.bin  ../Automated_testing/cuda_test/test.bin 
+  310  ../../meas_tools/bin/byte_vali./test.bin
+  311  ../../meas_tools/bin/byte_vali ./test.bin
+  312  ../../meas_tools/bin/byte_valid ./test.bin
+  313  ../../meas_tools/bin/byte_valid ./test.bin  ./ground.bin 
+  314  ../../meas_tools/bin/byte_valid ./test.bin  ./ground.bin get
+  315  cd ..
+  316  cd cuda_tile/
+  317  clear
+  318  make clean
+  319  make init
+  320  make EXTRA='-DF800_2 -DFORBLOCKED -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC ' build
+  321  make run
+  322  ../../meas_tools/bin/byte_valid ../openmp_blockground.bin./test.bin get
+  323  ../../meas_tools/bin/byte_valid ../openmp_blockground.bin ./test.bin get
+  324  ../../meas_tools/bin/byte_valid ../openmp_block/ground.bin ./test.bin get
+  325  clear
+  326  rm test.bin 
+  327  ls
+  328  make clean
+  329  make init
+  330  make EXTRA='-DF800_2 -DFORBLOCKED -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC ' build
+  331  make run
+  332  ls
+  333  ../../meas_tools/bin/byte_valid ../openmp_block/ground.bin ./test.bin get
+  334  clear
+  335  cd ..
+  336  cd meas_tools/
+  337  make build_validate
+  338  clear
+  339  make build_validate
+  340  clear
+  341  make build_validate
+  342  byate_valid
+  343  ./byate_valid
+  344  ./byte_valid
+  345  byte_valid
+  346  clear
+  347  byte_valid
+  348  make build_validate
+  349  pwd
+  350  $(pwd)
+  351  make build_validate
+  352  byte_valid
+  353  ./byte_valid
+  354  clear
+  355  cd ..
+  356  cd Automated_testing/
+  357  byte_valid ./openmp_block/ground.bin ./openmp_block/test.bin 
+  358  ./byte_valid ./openmp_block/ground.bin ./openmp_block/test.bin 
+  359  byte_valid ./openmp_block/ground.bin ./openmp_block/test.bin 
+  360  $(byte_valid) ./openmp_block/ground.bin ./openmp_block/test.bin 
+  361  clear
+  362  cd ..
+  363  cd meas_tools/
+  364  make build_validate
+  365  clear
+  366  byte_valid
+  367  ./byte_valid
+  368  clear
+  369  make build_validate
+  370  validate
+  371  ./validate
+  372  clear
+  373  validate
+  374  export alias validate="$(pwd)/bin/byte_valid"
+  375  validate
+  376  $(pwd)/bin/byte_valid
+  377  pwd
+  378  export SM_VAL='sm_80'
+  379  clear
+  380  exit
+  381  clear
+  382  cd Onlabprojekt/
+  383  source init_workspace 
+  384  validate
+  385  $SM_VAL
+  386  $validate
+  387  source init_workspace 
+  388  validate
+  389  $validate
+  390  exit
+  391  squeue 
+  392  salloc -pgpu --nodelist=renyi
+  393  nyi 
+  394  ssh renyi
+  395  clear
+  396  ssh renyi
+  397  cd Onlabprojekt/
+  398  source init_workspace 
+  399  clear
+  400  source init_workspace 
+  401  source init_workspace 
+  402  cd Onlabprojekt/
+  403  source init_workspace 
+  404  validate
+  405  $validate
+  406  clear
+  407  cd Automated_testing/
+  408  clear
+  409  $validate ./openmp_block/ground.bin ./openmp_block/test.bin 
+  410  $validate ./openmp_block/ground.bin ./openmp_block/test.bin get
+  411  clear
+  412  cd ..
+  413  source init_workspace 
+  414  cd Automated_testing/
+  415  $validate ./openmp_block/ground.bin ./openmp_block/test.bin get
+  416  cd ..
+  417  source init_workspace 
+  418  cd Automated_testing/
+  419  $validate ./openmp_block/ground.bin ./openmp_block/test.bin get
+  420  cd ..
+  421  source init_workspace 
+  422  cd Automated_testing/
+  423  $validate ./openmp_block/ground.bin ./openmp_block/test.bin get
+  424  clear
+  425  $validate ./openmp_block/ground.bin ./openmp_block/test.bin get
+  426  $validate ./openmp_block/ground.bin ./cuda_test/test.bin 
+  427  $validate ./openmp_block/ground.bin ./cuda_tile/test.bin 
+  428  $validate ./openmp_block/ground.bin ./cuda_tile/test.bin get
+  429  clear
+  430  $validate ./openmp_block/ground.bin ./cuda_tile/test.bin get
+  431  clear
+  432  cd cuda_t
+  433  $validate ./openmp_block/ground.bin ./cuda_tile/test.bin get
+  434  clear
+  435  cd cuda_test/
+  436  make clean
+  437  make init
+  438  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC' build
+  439  make run
+  440  cd ..
+  441  cd openmp_block/
+  442  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -DMOREINFO ' build
+  443  make rub
+  444  make run
+  445  clear
+  446  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -DMOREINFO ' build
+  447  make run
+  448  clear
+  449  cd ..
+  450  cd cuda_test/ 
+  451  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC' build
+  452  make run
+  453  clear
+  454  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC' build
+  455  make run
+  456  print()
+  457  cd ..
+  458  cd cuda_tile/
+  459  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC' build
+  460  make run
+  461  cd ..
+  462  clear
+  463  cd openmp_block/
+  464  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -DMOREINFO ' build
+  465  make run
+  466  clear
+  467  cd ..
+  468  $validate ./openmp_block/ground.bin ./cuda_tile/test.bin get
+  469  cd Onlabprojekt/
+  470  source init_workspace 
+  471  cd Automated_testing/
+  472  cd openmp_block/
+  473  clear
+  474  make clean init
+  475  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -DMOREINFO ' build
+  476  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -DMOREINFO -DEXPORTUVEC ' build
+  477  clear
+  478  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -DMOREINFO -DEXPORTUVEC ' build
+  479  make run
+  480  clear
+  481  ls
+  482  rm test1.bin 
+  483  rm test.bin 
+  484  rm ground.bin 
+  485  clear
+  486  make clean
+  487  make init
+  488  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -DMOREINFO -DEXPORTUVEC ' build
+  489  make run
+  490  clear
+  491  exit
+  492  clear
+  493  cd Onlabprojekt/
+  494  clear
+  495  ls
+  496  source init_workspace 
+  497  code init_workspace 
+  498  clear
+  499  cd Automated_testing/cuda_t
+  500  cd Automated_testing/cuda_test/
+  501  clear
+  502  make init 
+  503  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC' build
+  504  n
+  505  make run
+  506  $validate ./openmp_block/ground.bin ./cuda_tile/test.bin get
+  507  cd ..
+  508  $validate ./openmp_b ./cuda_tile/test.bin get
+  509  clear
+  510  $validate ./openmp_block/ground.bin ./cuda_test/test.bin 
+  511  $validate ./openmp_block/ground.bin ./cuda_test/test.bin get
+  512  clear
+  513  $validate ./cuda_tile/test.bin ./cuda_test/test.bin get
+  514  clear
+  515  ls
+  516  cd openmp_block/
+  517  make clean
+  518  make init
+  519  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -DMOREINFO -DEXPORTUVEC' build
+  520  ls
+  521  rm test.bin 
+  522  make run
+  523  clear
+  524  ls
+  525  $validate ./test.bin ground.bin 
+  526  $validate ./test.bin ./ground.bin 
+  527  clear
+  528  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -DMOREINFO -DEXPORTUVEC' build
+  529  make run
+  530  $validate ./test.bin ./ground.bin 
+  531  $validate ./test.bin ./ground.bin get
+  532  clear
+  533  cd ..
+  534  clear
+  535  cd openmp_block/
+  536  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -DMOREINFO -DEXPORTUVEC' build
+  537  make run
+  538  $validate ./test.bin ./ground.bin get
+  539  clear
+  540  cd ..
+  541  cd cuda_test/
+  542  make clean
+  543  make init
+  544  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC' build
+  545  make run
+  546  clear
+  547  cd ..
+  548  $validate ./openmp_block/ground.bin ./cuda_test/test.bin get
+  549  clear
+  550  cd cuda_test/
+  551  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC' build
+  552  make run
+  553  clear
+  554  cd ..
+  555  $validate ./openmp_block/ground.bin ./cuda_test/test.bin get
+  556  clear
+  557  cd ..
+  558  clear
+  559  cd Automated_testing/
+  560  clear
+  561  cd openmp_block/
+  562  clear
+  563  make clean
+  564  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -DMOREINFO -DEXPORTUVEC' build
+  565  make init
+  566  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -DMOREINFO -DEXPORTUVEC' build
+  567  clear
+  568  make run
+  569  cd ..
+  570  cd cuda_test/
+  571  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC' build
+  572  make run
+  573  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC' build
+  574  make run
+  575  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC' build
+  576  make run
+  577  cd ..
+  578  $validate ./openmp_block/test.bin ./cuda_test/test.bin get
+  579  clear
+  580  make clean
+  581  cd cuda_test/
+  582  clear
+  583  make clean
+  584  make init
+  585  rm test.bin 
+  586  ls
+  587  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC' build
+  588  clear
+  589  make run
+  590  clear
+  591  $validate ./openmp_block/test.bin ./cuda_test/test.bin get
+  592  cd ..
+  593  $validate ./openmp_block/test.bin ./cuda_test/test.bin get
+  594  clear
+  595  cd cuda_tile/
+  596  make clean init
+  597  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC' build
+  598  clear
+  599  ls
+  600  rm test.bin 
+  601  make run
+  602  cd ..
+  603  $validate ./openmp_block/test.bin ./cuda_tile/test.bin get
+  604  clear
+  605  exit
+  606  clear
+  607  ssh renyi
+  608  exit
+  609  clear
+  610  squeue 
+  611  salloc -pgpu --nodelist=renyi
+  612  ssh renyi
+  613  clear
+  614  git status
+  615  git add -u
+  616  clear
+  617  git status
+  618  git commit -m "found the error" -m "it was in the test"
+  619  git push
+  620  nvidia-smi
+  621  exit
+  622  squeue 
+  623  exit
+  624  clear
+  625  cd Onlabprojekt/
+  626  clear
+  627  source init_workspace 
+  628  cd Automated_testing/
+  629  clear
+  630  cd cuda_test/
+  631  clear
+  632  clear
+  633  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO' build
+  634  make run
+  635  squeue 
+  636  nvidia-smi
+  637  squeue 
+  638  clear
+  639  exit
+  640  squeue 
+  641  clear
+  642  ssh erdos 
+  643  clear
+  644  squeue 
+  645  exit
+  646  cd Onlabprojekt/
+  647  source init_workspace 
+  648  cd Automated_testing/
+  649  clear
+  650  cd cuda_test/
+  651  clear
+  652  make run
+  653  clear
+  654  export CUDA_VISIBLE_DEVICES=1
+  655  clear
+  656  make run
+  657  nvidia-smi
+  658  exit
+  659  squeue 
+  660  ssh erdos
+  661  exit
+  662  clear
+  663  git push
+  664  clear
+  665  exit
+  666  nvidia-smi
+  667  squeue 
+  668  clear
+  669  cd Onlabprojekt/
+  670  clear
+  671  source init_workspace 
+  672  clear
+  673  source init_workspace 
+  674  cd Automated_testing/
+  675  clear
+  676  cd openmp_block/
+  677  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -DMOREINFO ' build
+  678  clear
+  679  make run
+  680  make run
+  681  make EXTRA='-DFORBLOCKED  -DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO ' build
+  682  clear
+  683  make EXTRA='-DFORBLOCKED  -DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO ' build
+  684  make run
+  685  clear
+  686  make EXTRA='-DFORBLOCKED  -DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO ' build
+  687  make EXTRA='-DFORBLOCKED  -DF800_2 -Dblocksize_x=2 -Dblocksize_y=8 -Dblocksize_z=64 -DTHREADLIMIT -DMOREINFO ' build
+  688  make run
+  689  make EXTRA='-DFORBLOCKED  -DF800_2 -Dblocksize_x=2 -Dblocksize_y=8 -Dblocksize_z=64 -DTHREADLIMIT=1024 -DMOREINFO ' build
+  690  make run
+  691  make EXTRA='-DFORBLOCKED  -DF800_2 -Dblocksize_x=2 -Dblocksize_y=8 -Dblocksize_z=64 -DTHREADLIMIT=1024 -DMOREINFO ' build
+  692  make run
+  693  clear
+  694  cd ..
+  695  clear
+  696  cd cuda_test/
+  697  clear
+  698  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO ' build
+  699  make run
+  700  make EXTRA='-DF800_2 -Dblocksize_x=8 -Dblocksize_y=4 -Dblocksize_z=32 -DTHREADLIMIT -DMOREINFO ' build
+  701  make run
+  702  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=8 -Dblocksize_z=64 -DTHREADLIMIT=1024 -DMOREINFO ' build
+  703  make run
+  704  cd ..
+  705  clear
+  706  $validate ./openmp_block/test.bin ./cuda_tile/test.bin get
+  707  clear
+  708  cd openmp_block/
+  709  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -DMOREINFO -EXPORTUVEC' build
+  710  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -DMOREINFO -DEXPORTUVEC' build
+  711  make run
+  712  clear
+  713  cd ..
+  714  cd cuda_test/
+  715  make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=8 -Dblocksize_z=64 -DTHREADLIMIT=1024 -DMOREINFO -DEXPORTUVEC' build
+  716  make run
+  717  cd ..
+  718  clear
+  719  $validate ./openmp_block/test.bin ./cuda_tile/test.bin get
+  720  clear
+  721  $validate ./openmp_block/test.bin ./cuda_test/test.bin get
+  722  clear
+  723  cd cuda_tile/
+  724  cd ..
+  725  clear
+  726  cd cuda_test/
+  727  py execute.py 
+  728  python execute.py 
+  729  clear
+  730  python execute.py 
+  731  clear
+  732  python execute.py 
+  733  clear
+  734  cd ..
+  735  clear
+  736  cd cuda_tile/
+  737  clear
+  738  ls
+  739  python execute.py 
+  740  clear
+  741  python execute.py 
+  742  clear
+  743  python execute.py 
+  744  clear
+  745  git status
+  746  clear
+  747  git status -u
+  748  git add -A
+  749  clear
+  750  git status
+  751   git commit -m "almost done"
+  752  clear
+  753  python execute.py 
+  754  clear
+  755  python execute.py 
+  756  clear
+  757  pwd
+  758  clear
+  759  git status
+  760  git add -u
+  761  git add Slurm_job.sh 
+  762  clear
+  763  git status
+  764  git commit -m "cuda tile test is done"
+  765  clear
+  766  exit
+  767  clear
+  768  squeue 
+  769  salloc -pgpu --nodelist=renyi
+  770  clear
+  771  ssh renyi
+  772  clear
+  773  squeue 
+  774  salloc -pgpu --nodelist=renyi --gres=gpu:0
+  775  salloc -pgpu --nodelist=renyi --gres=gpu:1
+  776  clear
+  777  slist
+  778  salloc
+  779  clear
+  780  squeue 
+  781  salloc -pgpu --gres=gpu:0
+  782  salloc -pgpu --gres=gpu:1
+  783  clear
+  784  squeue 
+  785  ssh renyi
+  786  exit
+  787  nvidia-smi
+  788  clear
+  789  ps
+  790  clear
+  791  cd Onlabprojekt/
+  792  clear
+  793  source init_workspace 
+  794  clear
+  795  cd Automated_testing/
+  796  clear
+  797  cd cuda_tile/
+  798  clear
+  799  python execute.py 
+  800  clear
+  801  python execute.py 
+  802  clear
+  803  python execute.py 
+  804  clear
+  805  python execute.py 
+  806  clear
+  807  python execute.py 
+  808  clear
+  809  python execute.py 
+  810  clear
+  811  python execute.py 
+  812  clear
+  813  python execute.py 
+  814  clear
+  815  python execute.py 
+  816  clear
+  817  exit
+  818  clear
+  819  squeue 
+  820  ssh renyi
+  821  exit
+  822  clear
+  823  git status
+  824  git status -u
+  825  clear
+  826  git add -u
+  827  git status
+  828  git commit -m "minor changes"
+  829  clear
+  830  git push
+  831  clear
+  832  squeue 
+  833  clear
+  834  cd Automated_testing/
+  835  clear
+  836  squeue 
+  837  aaaaaaaaaaaaaaaa sbatch -pgpu --nodelist=renyi --exclusive ./cuda_test/Slurm_job.sh 
+  838  clear
+  839  squeue 
+  840  clear
+  841  sbatch -pgpu --gres=gpu:0 --nodelist=renyi --exclusive ./cuda_test/Slurm_job.sh 
+  842  squeue 
+  843  sbatch -pgpu --gres=gpu:0 --nodelist=renyi --exclusive ./cuda_test/Slurm_job.sh 
+  844  squeue 
+  845  scancel 42123
+  846  squeue 
+  847  clear
+  848  sbatch -pgpu --gres=gpu:0 --nodelist=renyi --exclusive ./cuda_tile/Slurm_job.sh 
+  849  squeue 
+  850  scancel 42126
+  851  squeue 
+  852  sbatch -pgpu --gres=gpu:0 --nodelist=renyi --exclusive ./cuda_tile/Slurm_job.sh 
+  853  clear
+  854  sbatch -pgpu --gres=gpu:1 --nodelist=renyi --exclusive ./openmp_block/blocked_Sjob.sh 
+  855  squeue 
+  856  scancel 42128
+  857  scancel 42131
+  858  squeue 
+  859  scancel 42122
+  860  clear
+  861  sbatch -pgpu --gres=gpu:0 --nodelist=renyi  ./cuda_test/Slurm_job.sh  
+  862  squeue 
+  863  sbatch -pgpu --gres=gpu:0 --nodelist=renyi  ./cuda_tile/Slurm_job.sh 
+  864  squeue 
+  865  clear
+  866  squeue 
+  867  scancel 42134
+  868  scancel 42135
+  869  squeue 
+  870  clear
+  871  squeue 
+  872  clear
+  873  squeue 
+  874  sbatch -pgpu --gres=gpu:0 --nodelist=renyi --exclusive ./cuda_test/Slurm_job.sh 
+  875  sbatch -pgpu --gres=gpu:0 --nodelist=renyi --exclusive ./cuda_tile/Slurm_job.sh 
+  876  squeue 
+  877  sbatch -pgpu --gres=gpu:0 --nodelist=renyi --exclusive ./openmp_block/blocked_Sjob.sh 
+  878  sbatch -pgpu --gres=gpu:0 --nodelist=renyi --exclusive ./openmp_block/tilled_Sjob.sh 
+  879  clear
+  880  squeue 
+  881  source /home/schmidtl/Onlabprojekt/py_venv/bin/activate
+  882  ssh renyi
+  883  nvidia-smi
+  884  clear
+  885  nvidia-smi
+  886  clear
+  887  ps
+  888  nvidia-smi
+  889  squeue 
+  890  nvidia-smi
+  891  clear
+  892  squeue 
+  893  clear
+  894  squeue 
+  895  clear
+  896  cd Onlabprojekt/
+  897  clear
+  898  source init_workspace 
+  899  clear
+  900  cd Automated_testing/
+  901  clear
+  902  cd openmp_blocktile/
+  903  clear
+  904  ls
+  905  clear
+  906  squeue 
+  907  clear
+  908  ls
+  909  clear
+  910  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -g ' build
+  911  make init
+  912  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -g ' build
+  913  clear
+  914  make clean
+  915  make init
+  916  clear
+  917  make EXTRA='-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=1024 -g ' build
+  918  make EXTRA='-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=1024 -Dblocksize_x=8 -Dblocksize_y=8 -Dblocksize_z=8 -Dtilesize_x=2 -Dtilesize_y=2 -Dtilesize_z=2  -g ' build
+  919  make run
+  920  make EXTRA='-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=1024 -Dblocksize_x=64 -Dblocksize_y=64 -Dblocksize_z=64 -Dtilesize_x=4 -Dtilesize_y=2 -Dtilesize_z=4  -g ' build
+  921  make run
+  922  make EXTRA='-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=1024 -Dblocksize_x=64 -Dblocksize_y=64 -Dblocksize_z=64 -Dtilesize_x=4 -Dtilesize_y=2 -Dtilesize_z=4 -DEXPORTUVEC  -g ' build
+  923  make run
+  924  cd ..
+  925  clear
+  926  cd openmp_block
+  927  clear
+  928  squeue 
+  929  clear
+  930  make EXTRA='-DFORNIVE -DF800_2 -DTHREADLIMIT=1024 -g ' build
+  931  make EXTRA='-DFORNAIVE -DF800_2 -DTHREADLIMIT=1024 -g ' build
+  932  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -g ' build
+  933  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -DEXPORTUVEC ' build
+  934  make run
+  935  make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -DEXPORTUVEC ' build
+  936  cd ..
+  937  clear
+  938  history | grep compare
+  939  history | grep valid
+  940  clear
+  941  validate ./openmp_block/test.bin ./openmp_blocktile/test.bin 
+  942  history | grep valid
+  943  $validate ./openmp_block/test.bin ./openmp_blocktile/test.bin 
+  944  clear
+  945  cd openmp_blocktile/
+  946  clear
+  947  make EXTRA='-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=512 -Dblocksize_x=8 -Dblocksize_y=4 -Dblocksize_z=32 -Dtilesize_x=4 -Dtilesize_y=2 -Dtilesize_z=4  ' build
+  948  make run
+  949  make EXTRA='-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=512 -Dblocksize_x=128 -Dblocksize_y=64 -Dblocksize_z=32 -Dtilesize_x=8 -Dtilesize_y=4 -Dtilesize_z=2  ' build
+  950  make run
+  951  make EXTRA='-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=512 -Dblocksize_x=128 -Dblocksize_y=64 -Dblocksize_z=32 -Dtilesize_x=8 -Dtilesize_y=4 -Dtilesize_z=4  ' build
+  952  make run
+  953  make EXTRA='-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=512 -Dblocksize_x=128 -Dblocksize_y=64 -Dblocksize_z=32 -Dtilesize_x48 -Dtilesize_y=4 -Dtilesize_z=4  ' build
+  954  make EXTRA='-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=512 -Dblocksize_x=128 -Dblocksize_y=64 -Dblocksize_z=32 -Dtilesize_x=4 -Dtilesize_y=4 -Dtilesize_z=4  ' build
+  955  make run
+  956  make EXTRA='-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=64 -Dblocksize_x=128 -Dblocksize_y=64 -Dblocksize_z=32 -Dtilesize_x=4 -Dtilesize_y=2 -Dtilesize_z=2  ' build
+  957  make run
+  958  make EXTRA='-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=64 -Dblocksize_x=256 -Dblocksize_y=128 -Dblocksize_z=128 -Dtilesize_x=4 -Dtilesize_y=2 -Dtilesize_z=2  ' build
+  959  make run
+  960  clear
+  961  ls
+  962  clear
+  963  make run
+  964  clear
+  965  nvidia-smi
+  966  clear
+  967  nvidia-smi
+  968  clear
+  969  make run
+  970  squeue 
+  971  exit
+  972  squeue 
+  973  ssh erdos
+  974  exit
+  975  clear
+  976  cd Onlabprojekt/
+  977  source init_workspace 
+  978  clear
+  979  cd Automated_testing/
+  980  clear
+  981  cd openmp_blocktile/
+  982  make clean init
+  983  make EXTRA='-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=1024 -Dblocksize_x=64 -Dblocksize_y=64 -Dblocksize_z=64 -Dtilesize_x=4 -Dtilesize_y=2 -Dtilesize_z=4  -g ' build
+  984  make EXTRA='-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=1024 -Dblocksize_x=64 -Dblocksize_y=64 -Dblocksize_z=64 -Dtilesize_x=4 -Dtilesize_y=2 -Dtilesize_z=4 ' build
+  985  make run
+  986  clear
+  987  make run
+  988  make EXTRA='-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=512 -Dblocksize_x=64 -Dblocksize_y=64 -Dblocksize_z=64 -Dtilesize_x=4 -Dtilesize_y=2 -Dtilesize_z=4 ' build
+  989  make run
+  990  make EXTRA='-DFORBLOCKTILLED -DF800_16 -DTHREADLIMIT=512 -Dblocksize_x=64 -Dblocksize_y=64 -Dblocksize_z=64 -Dtilesize_x=4 -Dtilesize_y=2 -Dtilesize_z=4 ' build
+  991  make run
+  992  cd ..
+  993  cd cuda_test/
+  994  nvprof -m gld_throughput  ./bin/run
+  995  history
+  996  history >> history_file

@@ -31,7 +31,7 @@ nvidia-smi
 
 export SM_VAL='sm_70'
 
-python3 ./execute_tilled_test.py
+python3 ./execute_blocked_tille_test.py
 
 date
 

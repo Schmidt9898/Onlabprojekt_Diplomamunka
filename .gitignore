@@ -53,3 +53,5 @@ Automated_testing/cuda_test/tsf.txt
 *.bin
 *tsf.txt
 meas_tools/bin/
+
+*.csv

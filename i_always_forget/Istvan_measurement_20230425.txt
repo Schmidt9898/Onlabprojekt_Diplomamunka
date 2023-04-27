@@ -1,0 +1,46 @@
+
+Szia! Tegnap esete belekalapáltam a main_so8.c-be azokat a makrókat amik a teszteléshez kellenek, és megindítottam a blocked meg tiled méréseket (utóbbi még fut)
+A100-on, 15.3-mal:
+
+OMP base
+so    thread_limit    size    x    y    z    execution time
+2    -1    800    -1    -1    -1    0.261353
+4    -1    800    -1    -1    -1    0.316363
+8    -1    800    -1    -1    -1    0.42964
+16    -1    800    -1    -1    -1    0.66458
+
+ 
+
+OMP block
+2    256    800    16    1    64    0.165123
+4    256    800    16    1    64    0.153729
+8    256    800    16    4    16    0.201533
+16    256    800    16    2    32    0.254217
+
+ 
+
+OMP tiled
+2    512    800    4    16    1    0.128574
+4    256    800    64    1    2    0.135545
+8    512    800    64    1    1    0.238173
+16    128    800    64    1    1    0.295892
+
+
+CUDA
+2    -1    800    8    2    32    0.116035
+4    -1    800    16    2    32    0.127782
+8    -1    800    4    4    32    0.163686
+16    -1    800    16    2    32    0.212242
+
+
+ez a CUDA még a te mérési környzetedből
+
+
+itt vannak a blocking + tiling eredmenyek, teljesen random modon (csak minden 10-ik kombinacio lett futtatva)
+
+block+tile
+2    256    800    16    4    64    2    2    2    0.099832
+4    256    800    16    8    32    2    4    1    0.117216
+8    256    800    8    8    64    32    1    2    0.209564
+16    512    800    16    8    64    64    1    1    0.225044
+so 8-nal nem gyorsabb az eddigieknel, de a tobbinel igen

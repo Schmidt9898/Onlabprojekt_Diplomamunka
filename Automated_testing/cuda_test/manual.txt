@@ -7,6 +7,7 @@ make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIM
 make EXTRA='-DF800_2 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2 -DTHREADLIMIT -DMOREINFO -DEXPORTUVEC' build
 
 
+make EXTRA='-DF800_8 -Dblocksize_x=8 -Dblocksize_y=2 -Dblocksize_z=32  ' build
 
 error: 0.009720 - 0.000378 = 0.009343 | at: t: 0, x: 2, y: 38, z: 780, 
 

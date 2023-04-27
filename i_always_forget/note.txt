@@ -1,0 +1,7 @@
+inst_per_warp  vedd figyelembe a threadlimitet
+
+
+
+const restrict for 4d arrays
+cast pointer, const size vs dynamic 
+create macro 
