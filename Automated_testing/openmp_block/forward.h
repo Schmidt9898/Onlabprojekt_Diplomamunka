@@ -54,8 +54,8 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
   float * restrict src = (float *) src_vec->data;
   float * restrict src_coords = (float *) src_coords_vec->data;
   float * restrict u = (float *) u_vec->data;
-  const float * restrict u0 = ((float *) u_vec->data) + u_vec->size[3]*u_vec->size[1]*u_vec->size[2] ;
-  const float * restrict u1 = ((float *) u_vec->data) + u_vec->size[3]*u_vec->size[1]*u_vec->size[2] * 2 ;
+  /*const */float * restrict u0 = ((float *) u_vec->data) + u_vec->size[3]*u_vec->size[1]*u_vec->size[2] ;
+  /*const */float * restrict u1 = ((float *) u_vec->data) + u_vec->size[3]*u_vec->size[1]*u_vec->size[2] * 2 ;
   float * restrict vp = (float *) vp_vec->data;
 
   #pragma omp target enter data map(to: rec[0:rec_vec->size[0]*rec_vec->size[1]])
@@ -95,12 +95,14 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
 
   for (int time = time_m, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3); time <= time_M; time += 1, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3))
   {
+	/*
 #define x_M 879
 #define x_m 0
 #define y_M 879
 #define y_m 0
 #define z_M 879
 #define z_m 0
+	*/
 //printf("time\n");
     /* Begin section0 */
     START_TIMER(section0)
@@ -109,10 +111,10 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
 #include "dimension_src/forward_loop_blocked.h"
 #include "dimension_src/forward_loop_tilled.h"
 
-#include "../dimension_src/func_800_2.h"
-#include "../dimension_src/func_800_4.h"
-#include "../dimension_src/func_800_8.h"
-#include "../dimension_src/func_800_16.h"
+#include "../dimension_src/decomposed4d/func_800_2.h"
+#include "../dimension_src/decomposed4d/func_800_4.h"
+#include "../dimension_src/decomposed4d/func_800_8.h"
+#include "../dimension_src/decomposed4d/func_800_16.h"
 
 
 

@@ -1,5 +1,5 @@
 #ifdef FORBLOCKED
-#pragma omp target teams distribute collapse(3) thread_limit(THREADLIMIT)
+#pragma omp target teams distribute collapse(3) thread_limit(THREADLIMIT) //deviceptr(u,u0,u1)
 	for(int Bx = x_m; Bx <= x_M; Bx += blocksize_x)
 		for (int By = y_m; By <= y_M; By += blocksize_y)
 			for (int Bz = z_m; Bz <= z_M; Bz += blocksize_z)

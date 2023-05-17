@@ -34,6 +34,13 @@ void delete_dataobj(dataobj a);
 //const int sizex = 800; //If this is not constant, will cause a segfault in runtime with clang-12
 //const int sizey = 800; //and clang-14 if -D
 //const int sizez = 800;
+const int blocksize_x = 8;
+const int blocksize_y = 4;
+const int blocksize_z = 32;
+//#define blocksize_x 8
+//#define blocksize_y 4
+//#define blocksize_z 32
+
 
 
 
@@ -87,22 +94,29 @@ float r9 = 1.0F/dt;
   const long z_fsz0 = u_vec.size[3];
   const long y_fsz1 = damp_vec.size[1];
   const long z_fsz1 = damp_vec.size[2];
-
   const long x_stride0 = x_fsz0*y_fsz0*z_fsz0;
   const long y_stride0 = y_fsz0*z_fsz0;
   const long z_stride0 = z_fsz0;
   const long y_stride1 = y_fsz1*z_fsz1;
   const long z_stride1 = z_fsz1;
+//
+  //const long x_fsz0 = 896;
+  //const long y_fsz0 = 896;
+  //const long z_fsz0 = 896;
+  //const long y_fsz1 = 882;
+  //const long z_fsz1 = 882;
+//
+  //const long x_stride0 = 719323136;
+  //const long y_stride0 = 802816;
+  //const long z_stride0 = 896;
+  //const long y_stride1 = 777924;
+  //const long z_stride1 = 882;
 
 
 int t0 = 0;
 int t1 = 1;
 int t2 = 2;
 
-
-const int blocksize_x = 8;
-const int blocksize_y = 4;
-const int blocksize_z = 32;
 
 //printf("block size: %d,%d,%d \n", blocksize_x, blocksize_y, blocksize_z);
 
