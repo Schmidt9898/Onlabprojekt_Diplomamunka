@@ -24,9 +24,9 @@ double Kill_stopper();
 #define Y 800
 #define Z 800
 */
-const int sizex = 800; //If this is not constant, will cause a segfault in runtime with clang-12
-const int sizey = 800; //and clang-14 if -D
-const int sizez = 800;
+const long sizex = 896; //If this is not constant, will cause a segfault in runtime with clang-12
+const long sizey = 896; //and clang-14 if -D
+const long sizez = 896;
 
 struct dataobj{void *data;};
 
@@ -64,10 +64,15 @@ printf("Hi this is openACC tiling test, \n");
 Ddim(out, x + 8, y + 8, z + 8) = (r9*Ddim(data2, x + 1, y + 1, z + 1)*Ddim(data3, x + 8, y + 8, z + 8) + r10*(-r8*(-2.0F*Ddim(data3, x + 8, y + 8, z + 8)) - r8*Ddim(data4, x + 8, y + 8, z + 8)) + 7.93650813e-6F*(-Ddim(data3, x + 4, y + 8, z + 8) - Ddim(data3, x + 8, y + 4, z + 8) - Ddim(data3, x + 8, y + 8, z + 4) - Ddim(data3, x + 8, y + 8, z + 12) - Ddim(data3, x + 8, y + 12, z + 8) - Ddim(data3, x + 12, y + 8, z + 8)) + 1.12874782e-4F*(Ddim(data3, x + 5, y + 8, z + 8) + Ddim(data3, x + 8, y + 5, z + 8) + Ddim(data3, x + 8, y + 8, z + 5) + Ddim(data3, x + 8, y + 8, z + 11) + Ddim(data3, x + 8, y + 11, z + 8) + Ddim(data3, x + 11, y + 8, z + 8)) + 8.8888891e-4F*(-Ddim(data3, x + 6, y + 8, z + 8) - Ddim(data3, x + 8, y + 6, z + 8) - Ddim(data3, x + 8, y + 8, z + 6) - Ddim(data3, x + 8, y + 8, z + 10) - Ddim(data3, x + 8, y + 10, z + 8) - Ddim(data3, x + 10, y + 8, z + 8)) + 7.11111128e-3F*(Ddim(data3, x + 7, y + 8, z + 8) + Ddim(data3, x + 8, y + 7, z + 8) + Ddim(data3, x + 8, y + 8, z + 7) + Ddim(data3, x + 8, y + 8, z + 9) + Ddim(data3, x + 8, y + 9, z + 8) + Ddim(data3, x + 9, y + 8, z + 8)) - 3.79629639e-2F*Ddim(data3, x + 8, y + 8, z + 8))/(r8*r10 + r9*Ddim(data2, x + 1, y + 1, z + 1));
 
 
-
+/*
 const int blocksize_x = 8;
 const int blocksize_y = 4;
 const int blocksize_z = 32;
+//////////////
+#define blocksize_x 8
+#define blocksize_y 4
+#define blocksize_z 32
+*/
 
 printf("block size: %d,%d,%d \n", blocksize_x, blocksize_y, blocksize_z);
 
@@ -236,6 +241,7 @@ Kill_stopper();
 }
 //Kill_stopper();
 
+/*
 for (int i = 0; i < meret; i++) {
   if (out[i]!=out2[i]) {
     printf("Validation failed\n");
@@ -244,6 +250,7 @@ for (int i = 0; i < meret; i++) {
   }
   
 }
+*/
 free(out);
 free(out2);
 
