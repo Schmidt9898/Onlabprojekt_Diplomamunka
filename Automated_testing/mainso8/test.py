@@ -2,7 +2,7 @@ import os
 
 #calls the make file build_for_test function
 def build(extra : str):
-	command = "make EXTRA='{}' build".format(extra)
+	command = "make EXTRA='{}' bintel".format(extra)
 	print(command)
 	os.popen(command).read()
 def test(i):
