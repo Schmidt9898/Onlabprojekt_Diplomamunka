@@ -6,3 +6,8 @@ intelapi
 
 qsub -I -l nodes=1:gen11:ppn=2
 -O3 -fiopenmp -fopenmp-targets=spir64
+
+
+ncu
+list-sections
+ncu --list-metrics

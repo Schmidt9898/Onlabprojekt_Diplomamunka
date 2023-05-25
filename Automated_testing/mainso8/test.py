@@ -12,7 +12,6 @@ def test(i):
 	print("R",result)
 
 
-
 cases =[
 		(8,256,16,	4,	16	),
 		(8,256,8,	8,	16	),

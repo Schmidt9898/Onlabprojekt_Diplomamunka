@@ -2656,15 +2656,15 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
 
 ;
 
-  float *damp = (float *) damp_vec->data;
-  float *rec = (float *) rec_vec->data;
-  float *rec_coords = (float *) rec_coords_vec->data;
-  float *src = (float *) src_vec->data;
-  float *src_coords = (float *) src_coords_vec->data;
-  float *u = (float *) u_vec->data;
-  float *u0 = ((float *) u_vec->data) + u_vec->size[3]*u_vec->size[1]*u_vec->size[2] ;
-  float *u1 = ((float *) u_vec->data) + u_vec->size[3]*u_vec->size[1]*u_vec->size[2] * 2 ;
-  float *vp = (float *) vp_vec->data;
+  float * __restrict damp = (float *) damp_vec->data;
+  float * __restrict rec = (float *) rec_vec->data;
+  float * __restrict rec_coords = (float *) rec_coords_vec->data;
+  float * __restrict src = (float *) src_vec->data;
+  float * __restrict src_coords = (float *) src_coords_vec->data;
+  float * __restrict u = (float *) u_vec->data;
+            float * __restrict u0 = ((float *) u_vec->data) + u_vec->size[3]*u_vec->size[1]*u_vec->size[2] ;
+            float * __restrict u1 = ((float *) u_vec->data) + u_vec->size[3]*u_vec->size[1]*u_vec->size[2] * 2 ;
+  float * __restrict vp = (float *) vp_vec->data;
 
 #pragma omp target enter data map(to: rec[0:rec_vec->size[0]*rec_vec->size[1]])
 #pragma omp target enter data map(to: u[0:u_vec->size[3]*u_vec->size[1]*u_vec->size[2]])
@@ -2703,40 +2703,40 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
 
   for (int time = time_m, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3); time <= time_M; time += 1, t0 = (time)%(3), t1 = (time + 2)%(3), t2 = (time + 1)%(3))
   {
-# 106 "./forward.h"
+# 108 "./forward.h"
     struct timeval start_section0 , end_section0 ; gettimeofday(&start_section0 , ((void*)0));
 
 # 1 "../dimension_src/forward_loop.h" 1
-# 109 "./forward.h" 2
+# 111 "./forward.h" 2
 # 1 "../dimension_src/forward_loop_blocked.h" 1
 
-#pragma omp target teams distribute collapse(3) thread_limit(512)
- for(int Bx = 0; Bx <= 879; Bx += 8)
-  for (int By = 0; By <= 879; By += 4)
-   for (int Bz = 0; Bz <= 879; Bz += 32)
+#pragma omp target teams distribute collapse(3) thread_limit(256)
+ for(int Bx = x_m; Bx <= x_M; Bx += 8)
+  for (int By = y_m; By <= y_M; By += 4)
+   for (int Bz = z_m; Bz <= z_M; Bz += 32)
    {
 #pragma omp parallel for collapse(3)
    for (int x = Bx; x < Bx + 8; x++)
     for (int y = By; y < By + 4; y++)
      for (int z = Bz; z < Bz + 32; z++)
      {
-      if (x <= 879 && y <= 879 && z <= 879){
-# 110 "./forward.h" 2
+      if (x <= x_M && y <= y_M && z <= z_M){
+# 112 "./forward.h" 2
 # 1 "../dimension_src/forward_loop_tilled.h" 1
-# 111 "./forward.h" 2
-
-# 1 "./../dimension_src/func_800_2.h" 1
 # 113 "./forward.h" 2
-# 1 "./../dimension_src/func_800_4.h" 1
-# 114 "./forward.h" 2
-# 1 "./../dimension_src/func_800_8.h" 1
+
+# 1 "./../dimension_src/decomposed4d/func_800_2.h" 1
+# 115 "./forward.h" 2
+# 1 "./../dimension_src/decomposed4d/func_800_4.h" 1
+# 116 "./forward.h" 2
+# 1 "./../dimension_src/decomposed4d/func_800_8.h" 1
 
 
 float r10 = 1.0F/(vp[(x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 8)]*vp[(x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 8)]);
-u[x_stride0 + (x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 8)] = (r9*damp[(x + 1)*y_stride1 + (y + 1)*z_stride1 + (z + 1)]*u0[x_stride0 + (x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 8)] + r10*(-r8*(-2.0F*u0[x_stride0 + (x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 8)]) - r8*u1[x_stride0 + (x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 8)]) + 7.93650813e-6F*(-u0[x_stride0 + (x + 4)*y_stride0 + (y + 8)*z_stride0 + (z + 8)] - u0[x_stride0 + (x + 8)*y_stride0 + (y + 4)*z_stride0 + (z + 8)] - u0[x_stride0 + (x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 4)] - u0[x_stride0 + (x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 12)] - u0[x_stride0 + (x + 8)*y_stride0 + (y + 12)*z_stride0 + (z + 8)] - u0[x_stride0 + (x + 12)*y_stride0 + (y + 8)*z_stride0 + (z + 8)]) + 1.12874782e-4F*(u0[x_stride0 + (x + 5)*y_stride0 + (y + 8)*z_stride0 + (z + 8)] + u0[x_stride0 + (x + 8)*y_stride0 + (y + 5)*z_stride0 + (z + 8)] + u0[x_stride0 + (x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 5)] + u0[x_stride0 + (x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 11)] + u0[x_stride0 + (x + 8)*y_stride0 + (y + 11)*z_stride0 + (z + 8)] + u0[x_stride0 + (x + 11)*y_stride0 + (y + 8)*z_stride0 + (z + 8)]) + 8.8888891e-4F*(-u0[x_stride0 + (x + 6)*y_stride0 + (y + 8)*z_stride0 + (z + 8)] - u0[x_stride0 + (x + 8)*y_stride0 + (y + 6)*z_stride0 + (z + 8)] - u0[x_stride0 + (x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 6)] - u0[x_stride0 + (x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 10)] - u0[x_stride0 + (x + 8)*y_stride0 + (y + 10)*z_stride0 + (z + 8)] - u0[x_stride0 + (x + 10)*y_stride0 + (y + 8)*z_stride0 + (z + 8)]) + 7.11111128e-3F*(u0[x_stride0 + (x + 7)*y_stride0 + (y + 8)*z_stride0 + (z + 8)] + u0[x_stride0 + (x + 8)*y_stride0 + (y + 7)*z_stride0 + (z + 8)] + u0[x_stride0 + (x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 7)] + u0[x_stride0 + (x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 9)] + u0[x_stride0 + (x + 8)*y_stride0 + (y + 9)*z_stride0 + (z + 8)] + u0[x_stride0 + (x + 9)*y_stride0 + (y + 8)*z_stride0 + (z + 8)]) - 3.79629639e-2F*u0[x_stride0 + (x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 8)])/(r8*r10 + r9*damp[(x + 1)*y_stride1 + (y + 1)*z_stride1 + (z + 1)]);
-# 115 "./forward.h" 2
-# 1 "./../dimension_src/func_800_16.h" 1
-# 116 "./forward.h" 2
+u[(x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 8)] = (r9*damp[(x + 1)*y_stride1 + (y + 1)*z_stride1 + (z + 1)]*u0[(x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 8)] + r10*(-r8*(-2.0F*u0[(x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 8)]) - r8*u1[(x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 8)]) + 7.93650813e-6F*(-u0[(x + 4)*y_stride0 + (y + 8)*z_stride0 + (z + 8)] - u0[(x + 8)*y_stride0 + (y + 4)*z_stride0 + (z + 8)] - u0[(x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 4)] - u0[(x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 12)] - u0[(x + 8)*y_stride0 + (y + 12)*z_stride0 + (z + 8)] - u0[(x + 12)*y_stride0 + (y + 8)*z_stride0 + (z + 8)]) + 1.12874782e-4F*(u0[(x + 5)*y_stride0 + (y + 8)*z_stride0 + (z + 8)] + u0[(x + 8)*y_stride0 + (y + 5)*z_stride0 + (z + 8)] + u0[(x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 5)] + u0[(x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 11)] + u0[(x + 8)*y_stride0 + (y + 11)*z_stride0 + (z + 8)] + u0[(x + 11)*y_stride0 + (y + 8)*z_stride0 + (z + 8)]) + 8.8888891e-4F*(-u0[(x + 6)*y_stride0 + (y + 8)*z_stride0 + (z + 8)] - u0[(x + 8)*y_stride0 + (y + 6)*z_stride0 + (z + 8)] - u0[(x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 6)] - u0[(x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 10)] - u0[(x + 8)*y_stride0 + (y + 10)*z_stride0 + (z + 8)] - u0[(x + 10)*y_stride0 + (y + 8)*z_stride0 + (z + 8)]) + 7.11111128e-3F*(u0[(x + 7)*y_stride0 + (y + 8)*z_stride0 + (z + 8)] + u0[(x + 8)*y_stride0 + (y + 7)*z_stride0 + (z + 8)] + u0[(x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 7)] + u0[(x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 9)] + u0[(x + 8)*y_stride0 + (y + 9)*z_stride0 + (z + 8)] + u0[(x + 9)*y_stride0 + (y + 8)*z_stride0 + (z + 8)]) - 3.79629639e-2F*u0[(x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 8)])/(r8*r10 + r9*damp[(x + 1)*y_stride1 + (y + 1)*z_stride1 + (z + 1)]);
+# 117 "./forward.h" 2
+# 1 "./../dimension_src/decomposed4d/func_800_16.h" 1
+# 118 "./forward.h" 2
 
 
 
@@ -2746,10 +2746,10 @@ u[x_stride0 + (x + 8)*y_stride0 + (y + 8)*z_stride0 + (z + 8)] = (r9*damp[(x + 1
       }
     }
     gettimeofday(&end_section0, ((void*)0)); timers->section0 += (double)(end_section0 .tv_sec-start_section0.tv_sec)+(double)(end_section0 .tv_usec-start_section0 .tv_usec)/1000000;
-# 136 "./forward.h"
+# 138 "./forward.h"
  if(time == time_m)
   timers->section0 = 0;
-# 147 "./forward.h"
+# 149 "./forward.h"
   }
 
 #pragma omp target update from(rec[0:rec_vec->size[0]*rec_vec->size[1]])
