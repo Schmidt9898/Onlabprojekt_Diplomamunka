@@ -19,7 +19,7 @@ double Kill_stopper();
 #include <math.h>
 #include "omp.h"
 
-#define THREADLIMIT 256
+//#define THREADLIMIT 256
 
 /* constans méretek */
 /*
@@ -74,8 +74,8 @@ Ddim(out, x + 16, y + 16, z + 16) = (r9*Ddim(data2, x + 1, y + 1, z + 1)*Ddim(da
 // const int blocksize_y = 4;
 // const int blocksize_z = 32;
 // const int window_size = 8;
-#define FORBLOCKED
-#define FORNAIV
+//#define FORBLOCKED
+//#define FORNAIV
 //#define FORBLOCKTILLED
 //#define FORTILLED
 
@@ -152,7 +152,7 @@ float r9 = 1.0F/dt;
 #ifdef FORNAIV
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 for (int i = 0; i < 11; i++) {
-if (i == 1) Spawn_stopper("NAIV");
+if (i == 1) Spawn_stopper("Kernel 0");
 #pragma omp target teams
 #pragma omp distribute parallel for collapse(3)
   for (int x = 0; x < sizex - 2*window_size; x++)
@@ -173,7 +173,7 @@ Kill_stopper();
 #ifdef FORTILLED
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 for (int i = 0; i < 11; i++) {
-if (i == 1) Spawn_stopper("FORTILLED");
+if (i == 1) Spawn_stopper("Kernel 1");
 // #pragma omp target teams
 // #pragma omp distribute parallel for collapse(3)
 #pragma omp target teams distribute parallel for collapse(3)
@@ -197,7 +197,7 @@ Kill_stopper();
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #ifdef FORBLOCKED
 for (int i = 0; i < 11; i++) {
-if (i == 1) Spawn_stopper("FORBLOCKED");
+if (i == 1) Spawn_stopper("Kernel 2");
 #pragma omp target teams distribute collapse(3) thread_limit(THREADLIMIT) //deviceptr(data,data1,data2,data3,data4,data_,data_1,data_2,data_3,data_4)
   for (int x = 0; x < sizex - 2*window_size; x += blocksize_x)
     for (int y = 0; y < sizey - 2*window_size; y += blocksize_y)
@@ -223,7 +223,7 @@ Kill_stopper();
 
 #ifdef FORBLOCKTILLED
 for (int i = 0; i < 11; i++) {
-if (i == 1) Spawn_stopper("FORBLOCKTILLED");
+if (i == 1) Spawn_stopper("Kernel 3");
 #pragma omp target teams distribute collapse(3) thread_limit(THREADLIMIT) //deviceptr(data,data1,data2,data3,data4,data_,data_1,data_2,data_3,data_4)
   for (int x = 0; x < sizex - 2*window_size; x += blocksize_x)
     for (int y = 0; y < sizey - 2*window_size; y += blocksize_y)
