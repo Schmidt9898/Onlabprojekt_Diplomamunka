@@ -81,7 +81,7 @@ Ddim(out, x + 16, y + 16, z + 16) = (r9*Ddim(data2, x + 1, y + 1, z + 1)*Ddim(da
 
 
 
-#if defined(FORBLOCKED) || defined(FORBLOCKTILLED)
+#if defined(FORBLOCKED) || defined(FORBLOCKTILLED) || defined(FORTILLED)
 printf("block size: %d,%d,%d \n", blocksize_x, blocksize_y, blocksize_z);
 #endif
 
@@ -177,7 +177,7 @@ if (i == 1) Spawn_stopper("Kernel 1");
 // #pragma omp target teams
 // #pragma omp distribute parallel for collapse(3)
 #pragma omp target teams distribute parallel for collapse(3)
-#pragma omp tile sizes(tilesize_x,tilesize_y,tilesize_z)
+#pragma omp tile sizes(blocksize_x,blocksize_y,blocksize_z) 
   for (int x = 0; x < sizex - 2*window_size; x++)
   {
     for (int y = 0; y < sizey - 2*window_size; y++)
