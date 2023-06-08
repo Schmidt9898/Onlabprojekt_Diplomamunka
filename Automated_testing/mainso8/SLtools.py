@@ -224,14 +224,14 @@ def set_case_number(n,path = "./case_number.cache"):
 if __name__ == "__main__":
 	print("generate case files")
 
-	#cases = create_test_cases("FORBLOCKED")
-	#export_cases(cases,path = "./cases/forblocked.csv")
+	cases = create_test_cases("FORBLOCKED")
+	export_cases(cases,path = "./cases/forblocked.csv")
 	cases = create_test_cases("FORTILLED")
 	export_cases(cases,path = "./cases/fortilled.csv")
-	#cases = create_test_cases("FORBLOCKTILLED")
-	#export_cases(cases,path = "./cases/forblocktilled.csv")
-	#cases = create_test_cases("FORNAIV")
-	#export_cases(cases,path = "./cases/fornaiv.csv")
+	cases = create_test_cases("FORBLOCKTILLED")
+	export_cases(cases,path = "./cases/forblocktilled.csv")
+	cases = create_test_cases("FORNAIV")
+	export_cases(cases,path = "./cases/fornaiv.csv")
 
 
 	
