@@ -1,0 +1,28 @@
+
+Create example for the openmp tile on intel devcloud doesnt work. - dont need
+
+Repeate all measurements with greater parameter space.
+
+Create and run performance counters on the best examples. legjobb 10 
+
+AMD profiler raw data analisys - tar file Reguly
+
+Find why the mainso8 works better than the composed main.c - this is a bug or something
+
+
+Szisztematikus ábrák gyártása  barchart,mindenből a legjobb
+
+Legjobb block méret konzisztencia
+
+kombinált eset legjobb 10 mindenből kombináljuk
+
+Nézz utánna hogyan kell cikket írni
+
+
+
+IntelGPU - soon
+
+
+
+
+
