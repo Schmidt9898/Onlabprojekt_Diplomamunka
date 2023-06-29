@@ -21,7 +21,7 @@ def get_forward_time(filename : str):
 
 #calls the make file build_for_test function
 def build_main(runname : str,extra : str,is_test = False):
-	command = "make runname='{}' EXTRA='{}' build_for_intel".format(runname,extra)
+	command = "make runname='{}' EXTRA='{}' build_for_test".format(runname,extra)
 	print(command)
 	if is_test:
 		return
@@ -34,7 +34,7 @@ def measure(runname : str,n=1,is_test = False):
 	time = 0.0
 	temp_file_name = "{}_out.log".format(runname)
 	for i in range(n):
-		os.popen("{} > {} 2>&1".format(runname,temp_file_name) ).read()
+		os.popen("timeout 10s {} > {} 2>&1".format(runname,temp_file_name) ).read()
 		time += float(get_forward_time(temp_file_name))
 	#os.remove("./bin/run")
 	return str(time/n)
@@ -146,30 +146,49 @@ def create_test_cases(type):
 		#this case we need the default cases
 		block_threads = [128,256,512,1024]
 		block_parts = [2,4,8,16,32,64]
-		prefix = "-D"
+		for area in areas:
+			for so in space_orders:
+
+				for t in block_threads:
+
+					for x in block_parts:
+						for y in block_parts:
+							for z in block_parts:
+
+								if x*y*z <= 2 * t:
+									#cases.append((area,so,x,y,z,t))
+									#count_num+=1
+									#if count_num % 5 == 0:
+									cases.append(("-D{} -DF{}_{} -DTHREADLIMIT={} -Dblocksize_x={} -Dblocksize_y={} -Dblocksize_z={}".format(type,area,so,t,x,y,z),area,so,t,x,y,z,x*y*z))
+
+									#print(x,y,z,"=",x*y*z,t)
+
+		return cases 
+
 	if type == "FORTILLED":
 		#this case we need the default cases
 		block_threads = [128,256,512,1024]
 		block_parts = [1,2,4,8,16,32,64]
-	count_num = 0
-	for area in areas:
-		for so in space_orders:
+		count_num = 0
+		for area in areas:
+			for so in space_orders:
 
-			for t in block_threads:
+				for t in block_threads:
 
-				for x in block_parts:
-					for y in block_parts:
-						for z in block_parts:
+					for x in block_parts:
+						for y in block_parts:
+							for z in block_parts:
 
-							if x*y*z <= 1024:
-								#cases.append((area,so,x,y,z,t))
-								count_num+=1
-								if count_num % 5 == 0:
-									cases.append(("-D{} -DF{}_{} -DTHREADLIMIT={} -Dblocksize_x={} -Dblocksize_y={} -Dblocksize_z={}".format(type,area,so,t,x,y,z),area,so,t,x,y,z))
+								if x*y*z*t <= 2048:
+									#cases.append((area,so,x,y,z,t))
+									#count_num+=1
+									#if count_num % 5 == 0:
+									cases.append(("-D{} -DF{}_{} -DTHREADLIMIT={} -Dblocksize_x={} -Dblocksize_y={} -Dblocksize_z={}".format(type,area,so,t,x,y,z),area,so,t,x,y,z,x*y*z*t))
+								else:
+									pass
+									#print(("-D{} -DF{}_{} -DTHREADLIMIT={} -Dblocksize_x={} -Dblocksize_y={} -Dblocksize_z={}".format(type,area,so,t,x,y,z),area,so,t,x,y,z,x*y*z*t))
 
-								#print(x,y,z,"=",x*y*z,t)
-
-	return cases 
+		return cases 
 
 def export_cases(cases,path = "./cases.csv"):
 	f = open(path,'w')

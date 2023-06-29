@@ -255,6 +255,8 @@ Kill_stopper();
 free(out);
 free(out2);
 
+printf("Done.");
+
 return 0;
 }
 

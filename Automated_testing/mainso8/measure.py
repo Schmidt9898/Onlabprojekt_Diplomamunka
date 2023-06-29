@@ -14,11 +14,16 @@ parser = argparse.ArgumentParser(
                     epilog='Run with caution, may take several ours to complete.')
 
 parser.add_argument('meas_type')  # positional argument, casefile to work with
+parser.add_argument('-nr', '--no_run',
+                    action='store_true')  # on/off flag
+parser.add_argument('-nb', '--no_build',
+                    action='store_true')  # on/off flag
 parser.add_argument('-t', '--test',
                     action='store_true')  # on/off flag
 
 args = parser.parse_args()
 print(args.meas_type,args.test)
+print(args.no_run,args.no_build)
 
 
 path_cache = "./bin/" + args.meas_type + ".cache"
@@ -48,7 +53,10 @@ for i in range(case_idx,len(cases)):
 	run_name = path_bin + "/" + run_name + "run"
 	#print(run_name)
 
-	build_main(run_name,extra,args.test)
+	if not args.no_build:
+		build_main(run_name,extra,args.test)
+	if args.no_run:
+		continue
 	forward_time = measure(run_name,1,args.test)
 	print(forward_time)
 

@@ -11,7 +11,7 @@ def build(extra : str):
 	print(command)
 	os.popen(command).read()
 def test(i):
-	command = "nvprof --csv --log-file result{}.csv  -m global_hit_rate,gld_requested_throughput,gst_requested_throughput,gld_throughput,gst_throughput,dram_read_throughput,dram_write_throughput,l2_read_throughput,l2_write_throughput,flop_count_sp,inst_executed,inst_issued,dram_read_bytes,dram_write_bytes,inst_integer ./bin/run ".format(i)
+	command = "nvprof --csv --log-file result{}.csv  -m global_hit_rate,gld_throughput,l2_read_throughput ./bin/run ".format(i)
 	print(command)
 	result = os.popen(command).read()
 	print("R",result)
@@ -35,3 +35,11 @@ for i in range(case_idx,len(cases)):
 
 
 #global_hit_rate,gld_requested_throughput,gst_requested_throughput,gld_throughput,gst_throughput,dram_read_throughput,dram_write_throughput,l2_read_throughput,l2_write_throughput,flop_count_sp,inst_executed,inst_issued,dram_read_bytes,dram_write_bytes,inst_integer
+
+
+
+
+
+
+
+#nvprof --csv --log-file result_cuda2.csv  -m global_hit_rate,gld_requested_throughput,gst_requested_throughput,gld_throughput,gst_throughput,dram_read_throughput,dram_write_throughput,l2_read_throughput,l2_write_throughput,flop_count_sp ./bin/run 

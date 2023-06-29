@@ -26,6 +26,7 @@ init:
 	mkdir -p bin/forblocktilled
 	mkdir -p bin/fornaiv
 	mkdir -p bin/fortilled
+	mkdir -p results
 
 
 build: init

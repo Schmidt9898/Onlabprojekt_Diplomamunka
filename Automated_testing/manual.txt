@@ -8,3 +8,4 @@ sbatch -pgpu --nodelist=neumann --exclusive ./openmp_blocktile/blocked_tille_Sjo
 
 
 
+sbatch -pgpu --nodelist=renyi --exclusive ./nvidia_measure.sh

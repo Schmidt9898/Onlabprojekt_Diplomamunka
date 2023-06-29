@@ -11,3 +11,8 @@ qsub -I -l nodes=1:gen11:ppn=2
 ncu
 list-sections
 ncu --list-metrics
+
+
+
+global_hit_rate,gld_throughput,l2_read_throughput
+
