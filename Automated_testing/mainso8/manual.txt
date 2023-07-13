@@ -16,3 +16,12 @@ ncu --list-metrics
 
 global_hit_rate,gld_throughput,l2_read_throughput
 
+
+
+
+
+
+
+
+
+

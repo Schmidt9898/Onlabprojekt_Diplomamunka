@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --ntasks=1
 #SBATCH --gres=gpu:0
-#SBATCH --job-name=OMPBLOCK
-#SBATCH --output=openmp_800_blocked_measurement.%j.out
+#SBATCH --job-name=MEASURE
+#SBATCH --output=openmp_800_nvidia_measurement.%j.out
 #SBATCH --time=11:00:00
 
 #module purge
