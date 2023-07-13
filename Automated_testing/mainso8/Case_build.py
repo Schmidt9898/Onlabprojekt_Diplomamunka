@@ -74,55 +74,28 @@ def create_test_cases(type):
 	
 	if type == "FORBLOCKTILLED":
 		count_num = 0
-		block_parts = [2,4,8,16,32,64]
-		tile_parts = [1,2,4,8]
-		block_threads = [128,256,512,1024]
+		#block_parts = [2,4,8,16,32,64]
+		tile_parts = [1,2,4,8,16,32,64]
+		##block_threads = [128,256,512,1024]
 		for area in areas:
 			for so in space_orders:
-
+				#for threads in block_threads:
 				
-				for bx in block_parts:
-					for by in block_parts:
-						for bz in block_parts:
-							
-							if bx == by and by == bz:
-							#	continue
-								pass
-							
+				for bx in [16,8]:
+					for by in [4,8]:
+						for bz in [32,64]:
+						
 							for tx in tile_parts:
-								for ty in tile_parts:
-									for tz in tile_parts:
-										if 1 == tx and 1 == ty and 1 == tz: # cubes are no good
-											continue
-
-
-										if bx < tx or by < ty or bz < tz: # cant be smaler than the tile
-											continue
-											pass
-
-										for t in block_threads:
-
+								for ty in [1,2,4,8]:
+									for tz in [1,2,4]:
+										for t in [256,512]:
 											block_size = bx*by*bz
-
 											size = t*tx*ty*tz
-											if size > 1024:
+											if size > 32768: # because of case 16,512,800,16,8,64,64,1,1,0.225044,
 												continue
-
-											if size != block_size:
-												#print("wrong")
-												continue
-												pass
-											#if Ax == Ay and Ay == Az:
-											#	continue
-											#if tx == ty and ty == tz:
-											#	continue
-
-											#if size <= 512 and size >= 128:
-											#print((area,so,bx,by,bz,tx,ty,tz,size))
-											#cases.append((area,so,bx,by,bz,tx,ty,tz,size))
 											count_num+=1
-											if count_num % 5 == 0:
-												cases.append(("-D{} -DF{}_{} -DTHREADLIMIT={} -Dblocksize_x={} -Dblocksize_y={} -Dblocksize_z={} -Dtilesize_x={} -Dtilesize_y={} -Dtilesize_z={}".format(type,area,so,size,bx,by,bz,tx,ty,tz),area,so,size,bx,by,bz,tx,ty,tz))
+											#if count_num % 5 == 0:
+											cases.append(("-D{} -DF{}_{} -DTHREADLIMIT={} -Dblocksize_x={} -Dblocksize_y={} -Dblocksize_z={} -Dtilesize_x={} -Dtilesize_y={} -Dtilesize_z={}".format(type,area,so,t,bx,by,bz,tx,ty,tz),area,so,t,bx,by,bz,tx,ty,tz,size))
 												#cases.append((area,so,bx,by,bz,tx,ty,tz,size))
 
 
@@ -155,7 +128,7 @@ def create_test_cases(type):
 						for y in block_parts:
 							for z in block_parts:
 
-								if x*y*z <= 2 * t:
+								if x*y*z <= 4 * t and x*y*z < 2048:
 									#cases.append((area,so,x,y,z,t))
 									#count_num+=1
 									#if count_num % 5 == 0:
@@ -164,7 +137,7 @@ def create_test_cases(type):
 									#print(x,y,z,"=",x*y*z,t)
 
 		return cases 
-
+	count=0
 	if type == "FORTILLED":
 		#this case we need the default cases
 		block_threads = [128,256,512,1024]
@@ -181,8 +154,9 @@ def create_test_cases(type):
 
 								if x*y*z*t <= 2048:
 									#cases.append((area,so,x,y,z,t))
-									#count_num+=1
+									count+=1
 									#if count_num % 5 == 0:
+									#print(count)
 									cases.append(("-D{} -DF{}_{} -DTHREADLIMIT={} -Dblocksize_x={} -Dblocksize_y={} -Dblocksize_z={}".format(type,area,so,t,x,y,z),area,so,t,x,y,z,x*y*z*t))
 								else:
 									pass

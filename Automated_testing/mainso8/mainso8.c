@@ -151,8 +151,8 @@ float r8 = 1.0F/(dt*dt);
 float r9 = 1.0F/dt;
 #ifdef FORNAIV
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-for (int i = 0; i < 11; i++) {
-if (i == 1) Spawn_stopper("Kernel 0");
+for (int i = 0; i < 21; i++) {
+if (i == 11) Spawn_stopper("Kernel 0");
 #pragma omp target teams
 #pragma omp distribute parallel for collapse(3)
   for (int x = 0; x < sizex - 2*window_size; x++)
@@ -172,8 +172,8 @@ Kill_stopper();
 
 #ifdef FORTILLED
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-for (int i = 0; i < 11; i++) {
-if (i == 1) Spawn_stopper("Kernel 1");
+for (int i = 0; i < 21; i++) {
+if (i == 11) Spawn_stopper("Kernel 1");
 // #pragma omp target teams
 // #pragma omp distribute parallel for collapse(3)
 #pragma omp target teams distribute parallel for collapse(3)
@@ -196,8 +196,8 @@ Kill_stopper();
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #ifdef FORBLOCKED
-for (int i = 0; i < 11; i++) {
-if (i == 1) Spawn_stopper("Kernel 2");
+for (int i = 0; i < 21; i++) {
+if (i == 11) Spawn_stopper("Kernel 2");
 #pragma omp target teams distribute collapse(3) thread_limit(THREADLIMIT) //deviceptr(data,data1,data2,data3,data4,data_,data_1,data_2,data_3,data_4)
   for (int x = 0; x < sizex - 2*window_size; x += blocksize_x)
     for (int y = 0; y < sizey - 2*window_size; y += blocksize_y)
@@ -222,8 +222,8 @@ Kill_stopper();
 #endif
 
 #ifdef FORBLOCKTILLED
-for (int i = 0; i < 11; i++) {
-if (i == 1) Spawn_stopper("Kernel 3");
+for (int i = 0; i < 21; i++) {
+if (i == 11) Spawn_stopper("Kernel 3");
 #pragma omp target teams distribute collapse(3) thread_limit(THREADLIMIT) //deviceptr(data,data1,data2,data3,data4,data_,data_1,data_2,data_3,data_4)
   for (int x = 0; x < sizex - 2*window_size; x += blocksize_x)
     for (int y = 0; y < sizey - 2*window_size; y += blocksize_y)

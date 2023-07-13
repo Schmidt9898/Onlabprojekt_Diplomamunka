@@ -26,3 +26,15 @@ IntelGPU - soon
 
 
 
+0713 ***************************************************************
+
+Todo add more case for blocked
+add gpu temperature for measure.py
+add 21 for loop and start from 11 mainso8
+
+
+
+
+
+
+
