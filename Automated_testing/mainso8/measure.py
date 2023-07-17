@@ -4,7 +4,7 @@ import time
 import sys
 import argparse
 
-from Automated_testing.mainso8.Case_build import *
+from Case_build import *
 
 
 

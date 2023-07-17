@@ -27,9 +27,9 @@ double Kill_stopper();
 #define Y 800
 #define Z 800
 */
-const long sizex = 896; //If this is not constant, will cause a segfault in runtime with clang-12
-const long sizey = 896; //and clang-14 if -D
-const long sizez = 896;
+const long sizex = 880; //If this is not constant, will cause a segfault in runtime with clang-12
+const long sizey = 880; //and clang-14 if -D
+const long sizez = 880;
 
 struct dataobj{void *data;};
 
