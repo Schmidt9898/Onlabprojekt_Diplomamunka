@@ -18,7 +18,10 @@ global_hit_rate,gld_throughput,l2_read_throughput
 
 
 
-
+make runname='./bin/fornaiv/800_2_run' EXTRA='-EXPORTDATA -DFORNAIV -DF800_2 -DTHREADLIMIT=128' build_for_test
+make runname='./bin/fornaiv/800_4_run' EXTRA='-EXPORTDATA -DFORNAIV -DF800_4 -DTHREADLIMIT=128' build_for_test
+make runname='./bin/fornaiv/800_8_run' EXTRA='-EXPORTDATA -DFORNAIV -DF800_8 -DTHREADLIMIT=128' build_for_test
+make runname='./bin/fornaiv/800_16_run' EXTRA='-EXPORTDATA -DFORNAIV -DF800_16 -DTHREADLIMIT=128' build_for_test
 
 
 

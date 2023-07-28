@@ -54,7 +54,9 @@ if(valid_file==NULL || test_file == NULL)
   printf("File was not found.\n");
   return -1; 
 }
-printf(" %s and %s exemaning...\n",argv[1],argv[2]);
+
+if(!silentmode)
+	printf(" %s and %s exemaning...\n",argv[1],argv[2]);
 
 size_t valid_size=0,test_size=0;
 
@@ -71,7 +73,7 @@ if(valid_size!=test_size){
     printf("Size not equal!! %lu != %lu",valid_size,test_size);
     return -1;
 }
-printf("Sizes equal. %lu\n",valid_size);
+
 
 
 char * valid_bytes,*test_bytes;
@@ -87,10 +89,16 @@ float* valid_f = (float*)valid_bytes
 size_t error_count=0;
 
 valid_size/=sizeof(float);
-printf("Float numbe:  %lu\n",valid_size);
 
+if(!silentmode)
+{
+
+
+printf("Sizes equal. %lu\n",valid_size);
+printf("Float numbe:  %lu\n",valid_size);
 printf("Testing validating bytes:---------------------------------------------------------------------------------------------------v\n");
 printf("                        :");
+}
 
 
 int darab,perc=0;
@@ -116,26 +124,27 @@ for(size_t i = 0 ;i< valid_size;i++)
 */
 	{
 		//size_t arrsize = a.size[0] * a.size[1] * a.size[2] * a.size[3];
-		//3,884,884,884
-		for (size_t t = 0; t < 3; t++)
-			for (size_t i = 0; i < 884; i++)
-				for (size_t j = 0; j < 884; j++)
-					for (size_t k = 0; k < 884; k++)
+		//3,880,880,880
+		//for (size_t t = 0; t < 3; t++)
+			for (size_t i = 0; i < 880; i++)
+				for (size_t j = 0; j < 880; j++)
+					for (size_t k = 0; k < 880; k++)
 					{
-						size_t index = t * (884 * 884 * 884) + i * (884 * 884) + j * (884) + k;
+						size_t index = /*t * (880 * 880 * 880) +*/ i * (880 * 880) + j * (880) + k;
 						//printf("index: %lu | t: %lu, x: %lu, y: %lu, z: %lu, \n",index, t,i,j,k);
 						float valid = valid_f[index];
 						float test = test_f[index];
 						// if(*f != *f)//Nan value
 						//	return 0;
-						if (valid == 5.0f)
+						//if (valid == 5.0f)
 						{
 							float error = fabsf(valid - test); /// abs(valid>test? valid : test);
+							//printf("error: %f - %f = %f | at: t: %lu, x: %lu, y: %lu, z: %lu, \n", valid, test, error, 0, i, j, k);
 							if (error > 0.00001)
 							{
 								error_count += 1;
 								if (silentmode == 0)
-									printf("error: %f - %f = %f | at: t: %lu, x: %lu, y: %lu, z: %lu, \n", valid, test, error, t, i, j, k);
+									printf("error: %f - %f = %f | at: x: %lu, y: %lu, z: %lu, \n", valid, test, error, i, j, k);
 								// printf("%f - %f = %f\n", valid_f[i], test_f[i], valid_f[i] - test_f[i]);
 							}
 						}
@@ -144,7 +153,6 @@ for(size_t i = 0 ;i< valid_size;i++)
 
 
 
-printf("\n");
 if(error_count>0)
     printf("Test FAILED. err %lu\n",error_count);
 else

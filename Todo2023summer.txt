@@ -1,7 +1,7 @@
 
 Create example for the openmp tile on intel devcloud doesnt work. - dont need
 
-Repeate all measurements with greater parameter space.
+Repeate all measurements with greater parameter space. 							done
 
 Create and run performance counters on the best examples. legjobb 10 
 
@@ -14,7 +14,7 @@ Szisztematikus ábrák gyártása  barchart,mindenből a legjobb
 
 Legjobb block méret konzisztencia
 
-kombinált eset legjobb 10 mindenből kombináljuk
+kombinált eset legjobb 10 mindenből kombináljuk  -not good done
 
 Nézz utánna hogyan kell cikket írni
 
@@ -28,9 +28,17 @@ IntelGPU - soon
 
 0713 ***************************************************************
 
-Todo add more case for blocked
-add gpu temperature for measure.py
-add 21 for loop and start from 11 mainso8
+Todo add more case for blocked 			-done
+add gpu temperature for measure.py		
+add 21 for loop and start from 11 mainso8   --done
+
+
+
+nvprof mérés a result 0718- tól, feltételes indítás a 11. ciklustól
+nv-nsight-cu-cli --profile-from-start off
+validáció a kimenő adatra mainso8 
+cuda mérés újból
+
 
 
 

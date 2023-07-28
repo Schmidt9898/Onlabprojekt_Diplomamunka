@@ -212,7 +212,7 @@ if (i == 11) Spawn_stopper("Kernel 2");
                   by < sizey - 2*window_size &&
                   bz < sizez - 2*window_size) {
 
-                  KERNEL_WINDOW2(out2,bx,by,bz);
+                  KERNEL_WINDOW2(out,bx,by,bz);
 
               }
             }
@@ -239,7 +239,7 @@ if (i == 11) Spawn_stopper("Kernel 3");
                   by < sizey - 2*window_size &&
                   bz < sizez - 2*window_size) {
 
-                  KERNEL_WINDOW2(out2,bx,by,bz);
+                  KERNEL_WINDOW2(out,bx,by,bz);
 
               }
             }
@@ -250,6 +250,19 @@ Kill_stopper();
 
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifdef EXPORTDATA
+{
+	FILE *write_ptr;
+	write_ptr = fopen("./out.bin","wb");  // w for write, b for binary
+	size_t arrsize = meret * sizeof(float);
+	fwrite((char*)out,arrsize,1,write_ptr); // write bytes from our buffer
+
+}
+#endif
+
 
 
 free(out);
