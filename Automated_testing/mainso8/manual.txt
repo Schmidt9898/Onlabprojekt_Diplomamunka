@@ -24,7 +24,21 @@ make runname='./bin/fornaiv/800_8_run' EXTRA='-EXPORTDATA -DFORNAIV -DF800_8 -DT
 make runname='./bin/fornaiv/800_16_run' EXTRA='-EXPORTDATA -DFORNAIV -DF800_16 -DTHREADLIMIT=128' build_for_test
 
 
+https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#sections-and-rules
+selected sections:
+
+--section InstructionStats
+--section LaunchStats
+--section MemoryWorkloadAnalysis
+--section Occupancy
+--section SchedulerStats
+--section SourceCounters
+--section SpeedOfLight
+--section WarpStateStats
+
+--section InstructionStats --section LaunchStats --section MemoryWorkloadAnalysis --section Occupancy --section SchedulerStats --section SourceCounters --section SpeedOfLight --section WarpStateStats
 
 
 
 
+ncu  --launch-skip 11 --launch-count 1 --replay-mode application --csv --log-file ezmi.log --section InstructionStats --section LaunchStats --section MemoryWorkloadAnalysis --section Occupancy --section SchedulerStats --section SourceCounters --section SpeedOfLight --section WarpStateStats ./bin/fornaiv/800_2_run
