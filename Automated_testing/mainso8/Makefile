@@ -5,14 +5,20 @@
 
 #flags = -Xopenmp-target -march=$(sm_VAL) -Ofast -ffast-math -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lomptarget # -g -Wall
 #flags = -Xopenmp-target -march=$(sm_VAL) -O3 -fPIC -Wno-unused-result -Wno-unused-variable -ffast-math -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lm -L $(CLANG_HOME)/lib -lomptarget -fopenmp-version=51 # -g -Wall
-flags = -Ofast -ffast-math -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lomptarget -Xopenmp-target -march=sm_80 -fopenmp-version=51 -lomptarget -lm -L $(CLANG_HOME)/lib
+flags = -Ofast -ffast-math -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lomptarget -Xopenmp-target -march=$(sm_VAL) -fopenmp-version=51 -lomptarget -lm -L $(CLANG_HOME)/lib
 flags_intel = -DLOMP -Ofast -ffast-math -lomptarget -fiopenmp -fopenmp-targets=spir64 -fopenmp-version=51 #-march=sm_70 -DL1D
 # -fopenmp -qopenmp
 sm_VAL = ${SM_VAL}
 
+
+GFLAGS_ = --gpu-architecture=$(sm_VAL) --compiler-options '-fPIC' -O3 --use_fast_math $(GFLAGS) #-g -G --ptxas-options=-v
+
+
 CC := ${CC}
 
 c_files = ./mainso8.c
+cuda_files = ./mainso.cu
+
 #c_files = test.c
 runname = ./bin/run
 #$(CXX)
@@ -26,6 +32,7 @@ init:
 	mkdir -p bin/forblocktilled
 	mkdir -p bin/fornaiv
 	mkdir -p bin/fortilled
+	mkdir -p bin/cuda
 	mkdir -p results
 
 
@@ -41,6 +48,9 @@ prep:
 build_for_test: init build
 
 build_for_intel: init bintel
+
+build_cuda: init 
+	nvcc $(GFLAGS_) -o $(runname) $(cuda_files) $(EXTRA)
 
 run:
 	./bin/run

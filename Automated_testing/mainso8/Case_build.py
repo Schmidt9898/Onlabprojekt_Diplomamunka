@@ -28,6 +28,14 @@ def build_main(runname : str,extra : str,is_test = False):
 	os.popen(command).read()
 	#os.remove("./cuda_temp.cu")
 
+def cuda_build(runname : str,extra : str,is_test = False):
+	command = "make runname='{}' EXTRA='{}' build_cuda".format(runname,extra)
+	print(command)
+	if is_test:
+		return
+	os.popen(command).read()
+	#os.remove("./cuda_temp.cu")
+
 def measure(runname : str,n=1,is_test = False):
 	if is_test:
 		return -1

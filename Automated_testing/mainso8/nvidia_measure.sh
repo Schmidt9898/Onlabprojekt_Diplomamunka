@@ -27,14 +27,16 @@ pwd
 
 nvidia-smi
 
-python3 ./measure.py fornaiv
-touch naive_is_done
-python3 ./measure.py forblocked
-touch blocked_is_done
-python3 ./measure.py fortilled
-touch tilled_is_done
-python3 ./measure.py forblocktilled
-touch forblocktilled_is_done
+python3 ./measure.py cuda
+touch cuda_is_done
+#python3 ./measure.py fornaiv
+#touch naive_is_done
+#python3 ./measure.py forblocked
+#touch blocked_is_done
+#python3 ./measure.py fortilled
+#touch tilled_is_done
+#python3 ./measure.py forblocktilled
+#touch forblocktilled_is_done
 
 date
 

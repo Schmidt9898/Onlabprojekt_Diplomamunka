@@ -14,7 +14,7 @@ bases = [
 
 
 def test(run_name):
-	command = "ncu  --launch-skip 11 --launch-count 1 --replay-mode application --csv --log-file {}.csv --section InstructionStats --section LaunchStats --section MemoryWorkloadAnalysis --section Occupancy --section SchedulerStats --section SourceCounters --section SpeedOfLight --section WarpStateStats {} ".format(run_name,run_name)
+	command = "ncu  --launch-skip 11 --launch-count 1 --replay-mode kernel --csv --log-file {}.csv --section InstructionStats --section LaunchStats --section MemoryWorkloadAnalysis --section Occupancy --section SchedulerStats --section SourceCounters --section SpeedOfLight --section WarpStateStats {} ".format(run_name,run_name)
 	print(command)
 	result = os.popen(command).read()
 	print("R",result)
@@ -23,9 +23,14 @@ def test(run_name):
 path_cases = "./ncu_profiler/best.csv"
 cases = import_cases(path_cases)
 
+case_cuda = import_cases("./ncu_profiler/bestcuda.csv")
 
 path_bin = "./ncu_profiler/bin/"
 
+
+
+
+#quit()
 
 for case in bases:
 	extra = case
@@ -36,6 +41,29 @@ for case in bases:
 	test(run_name)
 
 	#quit()
+
+idx = 1
+for case in case_cuda:
+	#print(case)
+	params = list(case)
+	#so,T,x,y,z = case
+	extra = params[0]
+	run_name = ""
+	for p in params[1:-1]:
+		run_name += p+"_"
+	#print(extra)
+	run_name = path_bin + str(idx)+"_cuda_" +run_name + "run"
+	print(run_name)
+	#quit()
+	
+	#build_main(run_name,extra)
+	cuda_build(run_name,extra)
+	test(run_name)
+	#build(extra)
+	idx+=1
+	if idx > 5: 
+		idx = 1
+
 
 for case in cases:
 	#print(case)

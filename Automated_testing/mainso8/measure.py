@@ -54,7 +54,10 @@ for i in range(case_idx,len(cases)):
 	#print(run_name)
 
 	if not args.no_build:
-		build_main(run_name,extra,args.test)
+		if args.meas_type == "cuda":
+			cuda_build(run_name,extra,args.test)
+		else:
+			build_main(run_name,extra,args.test)
 	if args.no_run:
 		continue
 	forward_time = measure(run_name,1,args.test)
