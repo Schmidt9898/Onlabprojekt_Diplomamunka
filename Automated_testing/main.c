@@ -1,8 +1,10 @@
 
 #include "forward.h"
 
-#include <stdio.h>
 #include "stdlib.h"
+#include <stdio.h>
+#include <math.h>
+#include "omp.h"
 
 typedef struct dataobj dataobj;//WHY?????? i finally know why :)
 
@@ -76,6 +78,20 @@ printf("Start\n");
 #include "dimension_src/declare_800_4.h"
 #include "dimension_src/declare_800_8.h"
 #include "dimension_src/declare_800_16.h"
+//dataobj damp_vec = create_data( 882,882,882,1,sizeof(float));
+//dataobj u_vec = create_data( 3,896,896,896,sizeof(float));
+//dataobj vp_vec = create_data( 896,896,896,1,sizeof(float));
+//int x_M = 879;
+//int x_m = 0;
+//int y_M = 879;
+//int y_m = 0;
+//int z_M = 879;
+//int z_m = 0;
+//float dt = 1.816000;
+//int time_M = 688;
+//int time_m = 1;
+//int deviceid = -1;
+//int devicerm = 1;
 
 time_M = 11;
 #ifdef blocksize_x
@@ -100,6 +116,7 @@ struct profiler timers={0,0,0};
 
 
 Forward((struct dataobj *restrict) &damp_vec,(struct dataobj *restrict) &rec_vec,(struct dataobj *restrict) &rec_coords_vec,(struct dataobj *restrict) &src_vec,(struct dataobj *restrict) &src_coords_vec,(struct dataobj *restrict) &u_vec,(struct dataobj *restrict) &vp_vec,x_M,x_m,y_M,y_m,z_M,z_m,dt,o_x,o_y,o_z,p_rec_M,p_rec_m,p_src_M,p_src_m,time_M,time_m,deviceid,devicerm,&timers);
+//Forward((struct dataobj *restrict) &damp_vec,(struct dataobj *restrict) &u_vec,(struct dataobj *restrict) &vp_vec,x_M,x_m,y_M,y_m,z_M,z_m,dt,devicerm);
 
 
 //printf("Forward\n");

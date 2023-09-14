@@ -5,9 +5,15 @@ sbatch -pgpu --nodelist=neumann ./Slurm_job.sh
 
 make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -g ' build
 make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 -g ' prep
+make EXTRA='-DFORNAIV -DF800_2 -DTHREADLIMIT=1024 ' build
+
+
+
+
+
 
 make EXTRA='-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=1024 -Dblocksize_x=64 -Dblocksize_y=64 -Dblocksize_z=64 -Dtilesize_x=4 -Dtilesize_y=2 -Dtilesize_z=4  -g ' build
-
+make EXTRA='-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=1024 -Dblocksize_x=64 -Dblocksize_y=64 -Dblocksize_z=64 -Dtilesize_x=4 -Dtilesize_y=2 -Dtilesize_z=4' build
 
 
 sbatch -pgpu --nodelist=neumann --exclusive ./blocked_Sjob.sh

@@ -1,0 +1,44 @@
+clang mainso8.c -DLOMP -DL1D -Ofast -ffast-math -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lomptarget -Xopenmp-target -march=sm_70
+
+
+
+intelapi
+
+qsub -I -l nodes=1:gen11:ppn=2
+-O3 -fiopenmp -fopenmp-targets=spir64
+
+
+ncu
+list-sections
+ncu --list-metrics
+
+
+
+global_hit_rate,gld_throughput,l2_read_throughput
+
+
+
+make runname='./bin/fornaiv/800_2_run' EXTRA='-EXPORTDATA -DFORNAIV -DF800_2 -DTHREADLIMIT=128' build_for_test
+make runname='./bin/fornaiv/800_4_run' EXTRA='-EXPORTDATA -DFORNAIV -DF800_4 -DTHREADLIMIT=128' build_for_test
+make runname='./bin/fornaiv/800_8_run' EXTRA='-EXPORTDATA -DFORNAIV -DF800_8 -DTHREADLIMIT=128' build_for_test
+make runname='./bin/fornaiv/800_16_run' EXTRA='-EXPORTDATA -DFORNAIV -DF800_16 -DTHREADLIMIT=128' build_for_test
+
+
+https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#sections-and-rules
+selected sections:
+
+--section InstructionStats
+--section LaunchStats
+--section MemoryWorkloadAnalysis
+--section Occupancy
+--section SchedulerStats
+--section SourceCounters
+--section SpeedOfLight
+--section WarpStateStats
+
+--section InstructionStats --section LaunchStats --section MemoryWorkloadAnalysis --section Occupancy --section SchedulerStats --section SourceCounters --section SpeedOfLight --section WarpStateStats
+
+
+
+
+ncu  --launch-skip 11 --launch-count 1 --replay-mode application --csv --log-file ezmi.log --section InstructionStats --section LaunchStats --section MemoryWorkloadAnalysis --section Occupancy --section SchedulerStats --section SourceCounters --section SpeedOfLight --section WarpStateStats ./bin/fornaiv/800_2_run

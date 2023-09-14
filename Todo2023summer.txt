@@ -1,0 +1,69 @@
+
+Create example for the openmp tile on intel devcloud doesnt work. - dont need
+
+Repeate all measurements with greater parameter space. 							done
+
+Create and run performance counters on the best examples. legjobb 10 
+
+AMD profiler raw data analisys - tar file Reguly
+
+Find why the mainso8 works better than the composed main.c - this is a bug or something
+
+
+Szisztematikus ábrák gyártása  barchart,mindenből a legjobb
+
+Legjobb block méret konzisztencia
+
+kombinált eset legjobb 10 mindenből kombináljuk  -not good done
+
+Nézz utánna hogyan kell cikket írni
+
+
+
+IntelGPU - soon
+
+
+
+
+
+0713 ***************************************************************
+
+Todo add more case for blocked 			-done
+add gpu temperature for measure.py		--skip
+add 21 for loop and start from 11 mainso8   --done
+
+
+
+nvprof mérés a result 0718- tól, feltételes indítás a 11. ciklustól --done
+nv-nsight-cu-cli --profile-from-start off	--done
+validáció a kimenő adatra mainso8 --done
+
+cuda mérés újból - almost done
+
+
+summary sorok összerendezése --done
+
+L2 bw - l2 cache bandwith? --idk
+
+nvhpc openmp offload -- tried
+
+
+
+
+try this
+nv-nsight-cu-cli -k op_cuda_compute_flux_edge_kernel -c 10 -f -o prof_flux_atomics --section ComputeWorkloadAnalysis --section InstructionStats --section LaunchStats --section MemoryWorkloadAnalysis --section MemoryWorkloadAnalysis_Chart --section MemoryWorkloadAnalysis_Deprecated --section MemoryWorkloadAnalysis_Tables --section Occupancy --section SchedulerStats --section SourceCounters --section SpeedOfLight --section SpeedOfLight_HierarchicalDoubleRooflineChart --section SpeedOfLight_RooflineChart --section WarpStateStats  ../MG-CFD-app-OP2/bin/mgcfd_cuda_atomics_soa -i input-mgcfd.dat OP_BLOCK_SIZE=256 OP_PART_SIZE=256
+nv-nsight-cu-cli -k op_cuda_compute_flux_edge_kernel -c 10 -f -o prof_flux_atomics --section ComputeWorkloadAnalysis --section InstructionStats --section LaunchStats --section MemoryWorkloadAnalysis --section MemoryWorkloadAnalysis_Chart --section MemoryWorkloadAnalysis_Deprecated --section MemoryWorkloadAnalysis_Tables --section Occupancy --section SchedulerStats --section SourceCounters --section SpeedOfLight --section SpeedOfLight_HierarchicalDoubleRooflineChart --section SpeedOfLight_RooflineChart --section WarpStateStats  ../run 
+
+nv-nsight-cu-cli --launch-skip 11 --launch-count 10 --replay-mode kernel --csv --section ComputeWorkloadAnalysis --section InstructionStats --section LaunchStats --section MemoryWorkloadAnalysis --section MemoryWorkloadAnalysis_Chart --section MemoryWorkloadAnalysis_Deprecated --section MemoryWorkloadAnalysis_Tables --section Occupancy --section SchedulerStats --section SourceCounters --section SpeedOfLight --section SpeedOfLight_HierarchicalDoubleRooflineChart --section SpeedOfLight_RooflineChart --section WarpStateStats
+done
+
+Szisztematikus ábrák gyártása  barchart,mindenből a legjobb
+
+több mérés átlaga
+
+AMD profiler || omniperf analyze -p paper_so16_naiv_aomp/mi200/ --gui
+
+
+pár lépéses elrontás- mainso8 elrontani dinamic type al
+
+

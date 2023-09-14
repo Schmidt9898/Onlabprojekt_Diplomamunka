@@ -1,7 +1,19 @@
 
 
-export SM_VAL='sm_80'
-#export SM_VAL='sm_70'
+
+gpu_name=$(nvidia-smi --query-gpu=gpu_name --format=csv | tail -n 1)
+
+echo $gpu_name
+
+if [ "$gpu_name" = "NVIDIA A100-PCIE-40GB" ]; then 
+    echo "sm_80" 
+	export SM_VAL='sm_80'
+else
+    echo "sm_70"  
+	export SM_VAL='sm_70'
+fi;
+
+
 source start 15.3
 source py_venv/bin/activate
 

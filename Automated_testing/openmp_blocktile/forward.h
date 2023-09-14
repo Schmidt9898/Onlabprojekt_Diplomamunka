@@ -1,5 +1,7 @@
 #define _POSIX_C_SOURCE 200809L
-#define uL0(t, x, y, z) u[(t)*x_stride0 + (x)*y_stride0 + (y)*z_stride0 + (z)]
+#define uL0(t,x, y, z) u[x_stride0 + (x)*y_stride0 + (y)*z_stride0 + (z)]
+#define uL1(t,x, y, z) u1[x_stride0 + (x)*y_stride0 + (y)*z_stride0 + (z)]
+#define uL2(t,x, y, z) u2[x_stride0 + (x)*y_stride0 + (y)*z_stride0 + (z)]
 #define dampL0(x, y, z) damp[(x)*y_stride1 + (y)*z_stride1 + (z)]
 #define vpL0(x, y, z) vp[(x)*y_stride0 + (y)*z_stride0 + (z)]
 #define recL0(time, p_rec) rec[(p_rec) + (time)*p_rec_stride0]
@@ -52,10 +54,14 @@ int Forward(struct dataobj *restrict damp_vec, struct dataobj *restrict rec_vec,
   float *src = (float *) src_vec->data;
   float *src_coords = (float *) src_coords_vec->data;
   float *u = (float *) u_vec->data;
+  float *u0 = ((float *) u_vec->data) + u_vec->size[0]*u_vec->size[1]*u_vec->size[2] ;
+  float *u1 = ((float *) u_vec->data) + u_vec->size[0]*u_vec->size[1]*u_vec->size[2]* 2 ;
   float *vp = (float *) vp_vec->data;
 
   #pragma omp target enter data map(to: rec[0:rec_vec->size[0]*rec_vec->size[1]])
-  #pragma omp target enter data map(to: u[0:u_vec->size[0]*u_vec->size[1]*u_vec->size[2]*u_vec->size[3]])
+  #pragma omp target enter data map(to: u[0:u_vec->size[0]*u_vec->size[1]*u_vec->size[2]])
+  #pragma omp target enter data map(to: u0[0:u_vec->size[0]*u_vec->size[1]*u_vec->size[2]])
+  #pragma omp target enter data map(to: u1[0:u_vec->size[0]*u_vec->size[1]*u_vec->size[2]])
   #pragma omp target enter data map(to: damp[0:damp_vec->size[0]*damp_vec->size[1]*damp_vec->size[2]])
   #pragma omp target enter data map(to: rec_coords[0:rec_coords_vec->size[0]*rec_coords_vec->size[1]])
   #pragma omp target enter data map(to: src[0:src_vec->size[0]*src_vec->size[1]])
