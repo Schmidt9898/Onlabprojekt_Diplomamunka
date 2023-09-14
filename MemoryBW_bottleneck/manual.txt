@@ -1,0 +1,9 @@
+clang mainso8.c -DLOMP -DL1D -Ofast -ffast-math -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lomptarget -Xopenmp-target -march=sm_70
+
+intel dev cloud
+renyi nvidia measurememnt
+curent difference
+
+
+nvhpc openmp try
+

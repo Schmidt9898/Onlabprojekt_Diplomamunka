@@ -14,7 +14,11 @@ bases = [
 
 
 def test(run_name):
-	command = "ncu  --launch-skip 11 --launch-count 1 --replay-mode kernel --csv --log-file {}.csv --section InstructionStats --section LaunchStats --section MemoryWorkloadAnalysis --section Occupancy --section SchedulerStats --section SourceCounters --section SpeedOfLight --section WarpStateStats {} ".format(run_name,run_name)
+	#old
+	#command = "ncu  --launch-skip 11 --launch-count 1 --replay-mode kernel --csv --log-file {}.csv --section InstructionStats --section LaunchStats --section MemoryWorkloadAnalysis --section Occupancy --section SchedulerStats --section SourceCounters --section SpeedOfLight --section WarpStateStats {} ".format(run_name,run_name)
+	#new Reguly
+	command = "nv-nsight-cu-cli --launch-skip 11 --launch-count 10 --replay-mode kernel --csv --log-file {}.csv --section ComputeWorkloadAnalysis --section InstructionStats --section LaunchStats --section MemoryWorkloadAnalysis --section MemoryWorkloadAnalysis_Chart --section MemoryWorkloadAnalysis_Deprecated --section MemoryWorkloadAnalysis_Tables --section Occupancy --section SchedulerStats --section SourceCounters --section SpeedOfLight --section SpeedOfLight_HierarchicalDoubleRooflineChart --section SpeedOfLight_RooflineChart --section WarpStateStats {}".format(run_name,run_name)
+	
 	print(command)
 	result = os.popen(command).read()
 	print("R",result)

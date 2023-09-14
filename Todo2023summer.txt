@@ -52,7 +52,10 @@ nvhpc openmp offload -- tried
 
 try this
 nv-nsight-cu-cli -k op_cuda_compute_flux_edge_kernel -c 10 -f -o prof_flux_atomics --section ComputeWorkloadAnalysis --section InstructionStats --section LaunchStats --section MemoryWorkloadAnalysis --section MemoryWorkloadAnalysis_Chart --section MemoryWorkloadAnalysis_Deprecated --section MemoryWorkloadAnalysis_Tables --section Occupancy --section SchedulerStats --section SourceCounters --section SpeedOfLight --section SpeedOfLight_HierarchicalDoubleRooflineChart --section SpeedOfLight_RooflineChart --section WarpStateStats  ../MG-CFD-app-OP2/bin/mgcfd_cuda_atomics_soa -i input-mgcfd.dat OP_BLOCK_SIZE=256 OP_PART_SIZE=256
+nv-nsight-cu-cli -k op_cuda_compute_flux_edge_kernel -c 10 -f -o prof_flux_atomics --section ComputeWorkloadAnalysis --section InstructionStats --section LaunchStats --section MemoryWorkloadAnalysis --section MemoryWorkloadAnalysis_Chart --section MemoryWorkloadAnalysis_Deprecated --section MemoryWorkloadAnalysis_Tables --section Occupancy --section SchedulerStats --section SourceCounters --section SpeedOfLight --section SpeedOfLight_HierarchicalDoubleRooflineChart --section SpeedOfLight_RooflineChart --section WarpStateStats  ../run 
 
+nv-nsight-cu-cli --launch-skip 11 --launch-count 10 --replay-mode kernel --csv --section ComputeWorkloadAnalysis --section InstructionStats --section LaunchStats --section MemoryWorkloadAnalysis --section MemoryWorkloadAnalysis_Chart --section MemoryWorkloadAnalysis_Deprecated --section MemoryWorkloadAnalysis_Tables --section Occupancy --section SchedulerStats --section SourceCounters --section SpeedOfLight --section SpeedOfLight_HierarchicalDoubleRooflineChart --section SpeedOfLight_RooflineChart --section WarpStateStats
+done
 
 Szisztematikus ábrák gyártása  barchart,mindenből a legjobb
 
