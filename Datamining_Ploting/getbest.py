@@ -277,82 +277,91 @@ if __name__ == "__main__":
 	#	for c in naiv[soi]:
 	#		print(c)
 
+	try:
+		s = import_cases(results_folder + "/cuda.csv")
+		so = {2:[],4:[],8:[],16:[]}
+		for i in s:
+			so[int(i[2])].append(Case(i))
 
-	s = import_cases(results_folder + "/cuda.csv")
-	so = {2:[],4:[],8:[],16:[]}
-	for i in s:
-		so[int(i[2])].append(Case(i))
+		for soi in [2,4,8,16]:
+			so[soi] = [ s for s in so[soi] if s.time >= 0]
 
-	for soi in [2,4,8,16]:
-		so[soi] = [ s for s in so[soi] if s.time >= 0]
+			so[soi].sort(key=lambda a : a.time)
 
-		so[soi].sort(key=lambda a : a.time)
+			so[soi] = [ so[soi][i] for i in range(N)]
+			
+		cuda = so
+		for soi in [2,4,8,16]:
+			for i,c in enumerate(cuda[soi]):
+				print(str(c)+",cuda"+str(i+1))
+	except:
+		pass
 
-		so[soi] = [ so[soi][i] for i in range(N)]
-		
-	cuda = so
-	for soi in [2,4,8,16]:
-		for c in cuda[soi]:
-			print(c)
+	#quit()
+	try:
+		s = import_cases(results_folder + "/forblocked.csv")
+		so = {2:[],4:[],8:[],16:[]}
+		for i in s:
+			so[int(i[2])].append(Case(i))
 
-	quit()
+		for soi in [2,4,8,16]:
+			so[soi] = [ s for s in so[soi] if s.time >= 0]
 
-	s = import_cases(results_folder + "/forblocked.csv")
-	so = {2:[],4:[],8:[],16:[]}
-	for i in s:
-		so[int(i[2])].append(Case(i))
+			so[soi].sort(key=lambda a : a.time)
 
-	for soi in [2,4,8,16]:
-		so[soi] = [ s for s in so[soi] if s.time >= 0]
-
-		so[soi].sort(key=lambda a : a.time)
-
-		so[soi] = [ so[soi][i] for i in range(N)]
-		
-	block = so
-	for soi in [2,4,8,16]:
-		for c in block[soi]:
-			print(c)
-
-
-	s = import_cases(results_folder + "/fortilled.csv")
-	so = {2:[],4:[],8:[],16:[]}
-	for i in s:
-		so[int(i[2])].append(Case(i))
-
-	for soi in [2,4,8,16]:
-		so[soi] = [ s for s in so[soi] if s.time >= 0]
-
-		so[soi].sort(key=lambda a : a.time)
-
-		so[soi] = [ so[soi][i] for i in range(5)]
-
-	tilled = so
+			so[soi] = [ so[soi][i] for i in range(N)]
+			
+		block = so
+		for soi in [2,4,8,16]:
+			for i,c in enumerate(block[soi]):
+				print(str(c)+",B"+str(i+1))
+	except:
+		pass
 
 
-	for soi in [2,4,8,16]:
-		for c in tilled[soi]:
-			print(c)
+	try:
+		s = import_cases(results_folder + "/fortilled.csv")
+		so = {2:[],4:[],8:[],16:[]}
+		for i in s:
+			so[int(i[2])].append(Case(i))
+
+		for soi in [2,4,8,16]:
+			so[soi] = [ s for s in so[soi] if s.time >= 0]
+
+			so[soi].sort(key=lambda a : a.time)
+
+			so[soi] = [ so[soi][i] for i in range(5)]
+
+		tilled = so
 
 
+		for soi in [2,4,8,16]:
+			for i,c in enumerate(tilled[soi]):
+				print(str(c)+",T"+str(i+1))
+	except:
+		pass
 
-	s = import_cases(results_folder + "/forblocktilled.csv")
-	so = {2:[],4:[],8:[],16:[]}
-	for i in s:
-		so[int(i[2])].append(Case(i))
+	try:
+		s = import_cases(results_folder + "/forblocktilled.csv")
+		so = {2:[],4:[],8:[],16:[]}
+		for i in s:
+			so[int(i[2])].append(Case(i))
 
-	for soi in [2,4,8,16]:
-		so[soi] = [ s for s in so[soi] if s.time >= 0]
+		for soi in [2,4,8,16]:
+			so[soi] = [ s for s in so[soi] if s.time >= 0]
 
-		so[soi].sort(key=lambda a : a.time)
+			so[soi].sort(key=lambda a : a.time)
 
-		so[soi] = [ so[soi][i] for i in range(5)]
+			so[soi] = [ so[soi][i] for i in range(5)]
 
-	combined = so
+		combined = so
 
-	for soi in [2,4,8,16]:
-		for c in combined[soi]:
-			print(c)
+		for soi in [2,4,8,16]:
+			for i,c in enumerate(combined[soi]):
+				print(str(c)+",C"+str(i+1))
+	except:
+		pass
+
 
 
 

@@ -1,60 +1,60 @@
--DFORBLOCKED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=2 -Dblocksize_y=8 -Dblocksize_z=64,800,2,256,2,8,64,1024,B1,0.106959
--DFORBLOCKED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=4 -Dblocksize_y=16 -Dblocksize_z=16,800,2,256,4,16,16,1024,B2,0.107978
--DFORBLOCKED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=4 -Dblocksize_y=8 -Dblocksize_z=32,800,2,256,4,8,32,1024,B3,0.108444
--DFORBLOCKED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=32 -Dblocksize_y=2 -Dblocksize_z=16,800,2,256,32,2,16,1024,B4,0.108522
--DFORBLOCKED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=4 -Dblocksize_z=32,800,2,256,8,4,32,1024,B5,0.109247
--DFORBLOCKED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=32 -Dblocksize_y=2 -Dblocksize_z=16,800,4,256,32,2,16,1024,B1,0.125753
--DFORBLOCKED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=2 -Dblocksize_z=32,800,4,256,16,2,32,1024,B2,0.126171
--DFORBLOCKED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=16,800,4,256,16,4,16,1024,B3,0.126853
--DFORBLOCKED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=8 -Dblocksize_z=16,800,4,256,8,8,16,1024,B4,0.129366
--DFORBLOCKED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=2 -Dblocksize_z=64,800,4,256,8,2,64,1024,B5,0.129406
--DFORBLOCKED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=32 -Dblocksize_y=2 -Dblocksize_z=16,800,8,256,32,2,16,1024,B1,0.172472
--DFORBLOCKED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=2 -Dblocksize_z=32,800,8,256,16,2,32,1024,B2,0.173282
--DFORBLOCKED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=16,800,8,256,16,4,16,1024,B3,0.176128
--DFORBLOCKED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=4 -Dblocksize_z=32,800,8,256,8,4,32,1024,B4,0.177133
--DFORBLOCKED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=8 -Dblocksize_z=16,800,8,256,8,8,16,1024,B5,0.182202
--DFORBLOCKED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=2 -Dblocksize_z=32,800,16,256,16,2,32,1024,B1,0.223938
--DFORBLOCKED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=32 -Dblocksize_y=2 -Dblocksize_z=16,800,16,256,32,2,16,1024,B2,0.228397
--DFORBLOCKED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=16,800,16,256,16,4,16,1024,B3,0.22903
--DFORBLOCKED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=4 -Dblocksize_z=32,800,16,256,8,4,32,1024,B4,0.235413
--DFORBLOCKED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=8 -Dblocksize_z=16,800,16,256,8,8,16,1024,B5,0.241744
--DFORTILLED -DF800_2 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=4 -Dblocksize_z=2,800,2,128,2,4,2,2048,t1,0.10788
--DFORTILLED -DF800_2 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=4,800,2,128,2,2,4,2048,t2,0.109277
--DFORTILLED -DF800_2 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2,800,2,128,2,2,2,1024,t3,0.111082
--DFORTILLED -DF800_2 -DTHREADLIMIT=128 -Dblocksize_x=4 -Dblocksize_y=2 -Dblocksize_z=2,800,2,128,4,2,2,2048,t4,0.111284
--DFORTILLED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2,800,2,256,2,2,2,2048,t5,0.1146
--DFORTILLED -DF800_4 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=4 -Dblocksize_z=2,800,4,128,2,4,2,2048,t1,0.145383
--DFORTILLED -DF800_4 -DTHREADLIMIT=128 -Dblocksize_x=4 -Dblocksize_y=2 -Dblocksize_z=2,800,4,128,4,2,2,2048,t2,0.147003
--DFORTILLED -DF800_4 -DTHREADLIMIT=128 -Dblocksize_x=8 -Dblocksize_y=1 -Dblocksize_z=2,800,4,128,8,1,2,2048,t3,0.151014
--DFORTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2,800,4,256,2,2,2,2048,t4,0.152485
--DFORTILLED -DF800_4 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2,800,4,128,2,2,2,1024,t5,0.152615
--DFORTILLED -DF800_8 -DTHREADLIMIT=128 -Dblocksize_x=8 -Dblocksize_y=1 -Dblocksize_z=2,800,8,128,8,1,2,2048,t1,0.1451
--DFORTILLED -DF800_8 -DTHREADLIMIT=128 -Dblocksize_x=4 -Dblocksize_y=2 -Dblocksize_z=2,800,8,128,4,2,2,2048,t2,0.155301
--DFORTILLED -DF800_8 -DTHREADLIMIT=128 -Dblocksize_x=4 -Dblocksize_y=1 -Dblocksize_z=2,800,8,128,4,1,2,1024,t3,0.162627
--DFORTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=4 -Dblocksize_y=1 -Dblocksize_z=2,800,8,256,4,1,2,2048,t4,0.162743
--DFORTILLED -DF800_8 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=4 -Dblocksize_z=2,800,8,128,2,4,2,2048,t5,0.17161
--DFORTILLED -DF800_16 -DTHREADLIMIT=128 -Dblocksize_x=8 -Dblocksize_y=2 -Dblocksize_z=1,800,16,128,8,2,1,2048,t1,0.233648
--DFORTILLED -DF800_16 -DTHREADLIMIT=128 -Dblocksize_x=4 -Dblocksize_y=4 -Dblocksize_z=1,800,16,128,4,4,1,2048,t2,0.245298
--DFORTILLED -DF800_16 -DTHREADLIMIT=128 -Dblocksize_x=4 -Dblocksize_y=2 -Dblocksize_z=1,800,16,128,4,2,1,1024,t3,0.256071
--DFORTILLED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=4 -Dblocksize_y=2 -Dblocksize_z=1,800,16,256,4,2,1,2048,t4,0.256087
--DFORTILLED -DF800_16 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=4 -Dblocksize_z=1,800,16,128,2,4,1,1024,t5,0.28412
--DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=8 -Dtilesize_z=2,800,2,256,16,4,64,1,8,2,4096,c1,0.08731
--DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=32 -Dtilesize_y=1 -Dtilesize_z=2,800,2,256,16,8,64,32,1,2,16384,c2,0.087622
--DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=4 -Dtilesize_z=2,800,2,512,16,8,64,1,4,2,4096,c3,0.087637
--DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=8 -Dtilesize_y=1 -Dtilesize_z=2,800,2,256,16,8,64,8,1,2,4096,c4,0.087738
--DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=64 -Dtilesize_y=1 -Dtilesize_z=2,800,2,256,16,8,64,64,1,2,32768,c5,0.087787
--DFORBLOCKTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=16 -Dtilesize_y=1 -Dtilesize_z=2,800,4,256,16,8,64,16,1,2,8192,c1,0.112532
--DFORBLOCKTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=2 -Dtilesize_z=2,800,4,256,16,4,64,1,2,2,1024,c2,0.11451
--DFORBLOCKTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=2 -Dtilesize_z=2,800,4,256,16,8,64,1,2,2,1024,c3,0.114512
--DFORBLOCKTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=4 -Dtilesize_z=2,800,4,256,16,8,64,2,4,2,4096,c4,0.11482
--DFORBLOCKTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=8 -Dtilesize_z=2,800,4,256,16,8,64,1,8,2,4096,c5,0.114977
--DFORBLOCKTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=4 -Dtilesize_y=1 -Dtilesize_z=2,800,8,256,16,4,64,4,1,2,2048,c1,0.179587
--DFORBLOCKTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=8 -Dtilesize_z=2,800,8,256,16,4,64,1,8,2,4096,c2,0.180109
--DFORBLOCKTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=1 -Dtilesize_z=2,800,8,256,16,4,64,2,1,2,1024,c3,0.180826
--DFORBLOCKTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=4 -Dtilesize_z=2,800,8,256,16,4,64,1,4,2,2048,c4,0.182549
--DFORBLOCKTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=8 -Dtilesize_z=2,800,8,256,16,4,64,2,8,2,8192,c5,0.183089
--DFORBLOCKTILLED -DF800_16 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=4 -Dtilesize_z=2,800,16,512,16,8,64,2,4,2,8192,c1,0.227818
--DFORBLOCKTILLED -DF800_16 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=2 -Dtilesize_z=2,800,16,512,16,8,64,2,2,2,4096,c2,0.23077
--DFORBLOCKTILLED -DF800_16 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=4 -Dtilesize_y=1 -Dtilesize_z=2,800,16,512,16,8,64,4,1,2,4096,c3,0.232286
--DFORBLOCKTILLED -DF800_16 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=1 -Dtilesize_z=2,800,16,512,16,8,64,2,1,2,2048,c4,0.232749
--DFORBLOCKTILLED -DF800_16 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=8 -Dtilesize_y=1 -Dtilesize_z=2,800,16,512,16,8,64,8,1,2,8192,c5,0.232763
+-DFORBLOCKED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=2 -Dblocksize_y=8 -Dblocksize_z=64,800,2,256,2,8,64,1024,0.106959,B1    
+-DFORBLOCKED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=4 -Dblocksize_y=16 -Dblocksize_z=16,800,2,256,4,16,16,1024,0.107978,B2  
+-DFORBLOCKED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=4 -Dblocksize_y=8 -Dblocksize_z=32,800,2,256,4,8,32,1024,0.108444,B3    
+-DFORBLOCKED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=32 -Dblocksize_y=2 -Dblocksize_z=16,800,2,256,32,2,16,1024,0.108522,B4  
+-DFORBLOCKED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=4 -Dblocksize_z=32,800,2,256,8,4,32,1024,0.109247,B5    
+-DFORBLOCKED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=32 -Dblocksize_y=2 -Dblocksize_z=16,800,4,256,32,2,16,1024,0.125753,B1  
+-DFORBLOCKED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=2 -Dblocksize_z=32,800,4,256,16,2,32,1024,0.126171,B2  
+-DFORBLOCKED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=16,800,4,256,16,4,16,1024,0.126853,B3  
+-DFORBLOCKED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=8 -Dblocksize_z=16,800,4,256,8,8,16,1024,0.129366,B4    
+-DFORBLOCKED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=2 -Dblocksize_z=64,800,4,256,8,2,64,1024,0.129406,B5    
+-DFORBLOCKED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=32 -Dblocksize_y=2 -Dblocksize_z=16,800,8,256,32,2,16,1024,0.172472,B1  
+-DFORBLOCKED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=2 -Dblocksize_z=32,800,8,256,16,2,32,1024,0.173282,B2  
+-DFORBLOCKED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=16,800,8,256,16,4,16,1024,0.176128,B3  
+-DFORBLOCKED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=4 -Dblocksize_z=32,800,8,256,8,4,32,1024,0.177133,B4    
+-DFORBLOCKED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=8 -Dblocksize_z=16,800,8,256,8,8,16,1024,0.182202,B5    
+-DFORBLOCKED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=2 -Dblocksize_z=32,800,16,256,16,2,32,1024,0.223938,B1
+-DFORBLOCKED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=32 -Dblocksize_y=2 -Dblocksize_z=16,800,16,256,32,2,16,1024,0.228397,B2
+-DFORBLOCKED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=16,800,16,256,16,4,16,1024,0.22903,B3 
+-DFORBLOCKED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=4 -Dblocksize_z=32,800,16,256,8,4,32,1024,0.235413,B4  
+-DFORBLOCKED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=8 -Dblocksize_z=16,800,16,256,8,8,16,1024,0.241744,B5  
+-DFORTILLED -DF800_2 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=4 -Dblocksize_z=2,800,2,128,2,4,2,2048,0.10788,T1        
+-DFORTILLED -DF800_2 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=4,800,2,128,2,2,4,2048,0.109277,T2       
+-DFORTILLED -DF800_2 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2,800,2,128,2,2,2,1024,0.111082,T3       
+-DFORTILLED -DF800_2 -DTHREADLIMIT=128 -Dblocksize_x=4 -Dblocksize_y=2 -Dblocksize_z=2,800,2,128,4,2,2,2048,0.111284,T4       
+-DFORTILLED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2,800,2,256,2,2,2,2048,0.1146,T5
+-DFORTILLED -DF800_4 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=4 -Dblocksize_z=2,800,4,128,2,4,2,2048,0.145383,T1       
+-DFORTILLED -DF800_4 -DTHREADLIMIT=128 -Dblocksize_x=4 -Dblocksize_y=2 -Dblocksize_z=2,800,4,128,4,2,2,2048,0.147003,T2       
+-DFORTILLED -DF800_4 -DTHREADLIMIT=128 -Dblocksize_x=8 -Dblocksize_y=1 -Dblocksize_z=2,800,4,128,8,1,2,2048,0.151014,T3       
+-DFORTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2,800,4,256,2,2,2,2048,0.152485,T4       
+-DFORTILLED -DF800_4 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2,800,4,128,2,2,2,1024,0.152615,T5
+-DFORTILLED -DF800_8 -DTHREADLIMIT=128 -Dblocksize_x=8 -Dblocksize_y=1 -Dblocksize_z=2,800,8,128,8,1,2,2048,0.1451,T1
+-DFORTILLED -DF800_8 -DTHREADLIMIT=128 -Dblocksize_x=4 -Dblocksize_y=2 -Dblocksize_z=2,800,8,128,4,2,2,2048,0.155301,T2
+-DFORTILLED -DF800_8 -DTHREADLIMIT=128 -Dblocksize_x=4 -Dblocksize_y=1 -Dblocksize_z=2,800,8,128,4,1,2,1024,0.162627,T3
+-DFORTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=4 -Dblocksize_y=1 -Dblocksize_z=2,800,8,256,4,1,2,2048,0.162743,T4
+-DFORTILLED -DF800_8 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=4 -Dblocksize_z=2,800,8,128,2,4,2,2048,0.17161,T5
+-DFORTILLED -DF800_16 -DTHREADLIMIT=128 -Dblocksize_x=8 -Dblocksize_y=2 -Dblocksize_z=1,800,16,128,8,2,1,2048,0.233648,T1
+-DFORTILLED -DF800_16 -DTHREADLIMIT=128 -Dblocksize_x=4 -Dblocksize_y=4 -Dblocksize_z=1,800,16,128,4,4,1,2048,0.245298,T2
+-DFORTILLED -DF800_16 -DTHREADLIMIT=128 -Dblocksize_x=4 -Dblocksize_y=2 -Dblocksize_z=1,800,16,128,4,2,1,1024,0.256071,T3
+-DFORTILLED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=4 -Dblocksize_y=2 -Dblocksize_z=1,800,16,256,4,2,1,2048,0.256087,T4
+-DFORTILLED -DF800_16 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=4 -Dblocksize_z=1,800,16,128,2,4,1,1024,0.28412,T5
+-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=8 -Dtilesize_z=2,800,2,256,16,4,64,1,8,2,4096,0.08731,C1
+-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=32 -Dtilesize_y=1 -Dtilesize_z=2,800,2,256,16,8,64,32,1,2,16384,0.087622,C2
+-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=4 -Dtilesize_z=2,800,2,512,16,8,64,1,4,2,4096,0.087637,C3
+-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=8 -Dtilesize_y=1 -Dtilesize_z=2,800,2,256,16,8,64,8,1,2,4096,0.087738,C4
+-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=64 -Dtilesize_y=1 -Dtilesize_z=2,800,2,256,16,8,64,64,1,2,32768,0.087787,C5
+-DFORBLOCKTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=16 -Dtilesize_y=1 -Dtilesize_z=2,800,4,256,16,8,64,16,1,2,8192,0.112532,C1
+-DFORBLOCKTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=2 -Dtilesize_z=2,800,4,256,16,4,64,1,2,2,1024,0.11451,C2
+-DFORBLOCKTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=2 -Dtilesize_z=2,800,4,256,16,8,64,1,2,2,1024,0.114512,C3
+-DFORBLOCKTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=4 -Dtilesize_z=2,800,4,256,16,8,64,2,4,2,4096,0.11482,C4
+-DFORBLOCKTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=8 -Dtilesize_z=2,800,4,256,16,8,64,1,8,2,4096,0.114977,C5
+-DFORBLOCKTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=4 -Dtilesize_y=1 -Dtilesize_z=2,800,8,256,16,4,64,4,1,2,2048,0.179587,C1
+-DFORBLOCKTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=8 -Dtilesize_z=2,800,8,256,16,4,64,1,8,2,4096,0.180109,C2
+-DFORBLOCKTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=1 -Dtilesize_z=2,800,8,256,16,4,64,2,1,2,1024,0.180826,C3
+-DFORBLOCKTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=4 -Dtilesize_z=2,800,8,256,16,4,64,1,4,2,2048,0.182549,C4
+-DFORBLOCKTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=8 -Dtilesize_z=2,800,8,256,16,4,64,2,8,2,8192,0.183089,C5
+-DFORBLOCKTILLED -DF800_16 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=4 -Dtilesize_z=2,800,16,512,16,8,64,2,4,2,8192,0.227818,C1
+-DFORBLOCKTILLED -DF800_16 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=2 -Dtilesize_z=2,800,16,512,16,8,64,2,2,2,4096,0.23077,C2
+-DFORBLOCKTILLED -DF800_16 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=4 -Dtilesize_y=1 -Dtilesize_z=2,800,16,512,16,8,64,4,1,2,4096,0.232286,C3
+-DFORBLOCKTILLED -DF800_16 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=1 -Dtilesize_z=2,800,16,512,16,8,64,2,1,2,2048,0.232749,C4
+-DFORBLOCKTILLED -DF800_16 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=8 -Dtilesize_y=1 -Dtilesize_z=2,800,16,512,16,8,64,8,1,2,8192,0.232763,C5

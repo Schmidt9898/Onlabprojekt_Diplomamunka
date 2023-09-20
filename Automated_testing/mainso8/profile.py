@@ -37,6 +37,7 @@ path_bin = "./ncu_profiler/bin/"
 #quit()
 
 for case in bases:
+	#break
 	extra = case
 	run_name = path_bin + case[12:19].strip()
 	print(run_name)
@@ -48,25 +49,26 @@ for case in bases:
 
 idx = 1
 for case in case_cuda:
+
 	#print(case)
 	params = list(case)
 	#so,T,x,y,z = case
 	extra = params[0]
 	run_name = ""
-	for p in params[1:-1]:
+	for p in params[1:-2]:
 		run_name += p+"_"
+	run_name = params[-1]+"_"+run_name
 	#print(extra)
-	run_name = path_bin + str(idx)+"_cuda_" +run_name + "run"
-	print(run_name)
+	run_name = path_bin + run_name + "run"
+	#print(run_name)
+	#continue
+
 	#quit()
 	
 	#build_main(run_name,extra)
 	cuda_build(run_name,extra)
 	test(run_name)
 	#build(extra)
-	idx+=1
-	if idx > 5: 
-		idx = 1
 
 
 for case in cases:
@@ -75,11 +77,15 @@ for case in cases:
 	#so,T,x,y,z = case
 	extra = params[0]
 	run_name = ""
-	for p in params[1:-1]:
+	for p in params[1:-2]:
 		run_name += p+"_"
+	run_name = params[-1]+"_"+run_name
+
 	#print(extra)
 	run_name = path_bin + run_name + "run"
 	#print(run_name)
+	#continue
+
 	build_main(run_name,extra)
 	test(run_name)
 	#quit()
