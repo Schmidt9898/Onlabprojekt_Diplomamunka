@@ -4,6 +4,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
+#define MAX(x,y) (((x) >= (y)) ? (x) : (y))
+#define MIN(x,y) (((x) <= (y)) ? (x) : (y))
+
+
 /*
 
 size_t total_memory_needed=0;
@@ -134,12 +139,21 @@ for(size_t i = 0 ;i< valid_size;i++)
 						//printf("index: %lu | t: %lu, x: %lu, y: %lu, z: %lu, \n",index, t,i,j,k);
 						float valid = valid_f[index];
 						float test = test_f[index];
-						// if(*f != *f)//Nan value
-						//	return 0;
-						//if (valid == 5.0f)
+						if(test == test)//Nan value filter
+						//	continue;
 						{
-							float error = fabsf(valid - test); /// abs(valid>test? valid : test);
+							if(MAX(valid,test) == 0)
+							{
+								continue; // in case of 0 devision 
+							}
+							float error = (valid - test) / MAX(valid,test);
+							//printf("(valid - test) %f,%f\n",valid,test);
+
+							error = fabsf(error); /// abs(valid>test? valid : test);
 							//printf("error: %f - %f = %f | at: t: %lu, x: %lu, y: %lu, z: %lu, \n", valid, test, error, 0, i, j, k);
+							//printf("error: %f\n",error);
+							// FIXME a-b / max(a,b)
+
 							if (error > 0.00001)
 							{
 								error_count += 1;

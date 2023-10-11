@@ -45,7 +45,7 @@ int main(int argc, char **argv)
   printf("compiled with 3 dimensional arrays.\n");
   #define Ddim(arr,x,y,z) arr ## _[x][y][z]
 #else
-  #pragma message "Dimension was not defined use one of L1D or L3D " 
+  #pragma message "Dimension was not defined use one of L1D or L3D "
 #endif
 
 #if defined(F800_2)
@@ -100,29 +100,29 @@ printf("memory size needed: %lu , %f Gb \n", meret, 7*meret * sizeof(float) / 1e
 float * out = (float *)malloc(meret * sizeof(float));
 float * out2 = (float *)malloc(meret * sizeof(float));
 
-float * __restrict data = NULL;
-float * __restrict data1 = NULL;
-float * __restrict data2 = NULL;
-float * __restrict data3 = NULL;
-float * __restrict data4 = NULL;
-#pragma omp target data map(alloc : data[0:meret]) \
-            map(alloc : data1[0:meret]) \
-            map(alloc : data2[0:meret]) \
-            map(alloc : data3[0:meret]) \
-            map(alloc : data4[0:meret]) \
+float * __restrict data = (float *)malloc(meret * sizeof(float));
+float * __restrict data1 = (float *)malloc(meret * sizeof(float));
+float * __restrict data2 = (float *)malloc(meret * sizeof(float));
+float * __restrict data3 = (float *)malloc(meret * sizeof(float));
+float * __restrict data4 = (float *)malloc(meret * sizeof(float));
+#pragma omp target data map(to : data[0:meret]) \
+            map(to : data1[0:meret]) \
+            map(to : data2[0:meret]) \
+            map(to : data3[0:meret]) \
+            map(to : data4[0:meret]) \
             map(from  : out[0:meret])  \
             map(from  : out2[0:meret])
 {
 
 
-float(*__restrict data_)[sizey][sizez] =(float(*__restrict)[sizey][sizez])data;
+/*float(*__restrict data_)[sizey][sizez] =(float(*__restrict)[sizey][sizez])data;
 float(*__restrict data1_)[sizey][sizez] =(float(*__restrict)[sizey][sizez])data1;
 float(*__restrict data2_)[sizey][sizez] =(float(*__restrict)[sizey][sizez])data2;
 float(*__restrict data3_)[sizey][sizez] =(float(*__restrict)[sizey][sizez])data3;
 float(*__restrict data4_)[sizey][sizez] =(float(*__restrict)[sizey][sizez])data4;
 float(*__restrict out_)[sizey][sizez] = (float(*__restrict)[sizey][sizez])out;
 float(*__restrict out2_)[sizey][sizez] = (float(*__restrict)[sizey][sizez])out2;
-
+*/
 
 //init aka zeroing
 #pragma omp target teams
@@ -141,7 +141,7 @@ float(*__restrict out2_)[sizey][sizez] = (float(*__restrict)[sizey][sizez])out2;
         Ddim(data4,x,y,z) = 1.0;
         Ddim(out,x,y,z) = 0.0;
         Ddim(out2,x,y,z) = 0.0;
-        
+
       }
     }
   }
@@ -153,8 +153,12 @@ float r9 = 1.0F/dt;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 for (int i = 0; i < 21; i++) {
 if (i == 11) Spawn_stopper("Kernel 0");
+#ifdef LOOP
+#pragma omp target teams loop collapse(3)
+#else
 #pragma omp target teams
 #pragma omp distribute parallel for collapse(3)
+#endif
   for (int x = 0; x < sizex - 2*window_size; x++)
   {
     for (int y = 0; y < sizey - 2*window_size; y++)
@@ -177,7 +181,7 @@ if (i == 11) Spawn_stopper("Kernel 1");
 // #pragma omp target teams
 // #pragma omp distribute parallel for collapse(3)
 #pragma omp target teams distribute parallel for collapse(3)
-#pragma omp tile sizes(blocksize_x,blocksize_y,blocksize_z) 
+#pragma omp tile sizes(blocksize_x,blocksize_y,blocksize_z)
   for (int x = 0; x < sizex - 2*window_size; x++)
   {
     for (int y = 0; y < sizey - 2*window_size; y++)
@@ -198,12 +202,20 @@ Kill_stopper();
 #ifdef FORBLOCKED
 for (int i = 0; i < 21; i++) {
 if (i == 11) Spawn_stopper("Kernel 2");
+#ifdef LOOP
+#pragma omp target teams loop collapse(3) thread_limit(THREADLIMIT)
+#else
 #pragma omp target teams distribute collapse(3) thread_limit(THREADLIMIT) //deviceptr(data,data1,data2,data3,data4,data_,data_1,data_2,data_3,data_4)
+#endif
   for (int x = 0; x < sizex - 2*window_size; x += blocksize_x)
     for (int y = 0; y < sizey - 2*window_size; y += blocksize_y)
       for (int z = 0; z < sizez - 2*window_size; z += blocksize_z)
       {
+#ifdef LOOP
+  #pragma omp loop collapse(3) bind(parallel)
+#else
   #pragma omp parallel for collapse(3) //shared(out2_,data_)
+#endif
         for (int bx = x; bx < x + blocksize_x; bx++)
           for (int by = y; by < y + blocksize_y; by++)
             for (int bz = z; bz < z + blocksize_z; bz++)
@@ -266,6 +278,11 @@ Kill_stopper();
 
 
 free(out);
+free(data);
+free(data1);
+free(data2);
+free(data3);
+free(data4);
 free(out2);
 
 printf("Done.");
@@ -342,4 +359,3 @@ double Kill_stopper()
 
 }
 #endif
-

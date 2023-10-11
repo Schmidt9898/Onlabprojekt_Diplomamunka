@@ -59,11 +59,31 @@ done
 
 Szisztematikus ábrák gyártása  barchart,mindenből a legjobb
 
-több mérés átlaga
+több mérés átlaga done
 
 AMD profiler || omniperf analyze -p paper_so16_naiv_aomp/mi200/ --gui
 
 
 pár lépéses elrontás- mainso8 elrontani dinamic type al
 
+R javaslat:
+	nvidia cluster collum barchart
+	15.3 ,17, cray, 
+	cuda, naiv, 
 
+
+
+ncu --metrics smsp__sass_thread_inst_executed_op_dadd_pred_on.sum,smsp__sass_thread_inst_executed_op_dmul_pred_on.sum,smsp__sass_thread_inst_executed_op_dfma_pred_on.sum,smsp__sass_thread_inst_executed_ops_dadd_dmul_dfma_pred_on.sum,smsp__sass_thread_inst_executed_op_fp64_pred_on.sum,smsp__sass_thread_inst_executed_op_fp32_pred_on.sum,smsp__sass_thread_inst_executed_op_integer_pred_on.sum
+
+
+smsp__sass_thread_inst_executed_op_ffma_pred_on.sum
+
+flop_count_hp_mul 	smsp__sass_thread_inst_executed_op_hmul_pred_on.sum
+
+
+flop_count_sp 	smsp__sass_thread_inst_executed_op_fadd_pred_on.sum + smsp__sass_thread_inst_executed_op_fmul_pred_on.sum + smsp__sass_thread_inst_executed_op_ffma_pred_on.sum * 2
+flop_count_sp_add 	smsp__sass_thread_inst_executed_op_fadd_pred_on.sum
+flop_count_sp_fma 	smsp__sass_thread_inst_executed_op_ffma_pred_on.sum
+flop_count_sp_mul 	smsp__sass_thread_inst_executed_op_fmul_pred_on.sum
+
+smsp__sass_thread_inst_executed_op_fadd_pred_on.sum,smsp__sass_thread_inst_executed_op_ffma_pred_on.sum,smsp__sass_thread_inst_executed_op_fmul_pred_on.sum
