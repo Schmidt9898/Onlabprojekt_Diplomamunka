@@ -65,6 +65,44 @@ def reduce_make_averdev(path):
 		#print(l)
 		data2.append(l)
 	data2 = pd.DataFrame(data2,columns = ['Section Name', 'Metric Name','Metric Unit', 'AverValue','stdev'])
+
+
+	#0,Command line profiler metrics,smsp__sass_thread_inst_executed_op_fadd_pred_on.sum,inst,3361106880.0,0.0
+	#1,Command line profiler metrics,smsp__sass_thread_inst_executed_op_ffma_pred_on.sum,inst,3361106880.0,0.0
+	#2,Command line profiler metrics,smsp__sass_thread_inst_executed_op_fmul_pred_on.sum,inst,2688885504.0,0.0
+	#3,Command line profiler metrics,smsp__sass_thread_inst_executed_op_fp32_pred_on.sum,inst,10755542016.0,0.0
+
+
+	fadd,ffma,fmul,fp32 = (None,None,None,None)
+	duration = 0
+	drop_these = []
+	for ind in data2.index:
+		if "smsp__sass_thread_inst_executed_op_fadd_pred_on.sum" == data2['Metric Name'][ind]:
+			fadd = int(data2['AverValue'][ind])
+			drop_these.append(ind)
+		if "smsp__sass_thread_inst_executed_op_ffma_pred_on.sum" == data2['Metric Name'][ind]:
+			ffma = int(data2['AverValue'][ind])
+			drop_these.append(ind)
+		if "smsp__sass_thread_inst_executed_op_fmul_pred_on.sum" == data2['Metric Name'][ind]:
+			fmul = int(data2['AverValue'][ind])
+			drop_these.append(ind)
+		if "smsp__sass_thread_inst_executed_op_fp32_pred_on.sum" == data2['Metric Name'][ind]:
+			fp32 = int(data2['AverValue'][ind])
+			#drop_these.append(ind)
+		if "Duration" == data2['Metric Name'][ind]:
+			duration = float(data2['AverValue'][ind])
+		#print(data2['Metric Name'][ind], data2['AverValue'][ind])
+
+	data2.loc[drop_these[0]] = ['Calculated','fadd + fmul + 2*ffma','flop',fadd + fmul + 2*ffma, 0] 		
+	data2.loc[drop_these[1]] = ['Calculated','flops/duration','Gflop/second',float(fadd + fmul + 2*ffma) / duration , 0] 		#/ (duration/(10**9)) / (10**9)
+	data2 = data2.drop(drop_these[2:])
+
+
+
+
+
+
+
 	#print(data2)
 	data2.to_csv(path)
 	#quit()

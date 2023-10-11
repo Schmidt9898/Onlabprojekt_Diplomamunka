@@ -3,6 +3,7 @@ import os
 import sys
 from cleanup import cleanup_csvs,get_csvs
 from cleanup import reduce_make_averdev
+from summary import do_summary
 
 
 if __name__ == "__main__":
@@ -24,5 +25,6 @@ if __name__ == "__main__":
 	for csv in csvs :
 		reduce_make_averdev(csv)
 		
-	for csv in csvs :
-		reduce_make_averdev(csv)
+	do_summary(out_path)
+#	for csv in csvs :
+#		reduce_make_averdev(csv)
