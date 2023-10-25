@@ -87,3 +87,40 @@ flop_count_sp_fma 	smsp__sass_thread_inst_executed_op_ffma_pred_on.sum
 flop_count_sp_mul 	smsp__sass_thread_inst_executed_op_fmul_pred_on.sum
 
 smsp__sass_thread_inst_executed_op_fadd_pred_on.sum,smsp__sass_thread_inst_executed_op_ffma_pred_on.sum,smsp__sass_thread_inst_executed_op_fmul_pred_on.sum
+
+flop_count_sp 	Number of single-precision floating-point operations executed by non-predicated threads (add, multiply, and multiply-accumulate). Each multiply-accumulate operation contributes 2 to the count. The count does not include special operations. 	Multi-context
+
+flop_count_sp_add 	Number of single-precision floating-point add operations executed by non-predicated threads. 	Multi-context
+
+flop_count_sp_fma 	Number of single-precision floating-point multiply-accumulate operations executed by non-predicated threads. Each multiply-accumulate operation contributes 1 to the count. 	Multi-context
+
+flop_count_sp_mul 	Number of single-precision floating-point multiply operations executed by non-predicated threads. 	Multi-context
+
+flop_count_sp_special 	Number of single-precision floating-point special operations executed by non-predicated threads.
+
+
+
+
+PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,
+PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,
+PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,
+PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,PTX,
+
+nvcc -ptx -o kernel.ptx kernel.cu
+
+clang++ -S -mllvm --x86-asm-syntax=intel test.cpp -> 
+
+clang -S -Xclang -emit-llvm -Xclang -O3 -o output.ll input.c
+llc -march=nvptx -mcpu=sm_XX -o output.ptx output.ll
+
+
+
+clang -S -Xclang -emit-llvm -Xclang -Ofast -ffast-math -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lomptarget -Xopenmp-target -march=sm_70 -fopenmp-version=51 -lomptarget -lm -L /home/shared/software/clang/15.3-centos8/lib ./mainso8.c -DEXPORTDATA -DFORNAIV -DF800_2 -DTHREADLIMIT=128 -o output.ll
+
+clang -S -Xclang -emit-llvm -Xclang -Ofast -ffast-math -fopenmp -fopenmp-targets=nvptx64-nvidia-cuda -lomptarget -Xopenmp-target -march=sm_70 -fopenmp-version=51  ./mainso8.c -DEXPORTDATA -DFORNAIV -DF800_2 -DTHREADLIMIT=128 -o output.ll
+
+
+nvcc -ptx -o mainso.cu.ptx mainso.cu -DF800_2 -DTHREADLIMIT=512 -Dblocksize_x=4 -Dblocksize_y=2 -Dblocksize_z=64
+
+clang -S -Xclang -emit-llvm -Xclang -O3 -o output.ll mainso8.c -DEXPORTDATA -DFORNAIV -DF800_2 -DTHREADLIMIT=128 
+llc -march=nvptx -mcpu=sm_70 -o output.ptx output.ll

@@ -1,0 +1,64 @@
+-DFORNAIV -DF800_2 -DTHREADLIMIT=128
+-DFORNAIV -DF800_4 -DTHREADLIMIT=128
+-DFORNAIV -DF800_8 -DTHREADLIMIT=128
+-DFORNAIV -DF800_16 -DTHREADLIMIT=128
+-DFORBLOCKED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=2 -Dblocksize_z=64
+-DFORBLOCKED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=4 -Dblocksize_y=4 -Dblocksize_z=64
+-DFORBLOCKED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=2 -Dblocksize_y=32 -Dblocksize_z=16
+-DFORBLOCKED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=2 -Dblocksize_y=8 -Dblocksize_z=64
+-DFORBLOCKED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=32 -Dblocksize_y=4 -Dblocksize_z=8
+-DFORBLOCKED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=32 -Dblocksize_y=2 -Dblocksize_z=16
+-DFORBLOCKED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=2 -Dblocksize_z=32
+-DFORBLOCKED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=16
+-DFORBLOCKED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=2 -Dblocksize_z=64
+-DFORBLOCKED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=8 -Dblocksize_z=16
+-DFORBLOCKED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=32 -Dblocksize_y=2 -Dblocksize_z=16
+-DFORBLOCKED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=2 -Dblocksize_z=32
+-DFORBLOCKED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=16
+-DFORBLOCKED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=4 -Dblocksize_z=32
+-DFORBLOCKED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=2 -Dblocksize_z=64
+-DFORBLOCKED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=2 -Dblocksize_z=32
+-DFORBLOCKED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=16
+-DFORBLOCKED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=32 -Dblocksize_y=2 -Dblocksize_z=16
+-DFORBLOCKED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=4 -Dblocksize_z=32
+-DFORBLOCKED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=8 -Dblocksize_z=16
+-DFORTILLED -DF800_2 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=4
+-DFORTILLED -DF800_2 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=8 -Dblocksize_z=1
+-DFORTILLED -DF800_2 -DTHREADLIMIT=128 -Dblocksize_x=4 -Dblocksize_y=4 -Dblocksize_z=1
+-DFORTILLED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=1 -Dblocksize_z=1
+-DFORTILLED -DF800_2 -DTHREADLIMIT=128 -Dblocksize_x=1 -Dblocksize_y=2 -Dblocksize_z=4
+-DFORTILLED -DF800_4 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=2
+-DFORTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=8 -Dblocksize_y=1 -Dblocksize_z=1
+-DFORTILLED -DF800_4 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=1 -Dblocksize_z=2
+-DFORTILLED -DF800_4 -DTHREADLIMIT=128 -Dblocksize_x=2 -Dblocksize_y=4 -Dblocksize_z=2
+-DFORTILLED -DF800_4 -DTHREADLIMIT=128 -Dblocksize_x=4 -Dblocksize_y=4 -Dblocksize_z=1
+-DFORTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=2 -Dblocksize_y=1 -Dblocksize_z=2
+-DFORTILLED -DF800_8 -DTHREADLIMIT=128 -Dblocksize_x=1 -Dblocksize_y=2 -Dblocksize_z=2
+-DFORTILLED -DF800_8 -DTHREADLIMIT=128 -Dblocksize_x=8 -Dblocksize_y=2 -Dblocksize_z=1
+-DFORTILLED -DF800_8 -DTHREADLIMIT=128 -Dblocksize_x=4 -Dblocksize_y=2 -Dblocksize_z=1
+-DFORTILLED -DF800_8 -DTHREADLIMIT=512 -Dblocksize_x=2 -Dblocksize_y=1 -Dblocksize_z=2
+-DFORTILLED -DF800_16 -DTHREADLIMIT=128 -Dblocksize_x=8 -Dblocksize_y=2 -Dblocksize_z=1
+-DFORTILLED -DF800_16 -DTHREADLIMIT=128 -Dblocksize_x=4 -Dblocksize_y=2 -Dblocksize_z=1
+-DFORTILLED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=4 -Dblocksize_y=2 -Dblocksize_z=1
+-DFORTILLED -DF800_16 -DTHREADLIMIT=512 -Dblocksize_x=2 -Dblocksize_y=2 -Dblocksize_z=1
+-DFORTILLED -DF800_16 -DTHREADLIMIT=256 -Dblocksize_x=2 -Dblocksize_y=4 -Dblocksize_z=1
+-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=32 -Dtilesize_x=1 -Dtilesize_y=4 -Dtilesize_z=1
+-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=8 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=4 -Dtilesize_y=1 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=8 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_2 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=8 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=8 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=2 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=2 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=8 -Dtilesize_y=1 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_4 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=4 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=4 -Dtilesize_y=1 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=8 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=1 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=1 -Dtilesize_y=4 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_8 -DTHREADLIMIT=256 -Dblocksize_x=16 -Dblocksize_y=4 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=8 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_16 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=4 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_16 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=2 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_16 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=4 -Dtilesize_y=1 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_16 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=8 -Dtilesize_y=1 -Dtilesize_z=2
+-DFORBLOCKTILLED -DF800_16 -DTHREADLIMIT=512 -Dblocksize_x=16 -Dblocksize_y=8 -Dblocksize_z=64 -Dtilesize_x=2 -Dtilesize_y=1 -Dtilesize_z=2

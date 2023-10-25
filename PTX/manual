@@ -1,0 +1,16 @@
+clang++ -S -mllvm --x86-asm-syntax=intel test.cpp -> 
+clang -S -mllvm --x86-asm-syntax=intel main.c
+
+
+nvcc -ptx -o kernel.ptx kernel.cu
+nvcc -ptx -o kernel.ptx test.cu
+
+
+clang -S -Xclang -emit-llvm -Xclang -O3 -o output.ll input.c
+llc -march=nvptx -mcpu=sm_XX -o output.ptx output.ll
+
+
+
+
+clang -S -Xclang -emit-llvm -Xclang -O3 -o output.ll mainso8.c -DEXPORTDATA -DFORNAIV -DF800_2 -DTHREADLIMIT=128 
+llc -march=nvptx -mcpu=sm_70 -o output.ptx output.ll
