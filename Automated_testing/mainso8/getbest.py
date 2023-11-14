@@ -255,7 +255,20 @@ class Case:
 
 
 
-
+def get_best_N(path,N = 1):
+	s = import_cases(path)
+	so = {2:[],4:[],8:[],16:[]}
+	for i in s:
+		so[int(i[2])].append(Case(i))
+	for soi in [2,4,8,16]:
+		so[soi] = [ s for s in so[soi] if s.time >= 0]
+		so[soi].sort(key=lambda a : a.time)
+		so[soi] = [ so[soi][i] for i in range(N)]
+		
+	for soi in [2,4,8,16]:
+		for c in so[soi]:
+			print(c)
+	return so
 
 
 if __name__ == "__main__":
