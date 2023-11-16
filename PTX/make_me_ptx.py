@@ -17,9 +17,10 @@ print(os.popen("cp ../Automated_testing/mainso8/mainso8.c ./src/mainso8.c").read
 
 #ret = os.popen(command).read()
 
-cmd_build0 = "clang -S -Xclang -emit-llvm -Xclang -O3 -o output.ll ./src/mainso8.c" 
+cmd_build0 = "clang -S -Xclang -fopenmp-targets=nvptx64 -emit-llvm -Xclang -O3 -o output.ll ./src/mainso8.c" 
 cmd_build1 = "llc -march=nvptx -mcpu=sm_70 output.ll -o "
 
+#clang_build = "nvcc -ptx -Xcompiler -fopenmp ./src/mainso8.c -o "
 
 path = "./input/clang.csv"
 
@@ -36,6 +37,11 @@ for line in lines:
 	print(g_name)
 	os.popen(cmd_build0 + " {}".format(line)).read()
 	os.popen(cmd_build1 + g_name).read()
+	#cmd = clang_build + g_name + " {}".format(line)
+	#print(cmd)
+	#res = os.popen(cmd).read()
+	#print(res)
+	#quit()
 
 cmd_build_cuda = "nvcc -ptx ./src/mainso.cu -o "
 path = "./input/cuda.csv"
