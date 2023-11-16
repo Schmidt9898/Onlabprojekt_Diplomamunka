@@ -156,13 +156,20 @@ if (i == 11) Spawn_stopper("Kernel 0");
 #ifdef LOOP
 #pragma omp target teams loop collapse(3)
 #else
+#ifdef use_simd
+#pragma omp target teams distribute collapse(2)
+#else
 #pragma omp target teams
 #pragma omp distribute parallel for collapse(3)
+#endif
 #endif
   for (int x = 0; x < sizex - 2*window_size; x++)
   {
     for (int y = 0; y < sizey - 2*window_size; y++)
     {
+#ifdef use_simd
+	    #pragma omp parallel for simd simdlen(32)
+#endif
       for (int z = 0; z < sizez - 2*window_size; z++)
       {
         //kernel start
@@ -205,7 +212,11 @@ if (i == 11) Spawn_stopper("Kernel 2");
 #ifdef LOOP
 #pragma omp target teams loop collapse(3) thread_limit(THREADLIMIT)
 #else
+#ifdef use_simd
+#pragma omp target teams distribute collapse(3)
+#else
 #pragma omp target teams distribute collapse(3) thread_limit(THREADLIMIT) //deviceptr(data,data1,data2,data3,data4,data_,data_1,data_2,data_3,data_4)
+#endif
 #endif
   for (int x = 0; x < sizex - 2*window_size; x += blocksize_x)
     for (int y = 0; y < sizey - 2*window_size; y += blocksize_y)
@@ -214,12 +225,23 @@ if (i == 11) Spawn_stopper("Kernel 2");
 #ifdef LOOP
   #pragma omp loop collapse(3) bind(parallel)
 #else
+#ifdef use_simd
+  #pragma omp parallel for simd simdlen(32) //shared(out2_,data_)
+
+	for (int c = 0; c < blocksize_x*blocksize_y*blocksize_z; c++) {
+		int bx = x + c/blocksize_x*blocksize_y;
+		int by = y + c/blocksize_x;
+		int bz = z + c%blocksize_z;
+#else
   #pragma omp parallel for collapse(3) //shared(out2_,data_)
 #endif
+#endif
+#ifndef use_simd
         for (int bx = x; bx < x + blocksize_x; bx++)
           for (int by = y; by < y + blocksize_y; by++)
             for (int bz = z; bz < z + blocksize_z; bz++)
             {
+#endif
               if (bx < sizex - 2*window_size &&
                   by < sizey - 2*window_size &&
                   bz < sizez - 2*window_size) {

@@ -13,7 +13,7 @@ else
 	export SM_VAL='sm_70'
 fi;
 
-
+export MODULEPATH=/usr/share/Modules/modulefiles:/etc/modulefiles:/home/shared/software/modules
 source start 15.3
 source py_venv/bin/activate
 
